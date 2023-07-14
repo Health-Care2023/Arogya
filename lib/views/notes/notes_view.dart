@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/notes/chat_view.dart';
@@ -74,6 +75,7 @@ class _NotesViewState extends State<NotesView> {
           //     builder: (context) => const ChatView(),
           //     fullscreenDialog: true,
           //   ),
+
           Navigator.of(context).pushNamed(chatroute);
           // showDialog(
           //   context: context,
@@ -140,17 +142,99 @@ class _NotesViewState extends State<NotesView> {
       //       children: [],
       //     )),
       drawer: Drawer(
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         child: ListView(
-          padding: EdgeInsets.fromLTRB(5, 50, 0, 0),
+          padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
           children: [
-            Text('Welcome ${patient?['id']}'),
-            Text('Name: ${patient?['name']}'),
-            Text('Mail: ${patient?['email']}'),
-            Text('Aadhar No: ${patient?['aadhar_no']}'),
-            Text('Gender: ${patient?['gender']}'),
+            const SizedBox(height: 120),
+            const Text("    Name : ",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 5),
+            const Text("     Email : ",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 150, 151, 152))),
+            const SizedBox(height: 60),
+            const Text("    Profile ",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+            // const Text(" Date of birth : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Gender : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Profession : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Address 1 : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 20),
+            // const Text(" Address 2 : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 20),
+            // const Text(" Address 3 : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 20),
+            // const Text(" District : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 20),
+            // const Text(" WardNo : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Pincode : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Alternate Phno 1 : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
+            // const Text(" Alternate Phno 2 : ",
+            //     style: TextStyle(
+            //         fontSize: 18,
+            //         fontWeight: FontWeight.bold,
+            //         color: Color.fromARGB(255, 251, 253, 254))),
+            // const SizedBox(height: 10),
           ],
         ),
       ),
+      backgroundColor: Color.fromARGB(255, 247, 247, 245),
     );
   }
 }
