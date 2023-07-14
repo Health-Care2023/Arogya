@@ -108,24 +108,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
               ),
-              // TextField(
-              //   controller: _email,
-              //   enableSuggestions: false,
-              //   autocorrect: false,
-              //   keyboardType: TextInputType.emailAddress,
-              //   decoration: InputDecoration(
-              //     hintText: 'Enter Your Email',
-              //     border: InputBorder.none,
-              //     filled: true,
-              //     fillColor: Colors.white,
-              //     enabledBorder: OutlineInputBorder(
-              //       borderSide: BorderSide(width: 1, color: Colors.black),
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //   ),
-              //   style: const TextStyle(
-              //       fontSize: 15, fontWeight: FontWeight.w700),
-              // ),
               const SizedBox(height: 10),
               SizedBox(
                 child: TextField(
@@ -142,7 +124,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
               FloatingActionButton.extended(
                 extendedPadding: EdgeInsets.only(left: 150, right: 150),
@@ -212,87 +193,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ],
               )
-              // SizedBox(
-              //   height: 40,
-              //   width: 200,
-              //   child: ElevatedButton(
-              //       onPressed: () async {
-              //         final email = _email.text;
-              //         final pass = _pass.text;
-
-              //         try {
-              //           await Authservice.firebase()
-              //               .logIn(email: email, password: pass);
-              //           // ignore: use_build_context_synchronously
-              //           final user = Authservice.firebase().currentUser;
-              //           if (user?.isEmailVerified ?? false) {
-              //             Navigator.of(context).pushNamedAndRemoveUntil(
-              //               notesroute,
-              //               (route) => false,
-              //             );
-              //           } else {
-              //             Navigator.of(context).pushNamedAndRemoveUntil(
-              //                 verifyEmailRoute, (route) => false);
-              //           }
-              //         } on UserNotFoundException {
-              //           await showErrorDialog(
-              //             context,
-              //             'User Not Found',
-              //           );
-              //         } on WrongPasswordException {
-              //           await showErrorDialog(
-              //             context,
-              //             'Wrong Password',
-              //           );
-              //         } on GenericException {
-              //           await showErrorDialog(
-              //             context,
-              //             'Authentication Error',
-              //           );
-              //         }
-              //       },
-              //       child:
-              //           const Text('Login', style: TextStyle(fontSize: 15)),
-              //       style: ElevatedButton.styleFrom(
-              //         primary: Colors.deepPurple,
-              //         onPrimary: Colors.white70,
-              //         shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(15.0)),
-              //         minimumSize: Size(150, 20),
-              //       )),
-              // ),
-              // SizedBox(height: 10),
-              // SizedBox(
-              //   child: ElevatedButton(
-              //       onPressed: () {
-              //         Navigator.of(context).pushNamedAndRemoveUntil(
-              //             registerroute, (route) => false);
-              //       },
-              //       child: const Text("Not registered Yet? Register",
-              //           style: TextStyle(fontSize: 15)),
-              //       style: ElevatedButton.styleFrom(
-              //         primary: Colors.deepPurple,
-              //         onPrimary: Colors.white70,
-              //         shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(15.0)),
-              //         minimumSize: Size(180, 50),
-              //       )),
-              // ),
-              // SizedBox(height: 10),
-              // SizedBox(
-              //     child: ElevatedButton(
-              //         onPressed: () {
-              //           Navigator.of(context).pushNamed(myphone);
-              //         },
-              //         child: const Text("Register with Phone Number",
-              //             style: TextStyle(fontSize: 15)),
-              //         style: ElevatedButton.styleFrom(
-              //           primary: Colors.deepPurple,
-              //           onPrimary: Colors.white70,
-              //           shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(15.0)),
-              //           minimumSize: Size(180, 50),
-              //         )))
             ],
           ),
         ),
