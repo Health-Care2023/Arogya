@@ -81,12 +81,14 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Register', style: TextStyle(fontSize: 25)),
-          backgroundColor: Color.fromARGB(255, 160, 173, 252),
+          //backgroundColor: Color.fromARGB(255, 160, 173, 252),
+          backgroundColor: Colors.white,
           centerTitle: true,
         ),
         body: SingleChildScrollView(
       child: Container(
-        color: Color.fromARGB(255,160, 173, 252),
+       // color: Color.fromARGB(255,160, 173, 252),
+        color: Colors.white,
         alignment: Alignment.center,
         child: Container(
           margin: EdgeInsets.only(left: 20, right: 20),
@@ -106,14 +108,13 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Enter your email',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                // filled: true,
+                // fillColor: Colors.white,
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
+                 labelText: 'Enter your email',
               ),
               style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
             ),
@@ -124,11 +125,8 @@ class _RegisterViewState extends State<RegisterView> {
               enableSuggestions: false,
               autocorrect: false,
               decoration:  InputDecoration(
-                hintText: 'Enter password',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Enter password',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -142,11 +140,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'First Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'First Name',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -160,11 +155,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Middle Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Middle Name',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -178,11 +170,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Last Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Last Name',
+               border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -196,11 +185,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Alternate Phone No 1',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Alternate Phone No 1',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -214,11 +200,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Enter Alternate Phone No 2',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Enter Alternate Phone No 2',
+               border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -229,14 +212,11 @@ class _RegisterViewState extends State<RegisterView> {
             TextField(
               controller: _dob, //editing controller of this TextField
           decoration: InputDecoration(
-            border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white, 
                 //icon: Icon(Icons.calendar_today),
                 prefixIcon: Icon(Icons.calendar_today),
                 iconColor: Colors.blue, //icon of text field
-                hintText: "Enter Date Of Birth" ,//label text of field
-                enabledBorder: OutlineInputBorder(
+                labelText: "Enter Date Of Birth" ,//label text of field
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -262,7 +242,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),const SizedBox(height: 10),
             DropdownButtonFormField(
               decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                border: OutlineInputBorder( //<-- SEE HERE
                   borderSide: BorderSide(color: Colors.black, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -270,8 +250,6 @@ class _RegisterViewState extends State<RegisterView> {
                   borderSide: BorderSide(color: Colors.black, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                filled: true,
-                fillColor: Colors.white,
               ),
               dropdownColor: Colors.white,
               value: _gender.text,
@@ -297,11 +275,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Adhaar Card Number',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Adhaar Card Number',
+               border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -311,7 +286,7 @@ class _RegisterViewState extends State<RegisterView> {
             const SizedBox(height: 10),
             DropdownButtonFormField(
               decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder( //<-- SEE HERE
+                border: OutlineInputBorder( //<-- SEE HERE
                   borderSide: BorderSide(color: Colors.black, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -319,8 +294,6 @@ class _RegisterViewState extends State<RegisterView> {
                   borderSide: BorderSide(color: Colors.black, width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                filled: true,
-                fillColor: Colors.white,
               ),
               dropdownColor: Colors.white,
               value: _profession.text,
@@ -346,11 +319,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Addressline-1',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Addressline-1',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -364,11 +334,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'addressline-2,post office,landmark',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'addressline-2,post office,landmark',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -382,11 +349,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'City/town/village name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'City/town/village name',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -400,11 +364,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'Word No/Block No',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'Word No/Block No',
+                border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -418,11 +379,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'District',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'District',
+               border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -436,11 +394,8 @@ class _RegisterViewState extends State<RegisterView> {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
-                hintText: 'pincode',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
+                labelText: 'pincode',
+               border: OutlineInputBorder(
                   borderSide: BorderSide(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(10),
                 ),
