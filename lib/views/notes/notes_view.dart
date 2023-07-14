@@ -38,13 +38,8 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Notes'),
+        title: const Text('Arogya'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(newNotesRoute);
-              },
-              icon: const Icon(Icons.add)),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               final shouldLogout = await showLogOutDialog(context);

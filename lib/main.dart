@@ -5,7 +5,6 @@ import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/providers/models_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'constants/constants.dart';
 import 'providers/chats_provider.dart';
 
 import 'package:hello/views/login_view.dart';

@@ -80,9 +80,9 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Register', style: TextStyle(fontSize: 25)),
-          backgroundColor: Color.fromARGB(255, 160, 173, 252),
-          centerTitle: true,
+          // title: const Text('Register', style: TextStyle(fontSize: 25)),
+          backgroundColor: Colors.white,
+          // centerTitle: true,
         ),
         body: SingleChildScrollView(
       child: Container(
@@ -503,40 +503,31 @@ class _RegisterViewState extends State<RegisterView> {
                           minimumSize: Size(150, 20),
                         ))),
                 SizedBox(height: 10),
-                SizedBox(
-                    child: ElevatedButton(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Already Registered?',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               loginroute, (route) => false);
                         },
-                        child: const Text('Already Registered?Login',
-                            style: TextStyle(fontSize: 15)),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.deepPurple,
-                          onPrimary: Colors.white70,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                          minimumSize: Size(180, 50),
-                            )
-                          )
-                        )
-            // SizedBox(
-            //   height: 40,
-            //   width: 200,
-            //   child: ElevatedButton(
-            //     onPressed: () async {
-                 
-            //      },
-            //     child: const Text('Save',style: TextStyle(fontSize: 15)),
-            //     style: ElevatedButton.styleFrom(
-            //       primary: Colors.deepPurple,
-            //       onPrimary: Colors.white70,
-            //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-            //       minimumSize: Size(100,20),
-            //         )
-            //       ),
-            //     ),
-              ],
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         )

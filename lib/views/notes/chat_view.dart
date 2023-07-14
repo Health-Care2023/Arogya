@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import '../../providers/models_provider.dart';
-import '../../services/chat/assets_manager.dart';
+
 import '../../widgets/text_widget.dart';
 
 class ChatView extends StatefulWidget {
@@ -71,10 +71,7 @@ class _ChatViewState extends State<ChatView> {
         //   style: TextStyle(color: Colors.white),
         // ),
         title: const Text("Health Care Chat Application",
-                style: TextStyle(fontSize: 25,
-                color: Colors.white
-          )
-        ),
+            style: TextStyle(fontSize: 25, color: Colors.white)),
         backgroundColor: chatappTitleColor,
         centerTitle: true,
         actions: [
@@ -124,31 +121,39 @@ class _ChatViewState extends State<ChatView> {
             Material(
               color: cardColor,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(children: [
                     Expanded(
                       child: TextField(
-                        focusNode: focusNode,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700,color: Colors.black),
-                        controller: textEditingController,
-                        onSubmitted: (value) async {
-                          await sendMessageFCT(
-                              modelsProvider: modelsProvider,
-                              chatProvider: chatProvider);
-                        },
-                        decoration:  InputDecoration(
+                          focusNode: focusNode,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                          controller: textEditingController,
+                          onSubmitted: (value) async {
+                            await sendMessageFCT(
+                                modelsProvider: modelsProvider,
+                                chatProvider: chatProvider);
+                          },
+                          decoration: InputDecoration(
                             hintText: "How can I help you",
-                            hintStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.w700,color: Colors.grey),
+                            hintStyle: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey),
                             border: InputBorder.none,
                             filled: true,
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(25),
-                             ),
-                           )
-                      ),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          )),
+
+                      // borderSide: BorderSide.none,
+                      // borderRadius: BorderRadius.circular(25),
                     ),
                     ElevatedButton(
                         onPressed: () {
@@ -161,13 +166,12 @@ class _ChatViewState extends State<ChatView> {
                         child: Icon(
                           _isListening ? Icons.mic : Icons.mic_none,
                           color: _isListening ? Colors.blue : Colors.white,
-                          ),
-                          style: ElevatedButton.styleFrom(
+                        ),
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(188, 6, 141, 47),
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(15),
-                          )
-                        ),
+                        )),
                     ElevatedButton(
                         onPressed: () async {
                           await sendMessageFCT(
@@ -177,16 +181,13 @@ class _ChatViewState extends State<ChatView> {
                         child: const Icon(
                           Icons.send,
                           color: Colors.white,
-                          ),
-                          style: ElevatedButton.styleFrom(
+                        ),
+                        style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(188, 6, 141, 47),
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(15),
-                          ) 
-                        )
-                  ],
-                ),
-              ),
+                        ))
+                  ])),
             ),
           ],
         ),
