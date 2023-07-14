@@ -12,6 +12,7 @@ import 'package:hello/views/notes/new_notes_view.dart';
 import 'package:hello/views/notes/notes_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/notes/chat_view.dart';
+import 'package:hello/views/notes/profile_view.dart';
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
 import 'package:hello/views/verify_email_view.dart';
@@ -47,6 +48,7 @@ void main() {
         verifyEmailRoute: (context) => const VerifyEmailView(),
         newNotesRoute: (context) => const NewNotesView(),
         chatroute: (context) => const ChatView(),
+        profileroute: (context) => const ProfileView(),
       },
     ),
   )
