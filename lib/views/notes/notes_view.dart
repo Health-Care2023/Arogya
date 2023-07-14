@@ -4,6 +4,9 @@ import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/notes/chat_view.dart';
 import '../../constants/routes.dart';
 import '../../enum/menu_action.dart';
+import 'package:hello/services/auth/auth_exceptions.dart';
+import 'package:hello/services/auth/auth_service.dart';
+import 'package:hello/db/database_helper.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -13,14 +16,22 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
+  DatabaseHelper databaseHelper = DatabaseHelper();
   late final NotesService _notesService;
+  Map<String, dynamic>? patient;
 
-  String get userEmail => Authservice.firebase().currentUser!.email!;
   @override
   void initState() {
     _notesService = NotesService();
-
+    final user = Authservice.firebase().currentUser;
+    final String? email = user?.email;
+    fetchPatientDetails(email!);
     super.initState();
+  }
+
+  void fetchPatientDetails(String email) async {
+    patient = await databaseHelper.getPatientByEmail(email);
+    setState(() {});
   }
 
   @override
@@ -63,9 +74,7 @@ class _NotesViewState extends State<NotesView> {
           //     builder: (context) => const ChatView(),
           //     fullscreenDialog: true,
           //   ),
-          Navigator.of(context).pushNamed(
-          chatroute
-          );
+          Navigator.of(context).pushNamed(chatroute);
           // showDialog(
           //   context: context,
           //   builder: (context) {
@@ -130,6 +139,18 @@ class _NotesViewState extends State<NotesView> {
       //     child: Column(
       //       children: [],
       //     )),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(5, 50, 0, 0),
+          children: [
+            Text('Welcome ${patient?['id']}'),
+            Text('Name: ${patient?['name']}'),
+            Text('Mail: ${patient?['email']}'),
+            Text('Aadhar No: ${patient?['aadhar_no']}'),
+            Text('Gender: ${patient?['gender']}'),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -3,8 +3,7 @@ import 'package:hello/Utilities/show_error_dialog.dart';
 import 'package:hello/constants/routes.dart';
 import 'package:hello/services/auth/auth_exceptions.dart';
 import 'package:hello/services/auth/auth_service.dart';
-
-//import '../firebase_options.dart';
+import 'package:hello/db/database_helper.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -14,12 +13,20 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  DatabaseHelper databaseHelper = DatabaseHelper();
+
+  late final TextEditingController _name;
   late final TextEditingController _email;
+  late final TextEditingController _aadharNo;
+  late final TextEditingController _gender;
   late final TextEditingController _pass;
   @override
   void initState() {
     // TODO: implement initState
+    _name = TextEditingController();
     _email = TextEditingController();
+    _aadharNo = TextEditingController();
+    _gender = TextEditingController();
     _pass = TextEditingController();
     super.initState();
   }
@@ -55,12 +62,69 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 const SizedBox(height: 40),
                 TextField(
+                  controller: _name,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Your Name',
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
                   controller: _email,
                   enableSuggestions: false,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Enter Your Email',
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _aadharNo,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Your Addhar No',
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _gender,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Your Gender',
                     border: InputBorder.none,
                     filled: true,
                     fillColor: Colors.white,
@@ -102,7 +166,15 @@ class _RegisterViewState extends State<RegisterView> {
                           try {
                             await Authservice.firebase()
                                 .createUser(email: email, password: pass);
-
+                            Map<String, dynamic> patient = {
+                              'name': _name.text,
+                              'email': _email.text,
+                              'aadhar_no': _aadharNo.text,
+                              'gender': _gender.text,
+                            };
+                            int insertedId =
+                                await databaseHelper.insertPatient(patient);
+                            print('Inserted Patient ID: $insertedId');
                             Authservice.firebase().sendEmailVerification();
                             Navigator.of(context).pushNamed(verifyEmailRoute);
                           } on WeakPasswordException {
