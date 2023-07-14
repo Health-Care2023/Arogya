@@ -8,6 +8,7 @@ class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   factory DatabaseHelper() => _instance;
 
+  DatabaseHelper.internal();
   static Database? _database;
 
   final String tableName = 'patients';
@@ -22,8 +23,6 @@ class DatabaseHelper {
     _database = await initializeDatabase();
     return _database!;
   }
-
-  DatabaseHelper.internal();
 
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
@@ -50,12 +49,6 @@ class DatabaseHelper {
     return id;
   }
 
-  Future<List<Map<String, dynamic>>> getAllPatients() async {
-    Database db = await database;
-    List<Map<String, dynamic>> patients = await db.query(tableName);
-    return patients;
-  }
-
   Future<Map<String, dynamic>?> getPatientByEmail(String email) async {
     Database db = await database;
     List<Map<String, dynamic>> patients = await db.query(
@@ -79,15 +72,5 @@ class DatabaseHelper {
       whereArgs: [patient[columnId]],
     );
     return updatedCount;
-  }
-
-  Future<int> deletePatient(int id) async {
-    Database db = await database;
-    int deletedCount = await db.delete(
-      tableName,
-      where: '$columnId = ?',
-      whereArgs: [id],
-    );
-    return deletedCount;
   }
 }
