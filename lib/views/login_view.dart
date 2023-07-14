@@ -146,24 +146,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
-                // TextField(
-                //   controller: _pass,
-                //   obscureText: true,
-                //   enableSuggestions: false,
-                //   autocorrect: false,
-                //   decoration: InputDecoration(
-                //     hintText: 'Enter Your Password',
-                //     border: InputBorder.none,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(width: 1, color: Colors.black),
-                //       borderRadius: BorderRadius.circular(10),
-                //     ),
-                //   ),
-                //   style: const TextStyle(
-                //       fontSize: 15, fontWeight: FontWeight.w700),
-                // ),
+
                 const SizedBox(height: 10),
                 FloatingActionButton.extended(
                   extendedPadding: EdgeInsets.only(left: 150, right: 150),
