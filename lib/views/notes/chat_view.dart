@@ -144,7 +144,7 @@ class _ChatViewState extends State<ChatView> {
                             filled: true,
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1, color: Colors.black),
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(25),
                              ),
                            )
