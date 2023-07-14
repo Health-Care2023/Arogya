@@ -49,22 +49,7 @@ class _RegisterViewState extends State<RegisterView> {
     _pass = TextEditingController();
     _aadharNo = TextEditingController();
     _gender = TextEditingController();
-    _profession = TextEditingController();
-    _address1 = TextEditingController();
-    _address2 = TextEditingController();
-    _address3 = TextEditingController();
-    _wordno = TextEditingController();
-    _district = TextEditingController();
-    _pincode = TextEditingController();
-    //_pass = TextEditingController();
-    _dob = TextEditingController();
-    _firstname.text = "";
-    _middlename.text = "";
-    _lastname.text = "";
-    _dob.text = "";
-    _gender.text = 'Male';
-    _profession.text = 'Service';
-    _countrycode.text = "+91";
+    _pass = TextEditingController();
     super.initState();
   }
 
@@ -80,24 +65,43 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          // title: const Text('Register', style: TextStyle(fontSize: 25)),
-          backgroundColor: Colors.white,
-          // centerTitle: true,
+          title: const Text('Register', style: TextStyle(fontSize: 25)),
+          backgroundColor: Color.fromARGB(255, 160, 173, 252),
+          centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: Container(
+          color: Color.fromARGB(255, 160, 173, 252),
+          alignment: Alignment.center,
           child: Container(
-            color: Color.fromARGB(255, 160, 173, 252),
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
                   Image.asset(
                     'asset/healthcare.png',
                     width: double.infinity,
                     height: 200,
+                  ),
+                  const SizedBox(height: 40),
+                  TextField(
+                    controller: _name,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Your Name',
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 10),
                   TextField(
@@ -106,201 +110,18 @@ class _RegisterViewState extends State<RegisterView> {
                     autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Enter Your Email',
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _pass,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      hintText: 'Enter password',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _firstname,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'First Name',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _middlename,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Middle Name',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _lastname,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Last Name',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _phone1,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Alternate Phone No 1',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _phone2,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Enter Alternate Phone No 2',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                      controller: _dob, //editing controller of this TextField
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.white,
-                        //icon: Icon(Icons.calendar_today),
-                        prefixIcon: Icon(Icons.calendar_today),
-                        iconColor: Colors.blue, //icon of text field
-                        hintText: "Enter Date Of Birth", //label text of field
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 1, color: Colors.black),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      readOnly: true, // when true user cannot edit text
-                      onTap: () async {
-                        //when click we have to show the datepicker
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1923),
-                          lastDate: DateTime(2123),
-                        );
-                        if (pickedDate != null) {
-                          String formattedDate =
-                              DateFormat("dd-MM-yyyy").format(pickedDate);
-                          setState(() {
-                            _dob.text = formattedDate.toString();
-                          });
-                        } else {
-                          print("Not Selected");
-                        }
-                      }),
-                  const SizedBox(height: 10),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    dropdownColor: Colors.white,
-                    value: _gender.text,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _gender.text = newValue!;
-                      });
-                    },
-                    items: <String>['Male', 'Female', 'Others']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
+                        fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 10),
                   TextField(
@@ -309,174 +130,59 @@ class _RegisterViewState extends State<RegisterView> {
                     autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: 'Adhaar Card Number',
+                      hintText: 'Enter Your Addhar No',
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                    dropdownColor: Colors.white,
-                    value: _profession.text,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _profession.text = newValue!;
-                      });
-                    },
-                    items: <String>[
-                      'Service',
-                      'Business',
-                      'Agriculture',
-                      'Homemaker',
-                      'Student',
-                      'Others'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
+                        fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: _address1,
+                    controller: _gender,
                     enableSuggestions: false,
                     autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: 'Addressline-1',
+                      hintText: 'Enter Your Gender',
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
+                        fontSize: 15, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 10),
                   TextField(
-                    controller: _address2,
+                    controller: _pass,
+                    obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: 'addressline-2,post office,landmark',
+                      hintText: 'Password',
                       border: InputBorder.none,
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
+                        fontSize: 15, fontWeight: FontWeight.w700),
                   ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _address3,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'City/town/village name',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _wordno,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'Word No/Block No',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _district,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'District',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
-                  TextField(
-                    controller: _pincode,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: 'pincode',
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    style: const TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(height: 10),
                   const SizedBox(height: 10),
                   SizedBox(
                       height: 40,
@@ -489,22 +195,10 @@ class _RegisterViewState extends State<RegisterView> {
                               await Authservice.firebase()
                                   .createUser(email: email, password: pass);
                               Map<String, dynamic> patient = {
-                                'name': _firstname.text +
-                                    _middlename.text +
-                                    _lastname.text,
+                                'name': _name.text,
                                 'email': _email.text,
                                 'aadhar_no': _aadharNo.text,
                                 'gender': _gender.text,
-                                'profession': _profession.text,
-                                'address1': _address1.text,
-                                'address2': _address2.text,
-                                'address3': _address3.text,
-                                'District': _district.text,
-                                'Pincode': _pincode.text,
-                                'WordNo': _wordno.text,
-                                'Phone1': _phone1.text,
-                                'Phone2': _phone2.text,
-                                'dateOfbirth': _dob.text
                               };
                               int insertedId =
                                   await databaseHelper.insertPatient(patient);
@@ -524,39 +218,31 @@ class _RegisterViewState extends State<RegisterView> {
                                   context, 'Failed to register');
                             }
                           },
-                          child: const Text('Register',
-                              style: TextStyle(fontSize: 15)),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.deepPurple,
                             onPrimary: Colors.white70,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
-                            minimumSize: Size(150, 20),
-                          ))),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Already Registered?',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              loginroute, (route) => false);
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.blue,
+                            minimumSize: const Size(150, 20),
                           ),
-                        ),
-                      ),
-                    ],
-                  )
+                          child: const Text('Register',
+                              style: TextStyle(fontSize: 15)))),
+                  SizedBox(height: 10),
+                  SizedBox(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                loginroute, (route) => false);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.deepPurple,
+                            onPrimary: Colors.white70,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            minimumSize: const Size(180, 50),
+                          ),
+                          child: const Text('Already Registered?Login',
+                              style: TextStyle(fontSize: 15))))
                 ],
               ),
             ),

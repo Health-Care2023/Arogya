@@ -63,13 +63,6 @@ class _ChatViewState extends State<ChatView> {
     return Scaffold(
       backgroundColor: cardColor,
       appBar: AppBar(
-        // backgroundColor: scaffoldBackgroundColor,
-        // elevation: 2,
-        // // iconTheme: new IconThemeData(color: Colors.white),
-        // title: const Text(
-        //   "ChatGPT",
-        //   style: TextStyle(color: Colors.white),
-        // ),
         title: const Text("Health Care Chat Application",
             style: TextStyle(fontSize: 25, color: Colors.white)),
         backgroundColor: chatappTitleColor,
@@ -82,14 +75,6 @@ class _ChatViewState extends State<ChatView> {
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
           ),
         ],
-        // elevation: 2,
-        // leading: Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Image.asset(AssetsManager.govLogo,
-        //   width: 3,
-        //   height: 2,
-        //   ),
-        //),
       ),
       body: SafeArea(
         child: Column(
@@ -97,13 +82,11 @@ class _ChatViewState extends State<ChatView> {
             Flexible(
               child: ListView.builder(
                   controller: _listScrollController,
-                  itemCount: chatProvider.getChatList.length, //chatList.length,
+                  itemCount: chatProvider.getChatList.length,
                   itemBuilder: (context, index) {
                     return ChatWidget(
-                      msg: chatProvider
-                          .getChatList[index].msg, // chatList[index].msg,
-                      chatIndex: chatProvider.getChatList[index]
-                          .chatIndex, //chatList[index].chatIndex,
+                      msg: chatProvider.getChatList[index].msg,
+                      chatIndex: chatProvider.getChatList[index].chatIndex,
                       shouldAnimate:
                           chatProvider.getChatList.length - 1 == index,
                     );
@@ -151,9 +134,6 @@ class _ChatViewState extends State<ChatView> {
                               borderRadius: BorderRadius.circular(25),
                             ),
                           )),
-
-                      // borderSide: BorderSide.none,
-                      // borderRadius: BorderRadius.circular(25),
                     ),
                     ElevatedButton(
                         onPressed: () {
@@ -251,17 +231,14 @@ class _ChatViewState extends State<ChatView> {
       String msg = textEditingController.text;
       setState(() {
         _isTyping = true;
-        // chatList.add(ChatModel(msg: textEditingController.text, chatIndex: 0));
+
         chatProvider.addUserMessage(msg: msg);
         textEditingController.clear();
         focusNode.unfocus();
       });
       await chatProvider.sendMessageAndGetAnswers(
           msg: msg, chosenModelId: modelsProvider.getCurrentModel);
-      // chatList.addAll(await ApiService.sendMessage(
-      //   message: textEditingController.text,
-      //   modelId: modelsProvider.getCurrentModel,
-      // ));
+
       setState(() {});
     } catch (error) {
       log("error $error");
