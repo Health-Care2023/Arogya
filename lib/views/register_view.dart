@@ -73,7 +73,8 @@ class _RegisterViewState extends State<RegisterView> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -92,7 +93,8 @@ class _RegisterViewState extends State<RegisterView> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -111,7 +113,8 @@ class _RegisterViewState extends State<RegisterView> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -130,7 +133,8 @@ class _RegisterViewState extends State<RegisterView> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -149,7 +153,8 @@ class _RegisterViewState extends State<RegisterView> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -191,15 +196,15 @@ class _RegisterViewState extends State<RegisterView> {
                                   context, 'Failed to register');
                             }
                           },
-                          child: const Text('Register',
-                              style: TextStyle(fontSize: 15)),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.deepPurple,
                             onPrimary: Colors.white70,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
-                            minimumSize: Size(150, 20),
-                          ))),
+                            minimumSize: const Size(150, 20),
+                          ),
+                          child: const Text('Register',
+                              style: TextStyle(fontSize: 15)))),
                   SizedBox(height: 10),
                   SizedBox(
                       child: ElevatedButton(
@@ -207,15 +212,15 @@ class _RegisterViewState extends State<RegisterView> {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 loginroute, (route) => false);
                           },
-                          child: const Text('Already Registered?Login',
-                              style: TextStyle(fontSize: 15)),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.deepPurple,
                             onPrimary: Colors.white70,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
-                            minimumSize: Size(180, 50),
-                          )))
+                            minimumSize: const Size(180, 50),
+                          ),
+                          child: const Text('Already Registered?Login',
+                              style: TextStyle(fontSize: 15))))
                 ],
               ),
             ),
