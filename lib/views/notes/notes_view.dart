@@ -139,18 +139,127 @@ class _NotesViewState extends State<NotesView> {
       //     child: Column(
       //       children: [],
       //     )),
+      // drawer: Drawer(
+      //   backgroundColor: Colors.amber,
+      //   child: ListView(
+      //     padding: EdgeInsets.fromLTRB(5, 50, 0, 0),
+      //     children: [
+      //       Text('Welcome ${patient?['id']}'),
+      //       Text('Name: ${patient?['name']}'),
+      //       Text('Mail: ${patient?['email']}'),
+      //       Text('Aadhar No: ${patient?['aadhar_no']}'),
+      //       Text('Gender: ${patient?['gender']}'),
+      //        Text('Gender: ${patient?['gender']}'),
+      //         Text('Gender: ${patient?['gender']}'),
+      //          Text('Gender: ${patient?['gender']}'),
+      //           Text('Gender: ${patient?['gender']}'),
+      //            Text('Gender: ${patient?['gender']}'),
+      //             Text('Gender: ${patient?['gender']}'),
+      //              Text('Gender: ${patient?['gender']}'),
+      //               Text('Gender: ${patient?['gender']}'),
+      //     ],
+      //   ),
+      // ),
       drawer: Drawer(
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         child: ListView(
-          padding: EdgeInsets.fromLTRB(5, 50, 0, 0),
+          padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
           children: [
-            Text('Welcome ${patient?['id']}'),
-            Text('Name: ${patient?['name']}'),
-            Text('Mail: ${patient?['email']}'),
-            Text('Aadhar No: ${patient?['aadhar_no']}'),
-            Text('Gender: ${patient?['gender']}'),
+            const SizedBox(height: 120),
+             Text(" Name : ${patient?['name']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+            Text(" Email :  ${patient?['email']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Aadhar No :  ${patient?['aadhar_no']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Date of birth : ${patient?['dateOfbirth']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Gender : ${patient?['gender']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254)
+                      )
+                    ),
+            const SizedBox(height: 10),
+             Text(" Profession :  ${patient?['profession']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Address 1 : ${patient?['address1']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 20),
+             Text(" Address 2 : ${patient?['address2']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 20),
+             Text(" Address 3 : ${patient?['address3']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 20),
+             Text(" District : ${patient?['District']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 20),
+           Text(" WardNo : ${patient?['WordNo']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Pincode :  ${patient?['Pincode']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+             Text(" Alternate Phno 1 : ${patient?['Phone1']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+            Text(" Alternate Phno 2 : ${patient?['Phone2']}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 251, 253, 254))),
+            const SizedBox(height: 10),
+            // Text('Welcome ${patient?['id']}'),
+            // Text('Name: ${patient?['name']}'),
+            // Text('Mail: ${patient?['email']}'),
+            // Text('Aadhar No: ${patient?['aadhar_no']}'),
+            // Text('Gender: ${patient?['gender']}'),
           ],
         ),
-      ),
+      )
     );
   }
 }
