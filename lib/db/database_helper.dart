@@ -17,6 +17,17 @@ class DatabaseHelper {
   final String columnEmail = 'email';
   final String columnAadharNo = 'aadhar_no';
   final String columnGender = 'gender';
+  final String columnProfession = 'profession';
+  final String columnAddress1 = 'address1';
+  final String columnAddress2 = 'address2';
+  final String columnAddress3 = 'address3';
+  final String columnDistrict = 'District';
+  final String columnPincode = 'Pincode';
+  final String columnWordno= 'WordNo';
+  final String columnPhone1= 'Phone1';
+  final String columnPhone2= 'Phone2';
+   final String columnDob= 'dateOfbirth';
+  
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -37,8 +48,18 @@ class DatabaseHelper {
         $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
         $columnName TEXT,
         $columnEmail TEXT,
+        $columnPhone1 TEXT,
+        $columnPhone2 TEXT,
+        $columnDob TEXT,
         $columnAadharNo TEXT,
-        $columnGender TEXT
+        $columnGender TEXT,
+        $columnProfession TEXT,
+        $columnAddress1 TEXT,
+        $columnAddress2 TEXT,
+        $columnAddress3 TEXT,
+        $columnWordno TEXT,
+        $columnPincode TEXT,
+        $columnDistrict TEXT,
       )
     ''');
   }
