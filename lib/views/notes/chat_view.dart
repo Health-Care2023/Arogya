@@ -155,40 +155,40 @@ class _ChatViewState extends State<ChatView> {
                       // borderSide: BorderSide.none,
                       // borderRadius: BorderRadius.circular(25),
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_isListening) {
+                            stopListening();
+                          } else {
+                            startListening();
+                          }
+                        },
+                        child: Icon(
+                          _isListening ? Icons.mic : Icons.mic_none,
+                          color: _isListening ? Colors.blue : Colors.white,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(188, 6, 141, 47),
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(15),
+                        )),
+                    ElevatedButton(
+                        onPressed: () async {
+                          await sendMessageFCT(
+                              modelsProvider: modelsProvider,
+                              chatProvider: chatProvider);
+                        },
+                        child: const Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(188, 6, 141, 47),
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(15),
+                        ))
                   ])),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  if (_isListening) {
-                    stopListening();
-                  } else {
-                    startListening();
-                  }
-                },
-                child: Icon(
-                  _isListening ? Icons.mic : Icons.mic_none,
-                  color: _isListening ? Colors.blue : Colors.white,
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(188, 6, 141, 47),
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(15),
-                )),
-            ElevatedButton(
-                onPressed: () async {
-                  await sendMessageFCT(
-                      modelsProvider: modelsProvider,
-                      chatProvider: chatProvider);
-                },
-                child: const Icon(
-                  Icons.send,
-                  color: Colors.white,
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(188, 6, 141, 47),
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(15),
-                ))
           ],
         ),
       ),
