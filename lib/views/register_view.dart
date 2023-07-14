@@ -220,7 +220,8 @@ class _RegisterViewState extends State<RegisterView> {
                             minimumSize: const Size(180, 50),
                           ),
                           child: const Text('Already Registered?Login',
-                              style: TextStyle(fontSize: 15))))
+                              style: TextStyle(fontSize: 15)))),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
