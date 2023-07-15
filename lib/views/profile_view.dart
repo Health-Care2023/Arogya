@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:hello/db/database_helper.dart';
 import 'package:intl/intl.dart';
-
 class ProfileView extends StatefulWidget {
   final String email;
   const ProfileView(this.email);

@@ -99,11 +99,10 @@ class _RegisterViewState extends State<RegisterView> {
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                  hintText: 'First Name',
-                  border: InputBorder.none,
+                  labelText: 'First Name',
                   filled: true,
                   fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Colors.black),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -198,8 +197,6 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _email.text;
                         final pass = _pass.text;
                         try {
-                          await Authservice.firebase()
-                              .createUser(email: email, password: pass);
                           Map<String, dynamic> patient = {
                             'name': _firstname.text +
                                 _middlename.text +
@@ -221,6 +218,8 @@ class _RegisterViewState extends State<RegisterView> {
                           int insertedId =
                               await databaseHelper.insertPatient(patient);
                           print('Inserted Patient ID: $insertedId');
+                           await Authservice.firebase()
+                              .createUser(email: email, password: pass);
                           Authservice.firebase().sendEmailVerification();
                           Navigator.of(context).pushNamed(verifyEmailRoute);
                         } on WeakPasswordException {

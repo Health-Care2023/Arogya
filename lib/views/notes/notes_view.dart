@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello/services/auth/auth_service.dart';
+import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
 
@@ -110,8 +111,9 @@ class _NotesViewState extends State<NotesView> {
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
-                  children: [
-                    Icon(Icons.account_circle_rounded, size: 100),
+                  children: <Widget>[
+                  //  Icon(Icons.account_circle_rounded, size: 100),
+                    imageProfile(),
                     const SizedBox(height: 10),
                     Text(
                       "  ${patient?['name']}",
@@ -189,7 +191,67 @@ class _NotesViewState extends State<NotesView> {
         ));
   }
 }
+Widget imageProfile() {
+      return Center(
+        child: Stack(
+          children: <Widget>[
+           CircleAvatar(
+              radius: 70,
+              backgroundImage: AssetImage(AssetsManager.userImage),
+            ),
+             Positioned(
+                bottom: 21.0,
+                right: 21.0,
+                child: InkWell(
+                  onTap: () {},
+                  child: Icon(
+                  Icons.camera_alt,
+                  size: 25.0,
+                  color: Colors.teal,
+                  )
+                 ), 
+                )
+          ],
+        ),
+      )
+    ;
+  }
+  Widget bottomSheet(){
+    return Container(
+      height: 100.0,
+     // width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children:<Widget>[
+          Text(
+            "Choose your profile picture",
+            style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              TextButton.icon(
+                icon: Icon(Icons.camera),
+                label: Text("Camera"),
+                
+                onPressed: () {
 
+                },
+              )
+            ]
+          )
+        ]
+      )
+    );
+  }
 Future<bool> showLogOutDialog(BuildContext context) {
   return showDialog(
     context: context,
