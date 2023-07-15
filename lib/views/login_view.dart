@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hello/constants/routes.dart';
 import 'package:hello/services/auth/auth_exceptions.dart';
 import 'package:hello/services/auth/auth_service.dart';
+import 'package:hello/views/profile_view.dart';
 import '../Utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -143,11 +144,14 @@ class _LoginViewState extends State<LoginView> {
                     // ignore: use_build_context_synchronously
                     final user = Authservice.firebase().currentUser;
                     if (user?.isEmailVerified ?? false) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        notesroute,
-                        (route) => false,
-                        arguments: user?.email,
-                      );
+                      // Navigator.of(context).pushNamedAndRemoveUntil(
+                      //   notesroute,
+                      //   (route) => false,
+                      //   arguments: user?.email,
+                      // );
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProfileView(user!.email!),
+                      ));
                     } else {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           verifyEmailRoute, (route) => false);

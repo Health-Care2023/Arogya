@@ -66,53 +66,6 @@ class _NotesViewState extends State<NotesView> {
             Navigator.of(context).pushNamed(chatroute);
           },
         ),
-        // body: FutureBuilder(
-        //   future: _notesService.getorcreateUser(email: userEmail),
-        //   builder: (context, snapshot) {
-        //     switch (snapshot.connectionState) {
-        //       case ConnectionState.done:
-        //         return StreamBuilder(
-        //           stream: _notesService.allNotes,
-        //           builder: (context, snapshot) {
-        //             switch (snapshot.connectionState) {
-        //               case ConnectionState.waiting:
-        //               case ConnectionState.active:
-        //                 if (snapshot.hasData) {
-        //                   final allNotes = snapshot.data as List<DatabaseNote>;
-
-        //                   return ListView.builder(
-        //                     itemCount: allNotes.length,
-        //                     itemBuilder: (context, index) {
-        //                       final note = allNotes[index];
-        //                       return ListTile(
-        //                         title: Text(
-        //                           note.text,
-        //                           maxLines: 1,
-        //                           softWrap: true,
-        //                           overflow: TextOverflow.ellipsis,
-        //                         ),
-        //                       );
-        //                     },
-        //                   );
-        //                 } else {
-        //                   return CircularProgressIndicator();
-        //                 }
-        //               default:
-        //                 return CircularProgressIndicator();
-        //             }
-        //           },
-        //         );
-
-        //       default:
-        //         return CircularProgressIndicator();
-        //     }
-        //   },
-        // ),
-        // body: Container(
-        //     alignment: Alignment.bottomRight,
-        //     child: Column(
-        //       children: [],
-        //     )),
         drawer: Drawer(
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           child: ListView(

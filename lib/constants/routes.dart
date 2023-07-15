@@ -7,3 +7,4 @@ const myverify = 'otp';
 const verifyEmailRoute = '/verify-email/';
 const newNotesRoute = '/notes/new_notes_view';
 const chatroute = '/notes/chat_view';
+const profileroute = "/profile";
