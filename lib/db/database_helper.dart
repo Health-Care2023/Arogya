@@ -8,7 +8,6 @@ class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper.internal();
   factory DatabaseHelper() => _instance;
 
-  DatabaseHelper.internal();
   static Database? _database;
 
   final String tableName = 'patients';
@@ -17,23 +16,24 @@ class DatabaseHelper {
   final String columnEmail = 'email';
   final String columnAadharNo = 'aadhar_no';
   final String columnGender = 'gender';
+  final String columnPhone1 = 'phone1';
+  final String columnPhone2 = 'phone2';
   final String columnProfession = 'profession';
   final String columnAddress1 = 'address1';
   final String columnAddress2 = 'address2';
   final String columnAddress3 = 'address3';
-  final String columnDistrict = 'District';
-  final String columnPincode = 'Pincode';
-  final String columnWordno= 'WordNo';
-  final String columnPhone1= 'Phone1';
-  final String columnPhone2= 'Phone2';
-   final String columnDob= 'dateOfbirth';
-  
+  final String columnDistrict = 'district';
+  final String columnPincode = 'pincode';
+  final String columnWordno = 'wordno';
+  final String columnDob = 'dateofbirth';
 
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await initializeDatabase();
     return _database!;
   }
+
+  DatabaseHelper.internal();
 
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
@@ -48,18 +48,18 @@ class DatabaseHelper {
         $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
         $columnName TEXT,
         $columnEmail TEXT,
-        $columnPhone1 TEXT,
-        $columnPhone2 TEXT,
-        $columnDob TEXT,
         $columnAadharNo TEXT,
         $columnGender TEXT,
+        $columnPhone1 TEXT,
+        $columnPhone2 TEXT,
         $columnProfession TEXT,
         $columnAddress1 TEXT,
         $columnAddress2 TEXT,
         $columnAddress3 TEXT,
-        $columnWordno TEXT,
-        $columnPincode TEXT,
         $columnDistrict TEXT,
+        $columnPincode TEXT,
+        $columnWordno TEXT,
+        $columnDob TEXT
       )
     ''');
   }

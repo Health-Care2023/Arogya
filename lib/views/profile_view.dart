@@ -60,7 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
     _pincode = TextEditingController();
     _dob = TextEditingController();
 
-    _firstname.text = "hello ";
+    _firstname.text = "";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
@@ -78,6 +78,22 @@ class _ProfileViewState extends State<ProfileView> {
 
     setState(() {
       _email.text = _journals!['email'];
+      List<String> name = _journals!['name'].split(" ");
+      _firstname.text = name[0];
+      _middlename.text = name[1];
+      _lastname.text = name[2];
+      _dob.text = _journals!['dateofbirth'];
+      // _gender.text = _journals!['gender'];
+      // _profession.text = _journals!['profession'];
+      _phone1.text = _journals!['phone1'];
+      _phone2.text = _journals!['phone2'];
+      _aadharNo.text = _journals!['aadhar_no'];
+      _address1.text = _journals!['address1'];
+      _address2.text = _journals!['address2'];
+      _address3.text = _journals!['address3'];
+      _wordno.text = _journals!['wordno'];
+      // _district.text = _journals!['district'];
+      _pincode.text = _journals!['pincode'];
     });
   }
 
@@ -458,20 +474,20 @@ class _ProfileViewState extends State<ProfileView> {
                     'email': _email.text,
                     'aadhar_no': _aadharNo.text,
                     'gender': _gender.text,
+                    'phone1': _phone1.text,
+                    'phone2': _phone2.text,
                     'profession': _profession.text,
                     'address1': _address1.text,
                     'address2': _address2.text,
                     'address3': _address3.text,
-                    'District': _district.text,
-                    'Pincode': _pincode.text,
-                    'WordNo': _wordno.text,
-                    'Phone1': _phone1.text,
-                    'Phone2': _phone2.text,
-                    'dateOfbirth': _dob.text
+                    'district': _district.text,
+                    'pincode': _pincode.text,
+                    'wordno': _wordno.text,
+                    'dateofbirth': _dob.text
                   };
-                  await databaseHelper.insertPatient(patient);
+                  await databaseHelper.updatePatient(patient);
                 },
-                child: Text(_email.text))
+                child: Text("Update"))
           ],
         ),
       ),
