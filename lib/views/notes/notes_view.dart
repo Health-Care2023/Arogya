@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/crud/notes_service.dart';
+import 'package:hello/views/profile_view.dart';
 
 import '../../constants/routes.dart';
 import '../../enum/menu_action.dart';
@@ -149,7 +150,9 @@ class _NotesViewState extends State<NotesView> {
               GestureDetector(
                 onTap: () {
                   // Call your function here
-                  Navigator.of(context).pushNamed(profileroute);
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProfileView(patient?['email']),
+                  ));
                 },
                 child: const Row(
                   children: [

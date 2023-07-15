@@ -144,14 +144,14 @@ class _LoginViewState extends State<LoginView> {
                     // ignore: use_build_context_synchronously
                     final user = Authservice.firebase().currentUser;
                     if (user?.isEmailVerified ?? false) {
-                      // Navigator.of(context).pushNamedAndRemoveUntil(
-                      //   notesroute,
-                      //   (route) => false,
-                      //   arguments: user?.email,
-                      // );
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProfileView(user!.email!),
-                      ));
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        notesroute,
+                        (route) => false,
+                        arguments: user?.email,
+                      );
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => ProfileView(user!.email!),
+                      // ));
                     } else {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           verifyEmailRoute, (route) => false);
