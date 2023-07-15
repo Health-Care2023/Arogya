@@ -13,10 +13,10 @@ import 'package:hello/views/login_view.dart';
 import 'package:hello/views/notes/notes_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/notes/chat_view.dart';
+
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
 import 'package:hello/views/verify_email_view.dart';
-//import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
