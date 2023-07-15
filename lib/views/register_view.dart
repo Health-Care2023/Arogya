@@ -260,23 +260,6 @@ class _RegisterViewState extends State<RegisterView> {
                             borderRadius: BorderRadius.circular(15.0)),
                         minimumSize: Size(180, 50),
                       ))),
-              SizedBox(height: 8),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          loginroute, (route) => false);
-                    },
-                    child: const Text('Already Registered?Login',
-                        style: TextStyle(fontSize: 15)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
-                      onPrimary: Colors.white70,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
-                      minimumSize: Size(180, 50),
-                    ))
-              ])
             ],
           ),
         ),

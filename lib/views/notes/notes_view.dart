@@ -52,27 +52,6 @@ class _NotesViewState extends State<NotesView> {
             },
           ),
           title: const Text('Arogya', style: TextStyle(color: Colors.white)),
-          actions: [
-            PopupMenuButton<MenuAction>(
-              color: Colors.white,
-              onSelected: (value) async {
-                final shouldLogout = await showLogOutDialog(context);
-                if (shouldLogout) {
-                  await Authservice.firebase().logOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginroute, (_) => false);
-                }
-              },
-              itemBuilder: (context) {
-                return const [
-                  PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Text('logout'),
-                  ),
-                ];
-              },
-            )
-          ],
           backgroundColor: Color.fromARGB(255, 5, 14, 82),
         ),
         bottomNavigationBar: NavigationBar(
@@ -126,49 +105,85 @@ class _NotesViewState extends State<NotesView> {
           },
         ),
         drawer: Drawer(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
+          child: Column(
             children: [
-              Icon(Icons.account_circle_rounded, size: 100),
-              const SizedBox(height: 10),
-              Text("  ${patient?['name']}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text("   ${patient?['email']}",
-                  style: const TextStyle(
-                    fontSize: 15,
-                  )),
-              const SizedBox(height: 30),
-              Container(
-                margin: const EdgeInsets.only(left: 12, right: 18),
-                height: 0.5,
-                color: Colors.black,
-              ),
-              const SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  // Call your function here
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ProfileView(patient?['email']),
-                  ));
-                },
-                child: const Row(
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
                   children: [
-                    SizedBox(width: 25),
-                    Icon(Icons.person_2_outlined),
-                    SizedBox(width: 20),
+                    Icon(Icons.account_circle_rounded, size: 100),
+                    const SizedBox(height: 10),
                     Text(
-                      "Profile",
-                      style: TextStyle(
+                      "  ${patient?['name']}",
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text(
+                      "   ${patient?['email']}",
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(left: 12, right: 18),
+                      height: 0.5,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {
+                        // Call your function here
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfileView(patient?['email']),
+                        ));
+                      },
+                      child: const Row(
+                        children: [
+                          SizedBox(width: 25),
+                          Icon(Icons.person_2_outlined),
+                          SizedBox(width: 20),
+                          Text(
+                            "Profile",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              )
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final shouldLogout = await showLogOutDialog(context);
+                  if (shouldLogout) {
+                    await Authservice.firebase().logOut();
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(loginroute, (_) => false);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.logout,
+                    size: 30,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
             ],
           ),
         ));
