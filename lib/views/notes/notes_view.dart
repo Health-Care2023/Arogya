@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/crud/notes_service.dart';
-import 'package:hello/views/notes/chat_view.dart';
+import 'package:hello/views/profile_view.dart';
+
 import '../../constants/routes.dart';
 import '../../enum/menu_action.dart';
-import 'package:hello/services/auth/auth_exceptions.dart';
-import 'package:hello/services/auth/auth_service.dart';
+
 import 'package:hello/db/database_helper.dart';
 
 class NotesView extends StatefulWidget {
@@ -20,6 +20,7 @@ class _NotesViewState extends State<NotesView> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   late final NotesService _notesService;
   Map<String, dynamic>? patient;
+  int currentPageIndex = 0;
 
   @override
   void initState() {
@@ -38,18 +39,19 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Arogya'),
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              final shouldLogout = await showLogOutDialog(context);
-              if (shouldLogout) {
-                await Authservice.firebase().logOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(loginroute, (_) => false);
-              }
+        appBar: AppBar(
+          leading: Builder(
+            builder: (BuildContext context) {
+              return GestureDetector(
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: const Icon(
+                    Icons.account_circle_rounded,
+                    color: Colors.white,
+                  ));
             },
+<<<<<<< HEAD
             itemBuilder: (context) {
               return const [
                 PopupMenuItem<MenuAction>(
@@ -251,6 +253,145 @@ class _NotesViewState extends State<NotesView> {
         ),
       ),
     );
+=======
+          ),
+          title: const Text('Arogya', style: TextStyle(color: Colors.white)),
+          backgroundColor: Color.fromARGB(255, 5, 14, 82),
+        ),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          selectedIndex: currentPageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.book_online),
+              label: 'Bookings',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.place),
+              label: 'Maps',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.medication),
+              label: 'Medicines',
+            ),
+          ],
+        ),
+        body: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Home', style: TextStyle(fontSize: 30)),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Bookings', style: TextStyle(fontSize: 30)),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Maps', style: TextStyle(fontSize: 30)),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: const Text('Medicines', style: TextStyle(fontSize: 30)),
+          ),
+        ][currentPageIndex],
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.smart_toy_rounded),
+          onPressed: () {
+            Navigator.of(context).pushNamed(chatroute);
+          },
+        ),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
+                  children: [
+                    Icon(Icons.account_circle_rounded, size: 100),
+                    const SizedBox(height: 10),
+                    Text(
+                      "  ${patient?['name']}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "   ${patient?['email']}",
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(left: 12, right: 18),
+                      height: 0.5,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {
+                        // Call your function here
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfileView(patient?['email']),
+                        ));
+                      },
+                      child: const Row(
+                        children: [
+                          SizedBox(width: 25),
+                          Icon(Icons.person_2_outlined),
+                          SizedBox(width: 20),
+                          Text(
+                            "Profile",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final shouldLogout = await showLogOutDialog(context);
+                  if (shouldLogout) {
+                    await Authservice.firebase().logOut();
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(loginroute, (_) => false);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.logout,
+                    size: 30,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
+>>>>>>> 945c7363f4b24fa21fe65c3af7d25d88007a0194
   }
 }
 
