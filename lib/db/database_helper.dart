@@ -23,11 +23,10 @@ class DatabaseHelper {
   final String columnAddress3 = 'address3';
   final String columnDistrict = 'District';
   final String columnPincode = 'Pincode';
-  final String columnWordno= 'WordNo';
-  final String columnPhone1= 'Phone1';
-  final String columnPhone2= 'Phone2';
-   final String columnDob= 'dateOfbirth';
-  
+  final String columnWordno = 'WordNo';
+  final String columnPhone1 = 'Phone1';
+  final String columnPhone2 = 'Phone2';
+  final String columnDob = 'dateOfbirth';
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -89,8 +88,8 @@ class DatabaseHelper {
     int updatedCount = await db.update(
       tableName,
       patient,
-      where: '$columnId = ?',
-      whereArgs: [patient[columnId]],
+      where: '$columnEmail = ?',
+      whereArgs: [patient[columnEmail]],
     );
     return updatedCount;
   }

@@ -60,7 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
     _pincode = TextEditingController();
     _dob = TextEditingController();
 
-    _firstname.text = "hello ";
+    _firstname.text = "";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
@@ -78,6 +78,23 @@ class _ProfileViewState extends State<ProfileView> {
 
     setState(() {
       _email.text = _journals!['email'];
+      _firstname.text = _journals!['name'];
+      _lastname.text = _journals!['name'];
+      _middlename.text = _journals!['name'];
+
+      _phone1.text = _journals!['Phone1'];
+      _phone2.text = _journals!['Phone2'];
+
+      _aadharNo.text = _journals!['aadhar_no'];
+      _gender.text = _journals!['gender'];
+      _profession.text = _journals!['profession'];
+      _address1.text = _journals!['address1'];
+      _address2.text = _journals!['address2'];
+      _address3.text = _journals!['address3'];
+      _wordno.text = _journals!['WordNo'];
+      _district.text = _journals!['District'];
+      _pincode.text = _journals!['Pincode'];
+      _dob.text = _journals!['dateOfbirth'];
     });
   }
 
@@ -469,9 +486,8 @@ class _ProfileViewState extends State<ProfileView> {
                     'Phone2': _phone2.text,
                     'dateOfbirth': _dob.text
                   };
-                  await databaseHelper.insertPatient(patient);
                 },
-                child: Text(_email.text))
+                child: const Text("Save"))
           ],
         ),
       ),
