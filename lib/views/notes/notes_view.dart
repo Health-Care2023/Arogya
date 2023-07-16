@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/services/crud/notes_service.dart';
@@ -173,7 +174,7 @@ class _NotesViewState extends State<NotesView> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.red,
                       width: 2.0,
                     ),
                   ),
