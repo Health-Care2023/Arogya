@@ -49,6 +49,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   speech_to_text: ^6.2.0
   intl_utils: ^2.8.3
+  image_picker: ^1.0.1
 
 dev_dependencies:
   flutter_test:

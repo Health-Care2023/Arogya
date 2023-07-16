@@ -198,8 +198,6 @@ class _RegisterViewState extends State<RegisterView> {
                         final email = _email.text;
                         final pass = _pass.text;
                         try {
-                          await Authservice.firebase()
-                              .createUser(email: email, password: pass);
                           Map<String, dynamic> patient = {
                             'name': _firstname.text +
                                 _middlename.text +
@@ -221,6 +219,8 @@ class _RegisterViewState extends State<RegisterView> {
                           int insertedId =
                               await databaseHelper.insertPatient(patient);
                           print('Inserted Patient ID: $insertedId');
+                          await Authservice.firebase()
+                              .createUser(email: email, password: pass);
                           Authservice.firebase().sendEmailVerification();
                           Navigator.of(context).pushNamed(verifyEmailRoute);
                         } on WeakPasswordException {

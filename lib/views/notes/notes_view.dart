@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello/constants/constants.dart';
+// import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
+import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
 
@@ -51,209 +52,6 @@ class _NotesViewState extends State<NotesView> {
                     color: Colors.white,
                   ));
             },
-<<<<<<< HEAD
-            itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text('logout'),
-                ),
-              ];
-            },
-          )
-        ],
-        backgroundColor: const Color.fromARGB(255, 64, 255, 70),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.smart_toy_rounded),
-        onPressed: () {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => const ChatView(),
-          //     fullscreenDialog: true,
-          //   ),
-
-          Navigator.of(context).pushNamed(chatroute);
-          // showDialog(
-          //   context: context,
-          //   builder: (context) {
-          //     return Dialog(
-          //       shape: RoundedRectangleBorder(
-          //           borderRadius: BorderRadius.circular(20)),
-          //       elevation: 16,
-          //       child: Container(
-          //           height: 700,
-          //           child: const Column(
-          //             children: [],
-          //           )),
-          //     );
-          //   },
-          // );
-        },
-      ),
-      // body: FutureBuilder(
-      //   future: _notesService.getorcreateUser(email: userEmail),
-      //   builder: (context, snapshot) {
-      //     switch (snapshot.connectionState) {
-      //       case ConnectionState.done:
-      //         return StreamBuilder(
-      //           stream: _notesService.allNotes,
-      //           builder: (context, snapshot) {
-      //             switch (snapshot.connectionState) {
-      //               case ConnectionState.waiting:
-      //               case ConnectionState.active:
-      //                 if (snapshot.hasData) {
-      //                   final allNotes = snapshot.data as List<DatabaseNote>;
-
-      //                   return ListView.builder(
-      //                     itemCount: allNotes.length,
-      //                     itemBuilder: (context, index) {
-      //                       final note = allNotes[index];
-      //                       return ListTile(
-      //                         title: Text(
-      //                           note.text,
-      //                           maxLines: 1,
-      //                           softWrap: true,
-      //                           overflow: TextOverflow.ellipsis,
-      //                         ),
-      //                       );
-      //                     },
-      //                   );
-      //                 } else {
-      //                   return CircularProgressIndicator();
-      //                 }
-      //               default:
-      //                 return CircularProgressIndicator();
-      //             }
-      //           },
-      //         );
-
-      //       default:
-      //         return CircularProgressIndicator();
-      //     }
-      //   },
-      // ),
-      // body: Container(
-      //     alignment: Alignment.bottomRight,
-      //     child: Column(
-      //       children: [],
-      //     )),
-      // drawer: Drawer(
-      //   backgroundColor: Colors.amber,
-      //   child: ListView(
-      //     padding: EdgeInsets.fromLTRB(5, 50, 0, 0),
-      //     children: [
-      //       Text('Welcome ${patient?['id']}'),
-      //       Text('Name: ${patient?['name']}'),
-      //       Text('Mail: ${patient?['email']}'),
-      //       Text('Aadhar No: ${patient?['aadhar_no']}'),
-      //       Text('Gender: ${patient?['gender']}'),
-      //        Text('Gender: ${patient?['gender']}'),
-      //         Text('Gender: ${patient?['gender']}'),
-      //          Text('Gender: ${patient?['gender']}'),
-      //           Text('Gender: ${patient?['gender']}'),
-      //            Text('Gender: ${patient?['gender']}'),
-      //             Text('Gender: ${patient?['gender']}'),
-      //              Text('Gender: ${patient?['gender']}'),
-      //               Text('Gender: ${patient?['gender']}'),
-      //     ],
-      //   ),
-      // ),
-      drawer: Drawer(
-        backgroundColor: Colors.black,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
-          children: [
-            const SizedBox(height: 120),
-            Text(" Name : ${patient?['name']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Email :  ${patient?['email']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Aadhar No :  ${patient?['aadhar_no']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Date of birth : ${patient?['dateOfbirth']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Gender : ${patient?['gender']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Profession :  ${patient?['profession']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Address 1 : ${patient?['address1']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 20),
-            Text(" Address 2 : ${patient?['address2']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 20),
-            Text(" Address 3 : ${patient?['address3']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 20),
-            Text(" District : ${patient?['District']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 20),
-            Text(" WardNo : ${patient?['WordNo']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Pincode :  ${patient?['Pincode']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Alternate Phno 1 : ${patient?['Phone1']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-            Text(" Alternate Phno 2 : ${patient?['Phone2']}",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 251, 253, 254))),
-            const SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
-=======
           ),
           title: const Text('Arogya', style: TextStyle(color: Colors.white)),
           backgroundColor: Color.fromARGB(255, 5, 14, 82),
@@ -314,8 +112,9 @@ class _NotesViewState extends State<NotesView> {
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
-                  children: [
-                    Icon(Icons.account_circle_rounded, size: 100),
+                  children: <Widget>[
+                    // Icon(Icons.account_circle_rounded, size: 100),
+                    imageProfile(),
                     const SizedBox(height: 10),
                     Text(
                       "  ${patient?['name']}",
@@ -391,8 +190,69 @@ class _NotesViewState extends State<NotesView> {
             ],
           ),
         ));
->>>>>>> 945c7363f4b24fa21fe65c3af7d25d88007a0194
   }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 70,
+            backgroundImage: AssetImage("asset/user_image.png"),
+          ),
+          Positioned(
+              bottom: 21.0,
+              right: 21.0,
+              child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: ((builder) => bottomSheet()),
+                    );
+                  },
+                  child: Icon(
+                    Icons.camera_alt,
+                    size: 25.0,
+                    color: Colors.teal,
+                  )))
+        ],
+      ),
+    );
+  }
+}
+
+Widget bottomSheet() {
+  return Container(
+      height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(children: <Widget>[
+        Text(
+          "Choose your profile picture",
+          style: TextStyle(
+            fontSize: 20.0,
+          ),
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton.icon(
+              icon: Icon(Icons.camera),
+              onPressed: () {},
+              label: Text("Camera"),
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.camera),
+              onPressed: () {},
+              label: Text("Gallery"),
+            ),
+          ],
+        )
+      ]));
 }
 
 Future<bool> showLogOutDialog(BuildContext context) {
