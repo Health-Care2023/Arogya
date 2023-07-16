@@ -174,7 +174,7 @@ class _NotesViewState extends State<NotesView> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.black,
+                      color: Colors.red,
                       width: 2.0,
                     ),
                   ),
