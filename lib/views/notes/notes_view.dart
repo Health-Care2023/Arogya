@@ -20,7 +20,8 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+  late final SQLHelper _sqlHelper;
   late final NotesService _notesService;
   late String imageString;
   Map<String, dynamic>? patient;
@@ -28,16 +29,10 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   void initState() {
+    _sqlHelper = SQLHelper();
     _notesService = NotesService();
-    final user = Authservice.firebase().currentUser;
-    final String? email = user?.email;
-    fetchPatientDetails(email!);
-    super.initState();
-  }
 
-  void fetchPatientDetails(String email) async {
-    patient = await databaseHelper.getPatientByEmail(email);
-    setState(() {});
+    super.initState();
   }
 
   @override
@@ -120,14 +115,14 @@ class _NotesViewState extends State<NotesView> {
                     imageProfile(),
                     const SizedBox(height: 10),
                     Text(
-                      "  ${patient?['name']}",
+                      userEmail,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "   ${patient?['email']}",
+                      userEmail,
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -143,7 +138,7 @@ class _NotesViewState extends State<NotesView> {
                       onTap: () {
                         // Call your function here
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfileView(patient?['email']),
+                          builder: (context) => ProfileView(),
                         ));
                       },
                       child: const Row(
