@@ -26,6 +26,7 @@ class DatabaseHelper {
   final String columnPincode = 'pincode';
   final String columnWordno = 'wordno';
   final String columnDob = 'dateofbirth';
+  final String ColumnPhoto = 'photoname';
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -59,7 +60,8 @@ class DatabaseHelper {
         $columnDistrict TEXT,
         $columnPincode TEXT,
         $columnWordno TEXT,
-        $columnDob TEXT
+        $columnDob TEXT,
+        $ColumnPhoto TEXT
       )
     ''');
   }

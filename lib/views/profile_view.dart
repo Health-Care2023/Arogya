@@ -1,8 +1,29 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+
 import 'package:hello/db/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+class Utility {
+  static Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
+  }
+
+  static Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
+
+  static String base64String(Uint8List data) {
+    return base64Encode(data);
+  }
+}
 
 class ProfileView extends StatefulWidget {
   final String email;
@@ -14,8 +35,11 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   final String email;
-   late PickedFile _imageFile;
+  late String imgString;
+  PickedFile? pickedImage;
+  late File _imageFile;
   final ImagePicker _picker = ImagePicker();
+
   DatabaseHelper databaseHelper = DatabaseHelper();
 
   late final TextEditingController _firstname;
@@ -36,6 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _wordno;
   late final TextEditingController _district;
   late final TextEditingController _pincode;
+  late final TextEditingController _photo;
 
   _ProfileViewState(this.email);
 
@@ -61,6 +86,7 @@ class _ProfileViewState extends State<ProfileView> {
     _district = TextEditingController();
     _pincode = TextEditingController();
     _dob = TextEditingController();
+   // _photo = TextEditingController();
 
     _firstname.text = "";
     _middlename.text = "";
@@ -69,6 +95,9 @@ class _ProfileViewState extends State<ProfileView> {
     _gender.text = 'Male';
     _profession.text = 'Service';
     _countrycode.text = "+91";
+    _imageFile = File("asset/user_image.png");
+   // _photo.text = Utility.base64String(_imageFile.readAsBytesSync());
+  // _photo.text = "";
     refreshJournals();
     super.initState();
   }
@@ -96,6 +125,8 @@ class _ProfileViewState extends State<ProfileView> {
       _wordno.text = _journals!['wordno'];
       // _district.text = _journals!['district'];
       _pincode.text = _journals!['pincode'];
+      _photo.text = _journals!['photoname'];
+      //_imageFile = (Utility.imageFromBase64String(_photo.text));
     });
   }
 
@@ -106,8 +137,6 @@ class _ProfileViewState extends State<ProfileView> {
   //   _pass.dispose();
   //   super.dispose();
   // }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -488,7 +517,8 @@ class _ProfileViewState extends State<ProfileView> {
                     'district': _district.text,
                     'pincode': _pincode.text,
                     'wordno': _wordno.text,
-                    'dateofbirth': _dob.text
+                    'dateofbirth': _dob.text,
+                    //'photoname': _photo.text,
                   };
                   await databaseHelper.updatePatient(patient);
                 },
@@ -505,7 +535,7 @@ class _ProfileViewState extends State<ProfileView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: _imageFile == Null ? AssetImage("asset/user_image.png") as ImageProvider :FileImage(File(_imageFile.path)),
+            backgroundImage: FileImage(File(_imageFile.path)),
           ),
           Positioned(
               bottom: 21.0,
@@ -530,7 +560,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget bottomSheet() {
     return Container(
         height: 100.0,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context as BuildContext).size.width,
         margin: EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 20,
@@ -566,11 +596,12 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void takePhoto(ImageSource source) async {
-     final pickedFile = await _picker.pickImage(
+    final pickedFile = await _picker
+        .pickImage(
       source: source,
     );
     setState(() {
-      _imageFile = pickedFile as PickedFile;
-    }); 
+      _imageFile = File(pickedFile!.path);
+    });
   }
 }

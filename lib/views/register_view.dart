@@ -216,6 +216,7 @@ class _RegisterViewState extends State<RegisterView> {
                             'pincode': '',
                             'wordno': '',
                             'dateofbirth': '',
+                           // 'photoname' : '',
                           };
                           Authservice.firebase().sendEmailVerification();
                           int insertedId =

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
@@ -20,6 +22,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   late final NotesService _notesService;
+  late String imageString;
   Map<String, dynamic>? patient;
   int currentPageIndex = 0;
 
@@ -191,7 +194,7 @@ class _NotesViewState extends State<NotesView> {
           ),
         ));
   }
-}
+
 Widget imageProfile() {
       return Center(
         child: Stack(
@@ -200,59 +203,12 @@ Widget imageProfile() {
               radius: 70,
               backgroundImage: AssetImage(AssetsManager.userImage),
             ),
-             Positioned(
-                bottom: 21.0,
-                right: 21.0,
-                child: InkWell(
-                  onTap: () {},
-                  child: Icon(
-                  Icons.camera_alt,
-                  size: 25.0,
-                  color: Colors.teal,
-                  )
-                 ), 
-                )
           ],
         ),
       )
     ;
   }
-  Widget bottomSheet(){
-    return Container(
-      height: 100.0,
-     // width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        children:<Widget>[
-          Text(
-            "Choose your profile picture",
-            style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: <Widget>[
-              TextButton.icon(
-                icon: Icon(Icons.camera),
-                label: Text("Camera"),
-                
-                onPressed: () {
-
-                },
-              )
-            ]
-          )
-        ]
-      )
-    );
-  }
+}
 Future<bool> showLogOutDialog(BuildContext context) {
   return showDialog(
     context: context,
