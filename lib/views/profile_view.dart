@@ -1,10 +1,29 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 import 'package:hello/db/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+class Utility {
+  static Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
+  }
+
+  static Uint8List dataFromBase64String(String base64String) {
+    return base64Decode(base64String);
+  }
+
+  static String base64String(Uint8List data) {
+    return base64Encode(data);
+  }
+}
 
 class ProfileView extends StatefulWidget {
   final String email;
@@ -40,6 +59,8 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _wordno;
   late final TextEditingController _district;
   late final TextEditingController _pincode;
+
+  var images;
 
   _ProfileViewState(this.email);
 
@@ -569,11 +590,32 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(
+    final pickedFile = await _picker
+        .pickImage(
       source: source,
-    );
+    )
+        .then((imgFile) async {
+      String imgString = Utility.base64String(await imgFile!.readAsBytes());
+    });
     setState(() {
       _imageFile = File(pickedFile!.path);
     });
   }
+
+  // gridView() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(5.0),
+  //     child: GridView.count(
+  //       crossAxisCount: 2,
+  //       childAspectRatio: 1.0,
+  //       mainAxisSpacing: 4.0,
+  //       crossAxisSpacing: 4.0,
+  //       children: images.map((photo) {
+  //         // print("photo name");
+  //         // print(photo.photoName);
+  //         // return Utility.imageFromBase64String(photo.photoName ?? "");
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
 }

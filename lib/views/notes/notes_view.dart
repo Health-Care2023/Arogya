@@ -4,7 +4,7 @@ import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../../constants/routes.dart';
 import '../../enum/menu_action.dart';
 
@@ -174,7 +174,7 @@ class _NotesViewState extends State<NotesView> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Colors.red,
+                      color: Colors.black,
                       width: 2.0,
                     ),
                   ),
@@ -200,81 +200,72 @@ class _NotesViewState extends State<NotesView> {
             radius: 70,
             backgroundImage: AssetImage("asset/user_image.png"),
           ),
-          Positioned(
-              bottom: 21.0,
-              right: 21.0,
-              child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: ((builder) => bottomSheet()),
-                    );
-                  },
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: 25.0,
-                    color: Colors.teal,
-                  )))
+          // Positioned(
+          //   bottom: 21.0,
+          //   right: 21.0,
+          //   child: InkWell(
+          //       onTap: () {},
+          //       child: Icon(
+          //         Icons.camera_alt,
+          //         size: 25.0,
+          //         color: Colors.teal,
+          //       )),
+          // )
         ],
       ),
     );
   }
-}
 
-Widget bottomSheet() {
-  return Container(
-      height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(children: <Widget>[
-        Text(
-          "Choose your profile picture",
-          style: TextStyle(
-            fontSize: 20.0,
-          ),
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton.icon(
-              icon: Icon(Icons.camera),
-              onPressed: () {},
-              label: Text("Camera"),
-            ),
-            TextButton.icon(
-              icon: Icon(Icons.camera),
-              onPressed: () {},
-              label: Text("Gallery"),
-            ),
+  // Widget bottomSheet() {
+  //   return Container(
+  //       height: 100.0,
+  //       // width: MediaQuery.of(context).size.width,
+  //       margin: EdgeInsets.symmetric(
+  //         horizontal: 20,
+  //         vertical: 20,
+  //       ),
+  //       child: Column(children: <Widget>[
+  //         Text(
+  //           "Choose your profile picture",
+  //           style: const TextStyle(
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 20,
+  //         ),
+  //         Row(children: <Widget>[
+  //           TextButton.icon(
+  //             icon: Icon(Icons.camera),
+  //             label: Text("Camera"),
+  //             onPressed: () {},
+  //           )
+  //         ])
+  //       ]));
+  // }
+
+  Future<bool> showLogOutDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Log out'),
+          content: const Text("Are you sure You Want to Log out"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Ok')),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('Cancel'))
           ],
-        )
-      ]));
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text('Log out'),
-        content: const Text("Are you sure You Want to Log out"),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: const Text('Ok')),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text('Cancel'))
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
+        );
+      },
+    ).then((value) => value ?? false);
+  }
 }
