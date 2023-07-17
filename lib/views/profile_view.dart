@@ -99,11 +99,12 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Your Profile"),
-          backgroundColor: Colors.purple,
+          backgroundColor: Color.fromARGB(255, 5, 14, 82),
+          foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
             child: Container(
-          color: Color.fromARGB(255, 160, 173, 252),
+          color: Colors.white,
           alignment: Alignment.center,
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20),
@@ -111,11 +112,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                Image.asset(
-                  'asset/healthcare.png',
-                  width: double.infinity,
-                  height: 200,
-                ),
+                const Icon(Icons.account_circle_rounded, size: 150),
                 const SizedBox(height: 10),
                 TextField(
                   controller: _email,
@@ -475,43 +472,49 @@ class _ProfileViewState extends State<ProfileView> {
                       fontSize: 10, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton(
-                    onPressed: () async {
-                      Map<String, dynamic> patient = {
-                        'name':
-                            _firstname.text + _middlename.text + _lastname.text,
-                        'email': _email.text,
-                        'aadhar_no': _aadharNo.text,
-                        'gender': _gender.text,
-                        'phone1': _phone1.text,
-                        'phone2': _phone2.text,
-                        'profession': _profession.text,
-                        'address1': _address1.text,
-                        'address2': _address2.text,
-                        'address3': _address3.text,
-                        'district': _district.text,
-                        'pincode': _pincode.text,
-                        'wordno': _wordno.text,
-                        'dateofbirth': _dob.text
-                      };
-                      await _sqlhelper.updateItem(
-                        name:
-                            _firstname.text + _middlename.text + _lastname.text,
-                        email: _email.text,
-                        aadhar_no: _aadharNo.text,
-                        gender: _gender.text,
-                        phone1: _phone1.text,
-                        phone2: _phone2.text,
-                        profession: _profession.text,
-                        address1: _address1.text,
-                        district: _district.text,
-                        dateofbirth: _dob.text,
-                        address2: _address2.text,
-                        pincode: _pincode.text,
-                        wardNo: _wordno.text,
-                      );
-                    },
-                    child: Text("hello"))
+                FloatingActionButton.extended(
+                  extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                  label: const Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                  backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                  icon: new Icon(Icons.update),
+                  onPressed: () async {
+                    Map<String, dynamic> patient = {
+                      'name':
+                          _firstname.text + _middlename.text + _lastname.text,
+                      'email': _email.text,
+                      'aadhar_no': _aadharNo.text,
+                      'gender': _gender.text,
+                      'phone1': _phone1.text,
+                      'phone2': _phone2.text,
+                      'profession': _profession.text,
+                      'address1': _address1.text,
+                      'address2': _address2.text,
+                      'address3': _address3.text,
+                      'district': _district.text,
+                      'pincode': _pincode.text,
+                      'wordno': _wordno.text,
+                      'dateofbirth': _dob.text
+                    };
+                    await _sqlhelper.updateItem(
+                      name: _firstname.text + _middlename.text + _lastname.text,
+                      email: _email.text,
+                      aadhar_no: _aadharNo.text,
+                      gender: _gender.text,
+                      phone1: _phone1.text,
+                      phone2: _phone2.text,
+                      profession: _profession.text,
+                      address1: _address1.text,
+                      district: _district.text,
+                      dateofbirth: _dob.text,
+                      address2: _address2.text,
+                      pincode: _pincode.text,
+                      wardNo: _wordno.text,
+                    );
+                  },
+                ),
               ],
             ),
           ),
