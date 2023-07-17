@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 // import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
@@ -6,7 +8,7 @@ import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../constants/routes.dart';
-import '../../enum/menu_action.dart';
+//import '../../enum/menu_action.dart';
 
 import 'package:hello/db/database_helper.dart';
 
@@ -18,23 +20,19 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+  late final SQLHelper _sqlHelper;
   late final NotesService _notesService;
+  late String imageString;
   Map<String, dynamic>? patient;
   int currentPageIndex = 0;
 
   @override
   void initState() {
+    _sqlHelper = SQLHelper();
     _notesService = NotesService();
-    final user = Authservice.firebase().currentUser;
-    final String? email = user?.email;
-    fetchPatientDetails(email!);
-    super.initState();
-  }
 
-  void fetchPatientDetails(String email) async {
-    patient = await databaseHelper.getPatientByEmail(email);
-    setState(() {});
+    super.initState();
   }
 
   @override
@@ -113,18 +111,18 @@ class _NotesViewState extends State<NotesView> {
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
                   children: <Widget>[
-                    // Icon(Icons.account_circle_rounded, size: 100),
+                    //  Icon(Icons.account_circle_rounded, size: 100),
                     imageProfile(),
                     const SizedBox(height: 10),
                     Text(
-                      "  ${patient?['name']}",
+                      userEmail,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "   ${patient?['email']}",
+                      userEmail,
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -140,7 +138,7 @@ class _NotesViewState extends State<NotesView> {
                       onTap: () {
                         // Call your function here
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfileView(patient?['email']),
+                          builder: (context) => ProfileView(),
                         ));
                       },
                       child: const Row(
@@ -198,23 +196,36 @@ class _NotesViewState extends State<NotesView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: AssetImage("asset/user_image.png"),
+            backgroundImage: AssetImage(AssetsManager.userImage),
           ),
-          // Positioned(
-          //   bottom: 21.0,
-          //   right: 21.0,
-          //   child: InkWell(
-          //       onTap: () {},
-          //       child: Icon(
-          //         Icons.camera_alt,
-          //         size: 25.0,
-          //         color: Colors.teal,
-          //       )),
-          // )
         ],
       ),
     );
   }
+}
+
+Future<bool> showLogOutDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Log out'),
+          content: const Text("Are you sure You Want to Log out"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Ok')),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('Cancel'))
+          ],
+        );
+      }).then((value) => value ?? false);
+}
 
   // Widget bottomSheet() {
   //   return Container(
@@ -245,27 +256,4 @@ class _NotesViewState extends State<NotesView> {
   //       ]));
   // }
 
-  Future<bool> showLogOutDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Log out'),
-          content: const Text("Are you sure You Want to Log out"),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: const Text('Ok')),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: const Text('Cancel'))
-          ],
-        );
-      },
-    ).then((value) => value ?? false);
-  }
-}
+

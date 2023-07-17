@@ -13,7 +13,7 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  late final SQLHelper _sqlHelper;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -38,6 +38,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   void initState() {
     // TODO: implement initState
+    _sqlHelper = SQLHelper();
     _firstname = TextEditingController();
     _lastname = TextEditingController();
     _middlename = TextEditingController();
@@ -99,11 +100,10 @@ class _RegisterViewState extends State<RegisterView> {
                 autocorrect: false,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
-                  hintText: 'First Name',
-                  border: InputBorder.none,
+                  labelText: 'First Name',
                   filled: true,
                   fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Colors.black),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -201,27 +201,24 @@ class _RegisterViewState extends State<RegisterView> {
                           await Authservice.firebase()
                               .createUser(email: email, password: pass);
 
-                          Map<String, dynamic> patient = {
-                            'name':
-                                '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                            'email': _email.text,
-                            'aadhar_no': '',
-                            'gender': '',
-                            'phone1': '',
-                            'phone2': '',
-                            'profession': '',
-                            'address1': '',
-                            'address2': '',
-                            'address3': '',
-                            'district': '',
-                            'pincode': '',
-                            'wordno': '',
-                            'dateofbirth': '',
-                          };
                           Authservice.firebase().sendEmailVerification();
-                          int insertedId =
-                              await databaseHelper.insertPatient(patient);
-                          print('Inserted Patient ID: $insertedId');
+
+                          await _sqlHelper.createUser(
+                              name:
+                                  '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                              email: _email.text,
+                              aadhar_no: '',
+                              gender: '',
+                              phone1: '',
+                              phone2: '',
+                              profession: '',
+                              address1: '',
+                              district: '',
+                              dateofbirth: '',
+                              address2: '',
+                              pincode: '',
+                              wardNo: '');
+
                           Navigator.of(context).pushNamed(verifyEmailRoute);
                         } on WeakPasswordException {
                           await showErrorDialog(context, 'Weak password');

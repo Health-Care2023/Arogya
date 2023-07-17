@@ -8,6 +8,8 @@ import 'package:hello/db/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../services/auth/auth_service.dart';
+
 class Utility {
   static Image imageFromBase64String(String base64String) {
     return Image.memory(
@@ -26,20 +28,19 @@ class Utility {
 }
 
 class ProfileView extends StatefulWidget {
-  final String email;
-  const ProfileView(this.email);
+  const ProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState(email);
+  State<ProfileView> createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String email;
+  // final String email;
+  late String imgString;
   PickedFile? pickedImage;
   late File _imageFile;
   final ImagePicker _picker = ImagePicker();
-
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  late final SQLHelper _sqlhelper;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -59,15 +60,13 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _wordno;
   late final TextEditingController _district;
   late final TextEditingController _pincode;
-
-  var images;
-
-  _ProfileViewState(this.email);
+  late final TextEditingController _photo;
 
   //TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
+    _sqlhelper = SQLHelper();
     _firstname = TextEditingController();
     _lastname = TextEditingController();
     _middlename = TextEditingController();
@@ -86,8 +85,9 @@ class _ProfileViewState extends State<ProfileView> {
     _district = TextEditingController();
     _pincode = TextEditingController();
     _dob = TextEditingController();
+    // _photo = TextEditingController();
 
-    _firstname.text = "";
+    _firstname.text = " ";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
@@ -95,432 +95,417 @@ class _ProfileViewState extends State<ProfileView> {
     _profession.text = 'Service';
     _countrycode.text = "+91";
     _imageFile = File("asset/user_image.png");
+    // _photo.text = Utility.base64String(_imageFile.readAsBytesSync());
+    // _photo.text = "";
     refreshJournals();
     super.initState();
   }
 
-  Map<String, dynamic>? _journals;
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+
   void refreshJournals() async {
-    _journals = await databaseHelper.getPatientByEmail(email);
-    if (_journals != null) {}
+    DatabaseUser db = await _sqlhelper.getUser(email: userEmail);
 
     setState(() {
-      _email.text = _journals!['email'];
-      List<String> name = _journals!['name'].split(" ");
-      _firstname.text = name[0];
-      _middlename.text = name[1];
-      _lastname.text = name[2];
-      _dob.text = _journals!['dateofbirth'];
+      _email.text = db.email;
+
+      _firstname.text = db.name;
+
+      _dob.text = db.dateofbirth;
       // _gender.text = _journals!['gender'];
       // _profession.text = _journals!['profession'];
-      _phone1.text = _journals!['phone1'];
-      _phone2.text = _journals!['phone2'];
-      _aadharNo.text = _journals!['aadhar_no'];
-      _address1.text = _journals!['address1'];
-      _address2.text = _journals!['address2'];
-      _address3.text = _journals!['address3'];
-      _wordno.text = _journals!['wordno'];
+      _phone1.text = db.phone1;
+      _phone2.text = db.phone2;
+      _aadharNo.text = db.aadhar_no;
+      _address1.text = db.address1;
+      _address2.text = db.address2;
+
+      _wordno.text = db.wardNo;
       // _district.text = _journals!['district'];
-      _pincode.text = _journals!['pincode'];
+      _pincode.text = db.pincode;
     });
   }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   _email.dispose();
-  //   _pass.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Your Profile"),
+          backgroundColor: Colors.white,
+        ),
         body: SingleChildScrollView(
             child: Container(
-      color: Color.fromARGB(255, 160, 173, 252),
-      alignment: Alignment.center,
-      child: Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            // Image.asset(
-            //   'asset/healthcare.png',
-            //   width: double.infinity,
-            //   height: 200,
-            // ),
-            imageProfile(),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _pass,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: InputDecoration(
-                hintText: 'Enter password',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _firstname,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'First Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _middlename,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Middle Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _lastname,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Last Name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _phone1,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Alternate Phone No 1',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _phone2,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Enter Alternate Phone No 2',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-                controller: _dob, //editing controller of this TextField
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                  //icon: Icon(Icons.calendar_today),
-                  prefixIcon: Icon(Icons.calendar_today),
-                  iconColor: Colors.blue, //icon of text field
-                  hintText: "Enter Date Of Birth", //label text of field
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          alignment: Alignment.center,
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                imageProfile(),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Enter your email',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-                readOnly: true, // when true user cannot edit text
-                onTap: () async {
-                  //when click we have to show the datepicker
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1923),
-                    lastDate: DateTime(2123),
-                  );
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat("dd-MM-yyyy").format(pickedDate);
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _pass,
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    labelText: 'Enter password',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _firstname,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'First Name',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _middlename,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Middle Name',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _lastname,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Last Name',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _phone1,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Alternate Phone No 1',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _phone2,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Enter Alternate Phone No 2',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                    controller: _dob, //editing controller of this TextField
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.calendar_today),
+                      iconColor: Colors.blue, //icon of text field
+                      labelText: "Enter Date Of Birth", //label text of field
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    readOnly: true, // when true user cannot edit text
+                    onTap: () async {
+                      //when click we have to show the datepicker
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1923),
+                        lastDate: DateTime(2123),
+                      );
+                      if (pickedDate != null) {
+                        String formattedDate =
+                            DateFormat("dd-MM-yyyy").format(pickedDate);
+                        setState(() {
+                          _dob.text = formattedDate.toString();
+                        });
+                      } else {
+                        print("Not Selected");
+                      }
+                    }),
+                const SizedBox(height: 10),
+                DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      //<-- SEE HERE
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      //<-- SEE HERE
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  dropdownColor: Colors.white,
+                  value: _gender.text,
+                  onChanged: (String? newValue) {
                     setState(() {
-                      _dob.text = formattedDate.toString();
+                      _gender.text = newValue!;
                     });
-                  } else {
-                    print("Not Selected");
-                  }
-                }),
-            const SizedBox(height: 10),
-            DropdownButtonFormField(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  //<-- SEE HERE
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(10),
+                  },
+                  items: <String>['Male', 'Female', 'Others']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                    );
+                  }).toList(),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  //<-- SEE HERE
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              dropdownColor: Colors.white,
-              value: _gender.text,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _gender.text = newValue!;
-                });
-              },
-              items: <String>['Male', 'Female', 'Others']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _aadharNo,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Adhaar Card Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _aadharNo,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Adhaar Card Number',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  //<-- SEE HERE
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  //<-- SEE HERE
-                  borderSide: BorderSide(color: Colors.black, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              dropdownColor: Colors.white,
-              value: _profession.text,
-              onChanged: (String? newValue) {
-                setState(() {
-                  _profession.text = newValue!;
-                });
-              },
-              items: <String>[
-                'Service',
-                'Business',
-                'Agriculture',
-                'Homemaker',
-                'Student',
-                'Others'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                const SizedBox(height: 10),
+                DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      //<-- SEE HERE
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      //<-- SEE HERE
+                      borderSide: BorderSide(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _address1,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Addressline-1',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                  dropdownColor: Colors.white,
+                  value: _profession.text,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _profession.text = newValue!;
+                    });
+                  },
+                  items: <String>[
+                    'Service',
+                    'Business',
+                    'Agriculture',
+                    'Homemaker',
+                    'Student',
+                    'Others'
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                    );
+                  }).toList(),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _address2,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'addressline-2,post office,landmark',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _address1,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Addressline-1',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _address3,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'City/town/village name',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _address2,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'addressline-2,post office,landmark',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _wordno,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'Word No/Block No',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _address3,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'City/town/village name',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _district,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: 'District',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _wordno,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Word No/Block No',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
                 ),
-              ),
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _district,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'District',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  style: const TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                  extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                  label: const Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                  backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                  onPressed: () async {
+                    Map<String, dynamic> patient = {
+                      'name':
+                          _firstname.text + _middlename.text + _lastname.text,
+                      'email': _email.text,
+                      'aadhar_no': _aadharNo.text,
+                      'gender': _gender.text,
+                      'phone1': _phone1.text,
+                      'phone2': _phone2.text,
+                      'profession': _profession.text,
+                      'address1': _address1.text,
+                      'address2': _address2.text,
+                      'address3': _address3.text,
+                      'district': _district.text,
+                      'pincode': _pincode.text,
+                      'wordno': _wordno.text,
+                      'dateofbirth': _dob.text,
+                    };
+                    await _sqlhelper.updateItem(
+                      name: _firstname.text + _middlename.text + _lastname.text,
+                      email: _email.text,
+                      aadhar_no: _aadharNo.text,
+                      gender: _gender.text,
+                      phone1: _phone1.text,
+                      phone2: _phone2.text,
+                      profession: _profession.text,
+                      address1: _address1.text,
+                      district: _district.text,
+                      dateofbirth: _dob.text,
+                      address2: _address2.text,
+                      pincode: _pincode.text,
+                      wardNo: _wordno.text,
+                    );
+                  },
+                )
+              ],
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-                onPressed: () async {
-                  Map<String, dynamic> patient = {
-                    'name': _firstname.text + _middlename.text + _lastname.text,
-                    'email': _email.text,
-                    'aadhar_no': _aadharNo.text,
-                    'gender': _gender.text,
-                    'phone1': _phone1.text,
-                    'phone2': _phone2.text,
-                    'profession': _profession.text,
-                    'address1': _address1.text,
-                    'address2': _address2.text,
-                    'address3': _address3.text,
-                    'district': _district.text,
-                    'pincode': _pincode.text,
-                    'wordno': _wordno.text,
-                    'dateofbirth': _dob.text
-                  };
-                  await databaseHelper.updatePatient(patient);
-                },
-                child: Text("Update"))
-          ],
-        ),
-      ),
-    )));
+          ),
+        )));
   }
 
   Widget imageProfile() {
@@ -590,13 +575,9 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker
-        .pickImage(
+    final pickedFile = await _picker.pickImage(
       source: source,
-    )
-        .then((imgFile) async {
-      String imgString = Utility.base64String(await imgFile!.readAsBytes());
-    });
+    );
     setState(() {
       _imageFile = File(pickedFile!.path);
     });
