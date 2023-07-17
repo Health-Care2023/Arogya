@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:hello/db/database_helper.dart';
 import 'package:intl/intl.dart';
 
+import '../services/auth/auth_service.dart';
+
 class ProfileView extends StatefulWidget {
-  final String email;
-  const ProfileView(this.email);
+  const ProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState(email);
+  State<ProfileView> createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String email;
-
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  late final SQLHelper _sqlhelper;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -35,12 +34,11 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _district;
   late final TextEditingController _pincode;
 
-  _ProfileViewState(this.email);
-
   //TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
+    _sqlhelper = SQLHelper();
     _firstname = TextEditingController();
     _lastname = TextEditingController();
     _middlename = TextEditingController();
@@ -60,7 +58,7 @@ class _ProfileViewState extends State<ProfileView> {
     _pincode = TextEditingController();
     _dob = TextEditingController();
 
-    _firstname.text = "";
+    _firstname.text = " ";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
@@ -71,40 +69,30 @@ class _ProfileViewState extends State<ProfileView> {
     super.initState();
   }
 
-  Map<String, dynamic>? _journals;
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+
   void refreshJournals() async {
-    _journals = await databaseHelper.getPatientByEmail(email);
-    if (_journals != null) {}
+    DatabaseUser db = await _sqlhelper.getUser(email: userEmail);
 
     setState(() {
-      _email.text = _journals!['email'];
-      _firstname.text = _journals!['name'];
-      _lastname.text = _journals!['name'];
-      _middlename.text = _journals!['name'];
+      _email.text = db.email;
 
-      _phone1.text = _journals!['Phone1'];
-      _phone2.text = _journals!['Phone2'];
+      _firstname.text = db.name;
 
-      _aadharNo.text = _journals!['aadhar_no'];
-      _gender.text = _journals!['gender'];
-      _profession.text = _journals!['profession'];
-      _address1.text = _journals!['address1'];
-      _address2.text = _journals!['address2'];
-      _address3.text = _journals!['address3'];
-      _wordno.text = _journals!['WordNo'];
-      _district.text = _journals!['District'];
-      _pincode.text = _journals!['Pincode'];
-      _dob.text = _journals!['dateOfbirth'];
+      _dob.text = db.dateofbirth;
+      // _gender.text = _journals!['gender'];
+      // _profession.text = _journals!['profession'];
+      _phone1.text = db.phone1;
+      _phone2.text = db.phone2;
+      _aadharNo.text = db.aadhar_no;
+      _address1.text = db.address1;
+      _address2.text = db.address2;
+
+      _wordno.text = db.wardNo;
+      // _district.text = _journals!['district'];
+      _pincode.text = db.pincode;
     });
   }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   _email.dispose();
-  //   _pass.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -495,19 +483,35 @@ class _ProfileViewState extends State<ProfileView> {
                         'email': _email.text,
                         'aadhar_no': _aadharNo.text,
                         'gender': _gender.text,
+                        'phone1': _phone1.text,
+                        'phone2': _phone2.text,
                         'profession': _profession.text,
                         'address1': _address1.text,
                         'address2': _address2.text,
                         'address3': _address3.text,
-                        'District': _district.text,
-                        'Pincode': _pincode.text,
-                        'WordNo': _wordno.text,
-                        'Phone1': _phone1.text,
-                        'Phone2': _phone2.text,
-                        'dateOfbirth': _dob.text
+                        'district': _district.text,
+                        'pincode': _pincode.text,
+                        'wordno': _wordno.text,
+                        'dateofbirth': _dob.text
                       };
+                      await _sqlhelper.updateItem(
+                        name:
+                            _firstname.text + _middlename.text + _lastname.text,
+                        email: _email.text,
+                        aadhar_no: _aadharNo.text,
+                        gender: _gender.text,
+                        phone1: _phone1.text,
+                        phone2: _phone2.text,
+                        profession: _profession.text,
+                        address1: _address1.text,
+                        district: _district.text,
+                        dateofbirth: _dob.text,
+                        address2: _address2.text,
+                        pincode: _pincode.text,
+                        wardNo: _wordno.text,
+                      );
                     },
-                    child: const Text("Save"))
+                    child: Text("hello"))
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
@@ -16,23 +17,18 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+  late final SQLHelper _sqlHelper;
   late final NotesService _notesService;
   Map<String, dynamic>? patient;
   int currentPageIndex = 0;
 
   @override
   void initState() {
+    _sqlHelper = SQLHelper();
     _notesService = NotesService();
-    final user = Authservice.firebase().currentUser;
-    final String? email = user?.email;
-    fetchPatientDetails(email!);
-    super.initState();
-  }
 
-  void fetchPatientDetails(String email) async {
-    patient = await databaseHelper.getPatientByEmail(email);
-    setState(() {});
+    super.initState();
   }
 
   @override
@@ -52,27 +48,6 @@ class _NotesViewState extends State<NotesView> {
             },
           ),
           title: const Text('Arogya', style: TextStyle(color: Colors.white)),
-          actions: [
-            PopupMenuButton<MenuAction>(
-              color: Colors.white,
-              onSelected: (value) async {
-                final shouldLogout = await showLogOutDialog(context);
-                if (shouldLogout) {
-                  await Authservice.firebase().logOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(loginroute, (_) => false);
-                }
-              },
-              itemBuilder: (context) {
-                return const [
-                  PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Text('logout'),
-                  ),
-                ];
-              },
-            )
-          ],
           backgroundColor: Color.fromARGB(255, 5, 14, 82),
         ),
         bottomNavigationBar: NavigationBar(
@@ -126,49 +101,85 @@ class _NotesViewState extends State<NotesView> {
           },
         ),
         drawer: Drawer(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
+          child: Column(
             children: [
-              Icon(Icons.account_circle_rounded, size: 100),
-              const SizedBox(height: 10),
-              Text("  ${patient?['name']}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text("   ${patient?['email']}",
-                  style: const TextStyle(
-                    fontSize: 15,
-                  )),
-              const SizedBox(height: 30),
-              Container(
-                margin: const EdgeInsets.only(left: 12, right: 18),
-                height: 0.5,
-                color: Colors.black,
-              ),
-              const SizedBox(height: 30),
-              GestureDetector(
-                onTap: () {
-                  // Call your function here
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ProfileView(patient?['email']),
-                  ));
-                },
-                child: const Row(
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
                   children: [
-                    SizedBox(width: 25),
-                    Icon(Icons.person_2_outlined),
-                    SizedBox(width: 20),
+                    Icon(Icons.account_circle_rounded, size: 100),
+                    const SizedBox(height: 10),
                     Text(
-                      "Profile",
-                      style: TextStyle(
+                      userEmail,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Text(
+                      userEmail,
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(left: 12, right: 18),
+                      height: 0.5,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(height: 30),
+                    GestureDetector(
+                      onTap: () {
+                        // Call your function here
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfileView(),
+                        ));
+                      },
+                      child: const Row(
+                        children: [
+                          SizedBox(width: 25),
+                          Icon(Icons.person_2_outlined),
+                          SizedBox(width: 20),
+                          Text(
+                            "Profile",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              )
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final shouldLogout = await showLogOutDialog(context);
+                  if (shouldLogout) {
+                    await Authservice.firebase().logOut();
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(loginroute, (_) => false);
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.red,
+                      width: 2.0,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(20),
+                  child: Icon(
+                    Icons.logout,
+                    size: 30,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
             ],
           ),
         ));

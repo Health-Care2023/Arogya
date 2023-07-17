@@ -13,56 +13,57 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  DatabaseHelper databaseHelper = DatabaseHelper();
+  late final SQLHelper _sqlHelper;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
   late final TextEditingController _middlename;
-  late final TextEditingController _countrycode;
-  late final TextEditingController _phone1;
-  late final TextEditingController _phone2;
-  late final TextEditingController _profession;
+  // late final TextEditingController _countrycode;
+  // late final TextEditingController _phone1;
+  // late final TextEditingController _phone2;
+  // late final TextEditingController _profession;
   late final TextEditingController _email;
-  late final TextEditingController _aadharNo;
-  late final TextEditingController _gender;
+  // late final TextEditingController _aadharNo;
+  // late final TextEditingController _gender;
   late final TextEditingController _pass;
-  late final TextEditingController _dob;
-  late final TextEditingController _address1;
-  late final TextEditingController _address2;
-  late final TextEditingController _address3;
-  late final TextEditingController _wordno;
-  late final TextEditingController _district;
-  late final TextEditingController _pincode;
+  // late final TextEditingController _dob;
+  // late final TextEditingController _address1;
+  // late final TextEditingController _address2;
+  // late final TextEditingController _address3;
+  // late final TextEditingController _wordno;
+  // late final TextEditingController _district;
+  // late final TextEditingController _pincode;
 
   //TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
+    _sqlHelper = SQLHelper();
     _firstname = TextEditingController();
     _lastname = TextEditingController();
     _middlename = TextEditingController();
-    _countrycode = TextEditingController();
-    _phone1 = TextEditingController();
-    _phone2 = TextEditingController();
+    // _countrycode = TextEditingController();
+    // _phone1 = TextEditingController();
+    // _phone2 = TextEditingController();
     _email = TextEditingController();
     _pass = TextEditingController();
-    _aadharNo = TextEditingController();
-    _gender = TextEditingController();
-    _profession = TextEditingController();
-    _address1 = TextEditingController();
-    _address2 = TextEditingController();
-    _address3 = TextEditingController();
-    _wordno = TextEditingController();
-    _district = TextEditingController();
-    _pincode = TextEditingController();
-    _dob = TextEditingController();
-    _firstname.text = "";
-    _middlename.text = "";
-    _lastname.text = "";
-    _dob.text = "";
-    _gender.text = 'Male';
-    _profession.text = 'Service';
-    _countrycode.text = "+91";
+    // _aadharNo = TextEditingController();
+    // _gender = TextEditingController();
+    // _profession = TextEditingController();
+    // _address1 = TextEditingController();
+    // _address2 = TextEditingController();
+    // _address3 = TextEditingController();
+    // _wordno = TextEditingController();
+    // _district = TextEditingController();
+    // _pincode = TextEditingController();
+    // _dob = TextEditingController();
+    // _firstname.text = "";
+    // _middlename.text = "";
+    // _lastname.text = "";
+    // _dob.text = "";
+    // _gender.text = 'Male';
+    // _profession.text = 'Service';
+    // _countrycode.text = "+91";
     super.initState();
   }
 
@@ -200,28 +201,25 @@ class _RegisterViewState extends State<RegisterView> {
                         try {
                           await Authservice.firebase()
                               .createUser(email: email, password: pass);
-                          Map<String, dynamic> patient = {
-                            'name': _firstname.text +
-                                _middlename.text +
-                                _lastname.text,
-                            'email': _email.text,
-                            'aadhar_no': _aadharNo.text,
-                            'gender': _gender.text,
-                            'profession': _profession.text,
-                            'address1': _address1.text,
-                            'address2': _address2.text,
-                            'address3': _address3.text,
-                            'District': _district.text,
-                            'Pincode': _pincode.text,
-                            'WordNo': _wordno.text,
-                            'Phone1': _phone1.text,
-                            'Phone2': _phone2.text,
-                            'dateOfbirth': _dob.text
-                          };
-                          int insertedId =
-                              await databaseHelper.insertPatient(patient);
-                          print('Inserted Patient ID: $insertedId');
+
                           Authservice.firebase().sendEmailVerification();
+
+                          await _sqlHelper.createUser(
+                              name:
+                                  '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                              email: _email.text,
+                              aadhar_no: '',
+                              gender: '',
+                              phone1: '',
+                              phone2: '',
+                              profession: '',
+                              address1: '',
+                              district: '',
+                              dateofbirth: '',
+                              address2: '',
+                              pincode: '',
+                              wardNo: '');
+
                           Navigator.of(context).pushNamed(verifyEmailRoute);
                         } on WeakPasswordException {
                           await showErrorDialog(context, 'Weak password');
@@ -260,23 +258,6 @@ class _RegisterViewState extends State<RegisterView> {
                             borderRadius: BorderRadius.circular(15.0)),
                         minimumSize: Size(180, 50),
                       ))),
-              SizedBox(height: 8),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          loginroute, (route) => false);
-                    },
-                    child: const Text('Already Registered?Login',
-                        style: TextStyle(fontSize: 15)),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
-                      onPrimary: Colors.white70,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)),
-                      minimumSize: Size(180, 50),
-                    ))
-              ])
             ],
           ),
         ),
