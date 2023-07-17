@@ -64,6 +64,7 @@ class _RegisterViewState extends State<RegisterView> {
                       fontWeight: FontWeight.w700,
                       color: Colors.black)),
               const SizedBox(height: 10),
+
               SizedBox(
                 child: TextField(
                   controller: _firstname,
