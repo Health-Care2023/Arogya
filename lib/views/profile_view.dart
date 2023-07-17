@@ -130,7 +130,10 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Your Profile"),
-          backgroundColor: Colors.white,
+
+          backgroundColor: Color.fromARGB(255, 5, 14, 82),
+          foregroundColor: Colors.white,
+
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -142,7 +145,9 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
+
                 imageProfile(),
+
                 const SizedBox(height: 10),
                 TextField(
                   controller: _email,
@@ -460,48 +465,49 @@ class _ProfileViewState extends State<ProfileView> {
                 ),
                 const SizedBox(height: 10),
                 FloatingActionButton.extended(
-                extendedPadding: EdgeInsets.only(left: 150, right: 150),
-                label: const Text(
-                  'Update',
-                  style: TextStyle(color: Colors.white),
-                ), // <-- Text
-                backgroundColor: Color.fromARGB(255, 48, 143, 221),
-                    onPressed: () async {
-                      Map<String, dynamic> patient = {
-                        'name':
-                            _firstname.text + _middlename.text + _lastname.text,
-                        'email': _email.text,
-                        'aadhar_no': _aadharNo.text,
-                        'gender': _gender.text,
-                        'phone1': _phone1.text,
-                        'phone2': _phone2.text,
-                        'profession': _profession.text,
-                        'address1': _address1.text,
-                        'address2': _address2.text,
-                        'address3': _address3.text,
-                        'district': _district.text,
-                        'pincode': _pincode.text,
-                        'wordno': _wordno.text,
-                        'dateofbirth': _dob.text,
-                      };
-                      await _sqlhelper.updateItem(
-                        name:
-                            _firstname.text + _middlename.text + _lastname.text,
-                        email: _email.text,
-                        aadhar_no: _aadharNo.text,
-                        gender: _gender.text,
-                        phone1: _phone1.text,
-                        phone2: _phone2.text,
-                        profession: _profession.text,
-                        address1: _address1.text,
-                        district: _district.text,
-                        dateofbirth: _dob.text,
-                        address2: _address2.text,
-                        pincode: _pincode.text,
-                        wardNo: _wordno.text,
-                      );
-                    },
-                )
+
+                  extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                  label: const Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                  backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                  icon: new Icon(Icons.update),
+                  onPressed: () async {
+                    Map<String, dynamic> patient = {
+                      'name':
+                          _firstname.text + _middlename.text + _lastname.text,
+                      'email': _email.text,
+                      'aadhar_no': _aadharNo.text,
+                      'gender': _gender.text,
+                      'phone1': _phone1.text,
+                      'phone2': _phone2.text,
+                      'profession': _profession.text,
+                      'address1': _address1.text,
+                      'address2': _address2.text,
+                      'address3': _address3.text,
+                      'district': _district.text,
+                      'pincode': _pincode.text,
+                      'wordno': _wordno.text,
+                      'dateofbirth': _dob.text
+                    };
+                    await _sqlhelper.updateItem(
+                      name: _firstname.text + _middlename.text + _lastname.text,
+                      email: _email.text,
+                      aadhar_no: _aadharNo.text,
+                      gender: _gender.text,
+                      phone1: _phone1.text,
+                      phone2: _phone2.text,
+                      profession: _profession.text,
+                      address1: _address1.text,
+                      district: _district.text,
+                      dateofbirth: _dob.text,
+                      address2: _address2.text,
+                      pincode: _pincode.text,
+                      wardNo: _wordno.text,
+                    );
+                  },
+                ),
               ],
             ),
           ),
