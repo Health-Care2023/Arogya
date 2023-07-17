@@ -34,7 +34,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String email;
+ // final String email;
   late String imgString;
   PickedFile? pickedImage;
   late File _imageFile;
@@ -130,11 +130,11 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Your Profile"),
-          backgroundColor: Colors.purple,
+          backgroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
             child: Container(
-          color: Color.fromARGB(255, 160, 173, 252),
+          color: Colors.white,
           alignment: Alignment.center,
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20),
@@ -142,11 +142,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                Image.asset(
-                  'asset/healthcare.png',
-                  width: double.infinity,
-                  height: 200,
-                ),
+                imageProfile(),
                 const SizedBox(height: 10),
                 TextField(
                   controller: _email,
@@ -154,11 +150,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Enter your email',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Enter your email',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -173,11 +166,8 @@ class _ProfileViewState extends State<ProfileView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    hintText: 'Enter password',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Enter password',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -192,11 +182,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'First Name',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'First Name',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -211,11 +198,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Middle Name',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Middle Name',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -230,11 +214,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Last Name',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Last Name',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -249,11 +230,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Alternate Phone No 1',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Alternate Phone No 1',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -268,11 +246,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Enter Alternate Phone No 2',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Enter Alternate Phone No 2',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -284,14 +259,10 @@ class _ProfileViewState extends State<ProfileView> {
                 TextField(
                     controller: _dob, //editing controller of this TextField
                     decoration: InputDecoration(
-                      border: InputBorder.none,
-                      filled: true,
-                      fillColor: Colors.white,
-                      //icon: Icon(Icons.calendar_today),
                       prefixIcon: Icon(Icons.calendar_today),
                       iconColor: Colors.blue, //icon of text field
-                      hintText: "Enter Date Of Birth", //label text of field
-                      enabledBorder: OutlineInputBorder(
+                      labelText: "Enter Date Of Birth", //label text of field
+                      border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -357,11 +328,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Adhaar Card Number',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Adhaar Card Number',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -372,7 +340,7 @@ class _ProfileViewState extends State<ProfileView> {
                 const SizedBox(height: 10),
                 DropdownButtonFormField(
                   decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
+                    border: OutlineInputBorder(
                       //<-- SEE HERE
                       borderSide: BorderSide(color: Colors.black, width: 1),
                       borderRadius: BorderRadius.circular(10),
@@ -417,11 +385,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Addressline-1',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Addressline-1',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -436,11 +401,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'addressline-2,post office,landmark',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'addressline-2,post office,landmark',
+                   border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -455,11 +417,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'City/town/village name',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'City/town/village name',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -474,11 +433,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'Word No/Block No',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'Word No/Block No',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -493,11 +449,8 @@ class _ProfileViewState extends State<ProfileView> {
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    hintText: 'District',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
+                    labelText: 'District',
+                    border: OutlineInputBorder(
                       borderSide: BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -506,7 +459,13 @@ class _ProfileViewState extends State<ProfileView> {
                       fontSize: 10, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton(
+                FloatingActionButton.extended(
+                extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                label: const Text(
+                  'Update',
+                  style: TextStyle(color: Colors.white),
+                ), // <-- Text
+                backgroundColor: Color.fromARGB(255, 48, 143, 221),
                     onPressed: () async {
                       Map<String, dynamic> patient = {
                         'name':
@@ -523,7 +482,7 @@ class _ProfileViewState extends State<ProfileView> {
                         'district': _district.text,
                         'pincode': _pincode.text,
                         'wordno': _wordno.text,
-                        'dateofbirth': _dob.text
+                        'dateofbirth': _dob.text,
                       };
                       await _sqlhelper.updateItem(
                         name:
@@ -542,7 +501,7 @@ class _ProfileViewState extends State<ProfileView> {
                         wardNo: _wordno.text,
                       );
                     },
-                    child: Text("Update"))
+                )
               ],
             ),
           ),
