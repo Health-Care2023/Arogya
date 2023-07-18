@@ -80,8 +80,7 @@ class _ProfileViewState extends State<ProfileView> {
       _firstname.text = db.name;
 
       _dob.text = db.dateofbirth;
-      // _gender.text = _journals!['gender'];
-      // _profession.text = _journals!['profession'];
+     
       _phone1.text = db.phone1;
       _phone2.text = db.phone2;
       _aadharNo.text = db.aadhar_no;
@@ -89,7 +88,7 @@ class _ProfileViewState extends State<ProfileView> {
       _address2.text = db.address2;
 
       _wordno.text = db.wardNo;
-      // _district.text = _journals!['district'];
+    
       _pincode.text = db.pincode;
     });
   }
