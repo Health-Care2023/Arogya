@@ -37,6 +37,7 @@ class SQLHelper {
         dateofbirth: '',
         district: '',
         address2: '',
+        address3: '',
         pincode: '',
         wardNo: '',
       );
@@ -97,6 +98,7 @@ class SQLHelper {
     required String district,
     required String dateofbirth,
     required String address2,
+    required String address3,
     required String pincode,
     required String wardNo,
   }) async {
@@ -115,6 +117,7 @@ class SQLHelper {
       dateofbirthColumn: dateofbirth,
       districtColumn: district,
       address2Column: address2,
+      address3Column: address3,
       pincodeColumn: pincode,
       wardNoColumn: wardNo,
     });
@@ -131,6 +134,7 @@ class SQLHelper {
       dateofbirth: dateofbirth,
       district: district,
       address2: address2,
+      address3: address3,
       pincode: pincode,
       wardNo: wardNo,
     );
@@ -166,6 +170,7 @@ class SQLHelper {
     required String district,
     required String dateofbirth,
     required String address2,
+    required String address3,
     required String pincode,
     required String wardNo,
   }) async {
@@ -183,6 +188,7 @@ class SQLHelper {
       'district': district,
       'dateofbirth': dateofbirth,
       'address2': address2,
+      'address3': address3,
       'pincode': pincode,
       'wardNo': wardNo,
     };
@@ -215,14 +221,15 @@ class DatabaseUser {
   final String address1;
   final String district;
   final String address2;
+  final String address3;
   final String pincode;
   final String wardNo;
-
   final String dateofbirth;
 
   const DatabaseUser({
     required this.gender,
     required this.address2,
+    required this.address3,
     required this.pincode,
     required this.wardNo,
     required this.id,
@@ -249,6 +256,7 @@ class DatabaseUser {
         district = map[districtColumn] as String,
         dateofbirth = map[dateofbirthColumn] as String,
         address2 = map[address2Column] as String,
+        address3 = map[address3Column] as String,
         pincode = map[pincodeColumn] as String,
         wardNo = map[wardNoColumn] as String;
 }
@@ -267,6 +275,7 @@ const districtColumn = 'district';
 const dateofbirthColumn = 'dateofbirth';
 
 const address2Column = 'address2';
+const address3Column = 'address3';
 const pincodeColumn = 'pincode';
 const wardNoColumn = 'wardNo';
 const createTable = """CREATE TABLE "complaint" (
@@ -282,6 +291,7 @@ const createTable = """CREATE TABLE "complaint" (
  	"district"	TEXT,
   "dateofbirth"	TEXT, 	
   "address2" TEXT,
+  "address3" TEXT,
   "pincode" TEXT,
   "wardNo" TEXT,  
    PRIMARY KEY("id" AUTOINCREMENT)

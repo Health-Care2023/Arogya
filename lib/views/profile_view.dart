@@ -85,14 +85,12 @@ class _ProfileViewState extends State<ProfileView> {
     _district = TextEditingController();
     _pincode = TextEditingController();
     _dob = TextEditingController();
-    // _photo = TextEditingController();
+    _photo = TextEditingController();
 
     _firstname.text = " ";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
-    _gender.text = 'Male';
-    _profession.text = 'Service';
     _countrycode.text = "+91";
     _imageFile = File("asset/user_image.png");
     // _photo.text = Utility.base64String(_imageFile.readAsBytesSync());
@@ -115,16 +113,16 @@ class _ProfileViewState extends State<ProfileView> {
       _lastname.text = name[2];
 
       _dob.text = db.dateofbirth;
-      // _gender.text = _journals!['gender'];
-      // _profession.text = _journals!['profession'];
+      _gender.text = db.gender;
+      _profession.text = db.profession;
       _phone1.text = db.phone1;
       _phone2.text = db.phone2;
       _aadharNo.text = db.aadhar_no;
       _address1.text = db.address1;
       _address2.text = db.address2;
-
+      _address3.text = db.address3;
       _wordno.text = db.wardNo;
-      // _district.text = _journals!['district'];
+      _district.text = db.district;
       _pincode.text = db.pincode;
     });
   }
@@ -475,7 +473,7 @@ class _ProfileViewState extends State<ProfileView> {
                   onPressed: () async {
                     Map<String, dynamic> patient = {
                       'name':
-                          _firstname.text + _middlename.text + _lastname.text,
+                          '${_firstname.text} ${_middlename.text} ${_lastname.text}',
                       'email': _email.text,
                       'aadhar_no': _aadharNo.text,
                       'gender': _gender.text,
@@ -491,7 +489,8 @@ class _ProfileViewState extends State<ProfileView> {
                       'dateofbirth': _dob.text
                     };
                     await _sqlhelper.updateItem(
-                      name: _firstname.text + _middlename.text + _lastname.text,
+                      name:
+                          '${_firstname.text} ${_middlename.text} ${_lastname.text}',
                       email: _email.text,
                       aadhar_no: _aadharNo.text,
                       gender: _gender.text,
@@ -502,11 +501,13 @@ class _ProfileViewState extends State<ProfileView> {
                       district: _district.text,
                       dateofbirth: _dob.text,
                       address2: _address2.text,
+                      address3: _address3.text,
                       pincode: _pincode.text,
                       wardNo: _wordno.text,
                     );
                   },
                 ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

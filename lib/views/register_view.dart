@@ -222,20 +222,22 @@ class _RegisterViewState extends State<RegisterView> {
                     Authservice.firebase().sendEmailVerification();
 
                     await _sqlHelper.createUser(
-                        name:
-                            '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                        email: _email.text,
-                        aadhar_no: '',
-                        gender: '',
-                        phone1: '',
-                        phone2: '',
-                        profession: '',
-                        address1: '',
-                        district: '',
-                        dateofbirth: '',
-                        address2: '',
-                        pincode: '',
-                        wardNo: '');
+                      name:
+                          '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                      email: _email.text,
+                      aadhar_no: '',
+                      gender: 'Male',
+                      phone1: '',
+                      phone2: '',
+                      profession: 'Service',
+                      address1: '',
+                      district: '',
+                      dateofbirth: '',
+                      address2: '',
+                      address3: '',
+                      pincode: '',
+                      wardNo: '',
+                    );
 
                     Navigator.of(context).pushNamed(verifyEmailRoute);
                   } on WeakPasswordException {
