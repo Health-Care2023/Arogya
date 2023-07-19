@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
-import 'package:hello/services/crud/notes_service.dart';
+
+import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/views/profile_view.dart';
 
 import '../../constants/routes.dart';
-import '../../enum/menu_action.dart';
+//import '../../enum/menu_action.dart';
 
 import 'package:hello/db/database_helper.dart';
+import '../../constants/routes.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -19,16 +22,27 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   String get userEmail => Authservice.firebase().currentUser!.email!;
   late final SQLHelper _sqlHelper;
-  late final NotesService _notesService;
+
+  late String imageString;
+
   Map<String, dynamic>? patient;
   int currentPageIndex = 0;
+  String? _name;
+  String? _email;
 
   @override
   void initState() {
     _sqlHelper = SQLHelper();
-    _notesService = NotesService();
-
+    refreshJournals();
     super.initState();
+  }
+
+  void refreshJournals() async {
+    DatabaseUser user = await _sqlHelper.getUser(email: userEmail);
+    setState(() {
+      _name = user.name;
+      _email = user.email;
+    });
   }
 
   @override
@@ -106,18 +120,19 @@ class _NotesViewState extends State<NotesView> {
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
-                  children: [
-                    Icon(Icons.account_circle_rounded, size: 100),
+                  children: <Widget>[
+                    //  Icon(Icons.account_circle_rounded, size: 100),
+                    imageProfile(),
                     const SizedBox(height: 10),
                     Text(
-                      userEmail,
+                      _name.toString(),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      userEmail,
+                      _email.toString(),
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -183,6 +198,19 @@ class _NotesViewState extends State<NotesView> {
             ],
           ),
         ));
+  }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 70,
+            backgroundImage: AssetImage(AssetsManager.userImage),
+          ),
+        ],
+      ),
+    );
   }
 }
 

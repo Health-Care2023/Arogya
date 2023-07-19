@@ -64,8 +64,9 @@ class _ChatViewState extends State<ChatView> {
       backgroundColor: cardColor,
       appBar: AppBar(
         title: const Text("Health Care Chat Application",
-            style: TextStyle(fontSize: 25, color: Colors.white)),
-        backgroundColor: chatappTitleColor,
+            style: TextStyle(fontSize: 25)),
+        backgroundColor: Color.fromARGB(255, 5, 14, 82),
+        foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
           IconButton(
@@ -145,10 +146,10 @@ class _ChatViewState extends State<ChatView> {
                         },
                         child: Icon(
                           _isListening ? Icons.mic : Icons.mic_none,
-                          color: _isListening ? Colors.blue : Colors.white,
+                          color: _isListening ? Colors.red : Colors.white,
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(188, 6, 141, 47),
+                          backgroundColor: Color.fromARGB(255, 5, 14, 82),
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(15),
                         )),
@@ -163,7 +164,7 @@ class _ChatViewState extends State<ChatView> {
                           color: Colors.white,
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(188, 6, 141, 47),
+                          backgroundColor: Color.fromARGB(255, 5, 14, 82),
                           shape: CircleBorder(),
                           padding: EdgeInsets.all(15),
                         ))
