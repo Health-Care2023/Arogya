@@ -10,6 +10,8 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 
 import '../services/auth/bloc/auth_bloc.dart';
 import '../services/auth/bloc/auth_state.dart';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -26,6 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _middlename;
   late final TextEditingController _email;
   late final TextEditingController _pass;
+  Uint8List _imageBytes = Uint8List(0);
 
   @override
   void initState() {
@@ -35,6 +38,11 @@ class _RegisterViewState extends State<RegisterView> {
     _middlename = TextEditingController();
     _email = TextEditingController();
     _pass = TextEditingController();
+    loadImageFromAsset('asset/user_image.png').then((bytes) {
+      setState(() {
+        _imageBytes = bytes;
+      });
+    });
     super.initState();
   }
 
@@ -195,6 +203,7 @@ class _RegisterViewState extends State<RegisterView> {
                         address3: '',
                         pincode: '',
                         wardNo: '',
+                        image: _imageBytes,
                       );
                     }),
                 Row(
@@ -225,5 +234,10 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       )),
     );
+  }
+
+  Future<Uint8List> loadImageFromAsset(String assetPath) async {
+    final ByteData byteData = await rootBundle.load(assetPath);
+    return byteData.buffer.asUint8List();
   }
 }

@@ -28,7 +28,8 @@ class Utility {
 }
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+  final void Function() onDataUpdated;
+  const ProfileView({required this.onDataUpdated});
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -41,6 +42,7 @@ class _ProfileViewState extends State<ProfileView> {
   late File _imageFile;
   final ImagePicker _picker = ImagePicker();
   late final SQLHelper _sqlhelper;
+  Uint8List? _image;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -124,6 +126,7 @@ class _ProfileViewState extends State<ProfileView> {
       _wordno.text = db.wardNo;
       _district.text = db.district;
       _pincode.text = db.pincode;
+      _image = db.image;
     });
   }
 
@@ -487,7 +490,9 @@ class _ProfileViewState extends State<ProfileView> {
                       address3: _address3.text,
                       pincode: _pincode.text,
                       wardNo: _wordno.text,
+                      image: _image!,
                     );
+                    widget.onDataUpdated();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         backgroundColor:
@@ -509,7 +514,7 @@ class _ProfileViewState extends State<ProfileView> {
                     );
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -522,7 +527,8 @@ class _ProfileViewState extends State<ProfileView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: FileImage(File(_imageFile.path)),
+            // backgroundImage: FileImage(File(_imageFile.path)),
+            backgroundImage: MemoryImage(_image!),
           ),
           Positioned(
               bottom: 21.0,
@@ -588,6 +594,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
     setState(() {
       _imageFile = File(pickedFile!.path);
+      _image = _imageFile.readAsBytesSync();
     });
   }
 }
