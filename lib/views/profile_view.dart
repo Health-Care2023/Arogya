@@ -113,8 +113,8 @@ class _ProfileViewState extends State<ProfileView> {
       _lastname.text = name[2];
 
       _dob.text = db.dateofbirth;
-      // _gender.text = _journals!['gender'];
-      // _profession.text = _journals!['profession'];
+      _gender.text = db.gender;
+      _profession.text = db.profession;
       _phone1.text = db.phone1;
       _phone2.text = db.phone2;
       _aadharNo.text = db.aadhar_no;
@@ -122,7 +122,7 @@ class _ProfileViewState extends State<ProfileView> {
       _address2.text = db.address2;
       _address3.text = db.address3;
       _wordno.text = db.wardNo;
-      // _district.text = _journals!['district'];
+      _district.text = db.district;
       _pincode.text = db.pincode;
     });
   }
@@ -487,6 +487,25 @@ class _ProfileViewState extends State<ProfileView> {
                       address3: _address3.text,
                       pincode: _pincode.text,
                       wardNo: _wordno.text,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor:
+                            Colors.green, // Custom background color
+                        content: Row(
+                          children: [
+                            Icon(Icons.check_circle_outline,
+                                color: Colors.white), // Custom tick icon
+                            SizedBox(width: 8), // Spacing between icon and text
+                            Text(
+                              "Profile Updated",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        duration: Duration(
+                            seconds: 1), // Adjust the duration as needed
+                      ),
                     );
                   },
                 ),
