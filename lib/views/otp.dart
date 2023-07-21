@@ -4,7 +4,6 @@ import 'package:hello/views/phone.dart';
 import 'package:pinput/pinput.dart';
 
 import '../Utilities/show_error_dialog.dart';
-import '../constants/routes.dart';
 
 class MyVerify extends StatefulWidget {
   const MyVerify({Key? key}) : super(key: key);
@@ -116,10 +115,10 @@ class _MyVerifyState extends State<MyVerify> {
 
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          notesroute,
-                          (route) => false,
-                        );
+                        // Navigator.of(context).pushNamedAndRemoveUntil(
+                        //   notesroute,
+                        //   (route) => false,
+                        // );
                       } catch (e) {
                         await showErrorDialog(
                           context,

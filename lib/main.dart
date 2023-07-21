@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hello/Helper/loading/loading_screen.dart';
 import 'package:hello/constants/routes.dart';
-import 'package:hello/services/auth/auth_service.dart';
 
 import 'package:hello/providers/models_provider.dart';
+import 'package:hello/services/auth/bloc/auth_bloc.dart';
+import 'package:hello/services/auth/bloc/auth_event.dart';
+import 'package:hello/services/auth/bloc/auth_state.dart';
+import 'package:hello/services/auth/firebase_auth_provide.dart';
 
 import 'package:provider/provider.dart';
 
@@ -38,14 +43,12 @@ void main() {
             ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 48, 143, 221)),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: BlocProvider<AuthBloc>(
+          create: (context) => AuthBloc(FirebaseAuthProvider()),
+          child: const HomePage()),
       routes: {
-        loginroute: (context) => const LoginView(),
-        registerroute: (context) => const RegisterView(),
-        notesroute: (context) => const NotesView(),
         myphone: (context) => const MyPhone(),
         myverify: (context) => const MyVerify(),
-        verifyEmailRoute: (context) => const VerifyEmailView(),
 
         chatroute: (context) => const ChatView(),
         // profileroute: (context) => const ProfileView(),
@@ -59,32 +62,30 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Authservice.firebase().initialize(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            final user = Authservice.firebase().currentUser;
-            if (user != null) {
-              if (user.isEmailVerified) {
-                return const NotesView();
-              } else {
-                return const VerifyEmailView();
-              }
-            } else {
-              return const LoginView();
-            }
-          // final sol = user?.emailVerified ?? false;
-          // if (sol) {en
-          //   print("The User is verified");
-          //   return const Text('Done');
-          // } else {
-          //   print("Not Verified");
-          //   return const VerifyEmailView();
-          // }
-
-          default:
-            return const CircularProgressIndicator();
+    context.read<AuthBloc>().add(const AuthEventInitialize());
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.isloading) {
+          LoadingScreen().show(
+              context: context,
+              text: state.loadingText ?? "Please wait a moment...");
+        } else {
+          LoadingScreen().hide();
+        }
+      },
+      builder: (context, state) {
+        if (state is AuthStateLoggedIn) {
+          return const NotesView();
+        } else if (state is AuthStateNeedsVerification) {
+          return const VerifyEmailView();
+        } else if (state is AuthStateLoggedOut) {
+          return const LoginView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
+        } else {
+          return const Scaffold(
+            body: CircularProgressIndicator(),
+          );
         }
       },
     );

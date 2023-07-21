@@ -77,7 +77,7 @@ class SQLHelper {
     }
     try {
       final docsPath = await getApplicationDocumentsDirectory();
-      final path = join(docsPath.path, 'Profile_view.db');
+      final path = join(docsPath.path, 'Profile_v.db');
       final db = await openDatabase(path);
       _db = db;
       db.execute(createTable);

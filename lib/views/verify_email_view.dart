@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hello/constants/routes.dart';
-import 'package:hello/services/auth/auth_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:hello/services/auth/bloc/auth_bloc.dart';
+import 'package:hello/services/auth/bloc/auth_event.dart';
 //import 'package:hello/constants/routes.dart';
 
 class VerifyEmailView extends StatefulWidget {
@@ -33,11 +35,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               SizedBox(height: 10),
               TextButton(
                 onPressed: () async {
-                  await Authservice.firebase().sendEmailVerification();
-                  // Navigator.of(context).pushNamedAndRemoveUntil(
-                  //   loginroute,
-                  //   (route) => false,
-                  // );
+                  context
+                      .read<AuthBloc>()
+                      .add(const AuthEventSendEmailVerification());
                 },
                 child: const Text('Resend email Verification',
                     style: TextStyle(fontSize: 15)),
@@ -45,9 +45,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  Authservice.firebase().logOut();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerroute, (route) => false);
+                  context.read<AuthBloc>().add(const AuthEventLogOut());
                 },
                 child: const Text("Restart", style: TextStyle(fontSize: 15)),
               )
