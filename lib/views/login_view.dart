@@ -183,7 +183,22 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ],
-                )
+                ),
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                  extendedPadding: const EdgeInsets.only(left: 150, right: 150),
+                  label: const Text(
+                    'Forgot password?',
+                    style: TextStyle(color: Colors.white),
+                  ), // <-- Text
+                  backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                  icon: new Icon(Icons.login),
+                  onPressed: () {
+                    context
+                        .read<AuthBloc>()
+                        .add(const AuthEventForgotPassword());
+                  },
+                ),
               ],
             ),
           ),
