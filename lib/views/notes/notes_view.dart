@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // import 'package:hello/constants/constants.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/chat/assets_manager.dart';
-import 'package:hello/services/crud/notes_service.dart';
+// import 'package:hello/services/crud/notes_service.dart';
 import 'package:hello/views/profile_view.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../constants/routes.dart';
@@ -22,17 +22,28 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   String get userEmail => Authservice.firebase().currentUser!.email!;
   late final SQLHelper _sqlHelper;
-  late final NotesService _notesService;
+  // late final NotesService _notesService;
   late String imageString;
   Map<String, dynamic>? patient;
+  String? _name;
+  String? _email;
   int currentPageIndex = 0;
 
   @override
   void initState() {
     _sqlHelper = SQLHelper();
-    _notesService = NotesService();
-
+    // _notesService = NotesService();
+    refreshJournals();
     super.initState();
+  }
+
+  void refreshJournals() async {
+    DatabaseUser user;
+    user = await _sqlHelper.getUser(email: userEmail);
+    setState(() {
+      _name = user.name;
+      _email = user.email;
+    });
   }
 
   @override
@@ -115,14 +126,14 @@ class _NotesViewState extends State<NotesView> {
                     imageProfile(),
                     const SizedBox(height: 10),
                     Text(
-                      userEmail,
+                      _name.toString(),
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      userEmail,
+                      _email.toString(),
                       style: const TextStyle(
                         fontSize: 15,
                       ),
