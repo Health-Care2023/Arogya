@@ -205,6 +205,7 @@ class _RegisterViewState extends State<RegisterView> {
                         wardNo: '',
                         image: _imageBytes,
                       );
+                      await openDialog(context);
                     }),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -239,5 +240,43 @@ class _RegisterViewState extends State<RegisterView> {
   Future<Uint8List> loadImageFromAsset(String assetPath) async {
     final ByteData byteData = await rootBundle.load(assetPath);
     return byteData.buffer.asUint8List();
+  }
+
+  Future openDialog(BuildContext context) async {
+    // Obtain the AuthBloc using the closest ancestor BlocProvider
+    final authBloc = BlocProvider.of<AuthBloc>(context);
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Center(
+          // Wrap the Text widget with Center
+          child: Text("Verify Your Email"),
+        ),
+        alignment: Alignment.center,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Did not get it?',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                authBloc.add(const AuthEventSendEmailVerification());
+              },
+              child: const Text(
+                'Resend it',
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
