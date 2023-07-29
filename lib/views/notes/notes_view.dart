@@ -157,11 +157,19 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProfileView(
-                          onDataUpdated: onDataUpdated,
-                        ),
-                      ));
+                      LoadingScreen().show(
+                          context: context, text: "Please wait a moment...");
+                      Future.delayed(
+                        Duration(seconds: 1),
+                        () {
+                          LoadingScreen().hide();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfileView(
+                              onDataUpdated: onDataUpdated,
+                            ),
+                          ));
+                        },
+                      );
                     },
                     child: const Row(
                       children: [
@@ -217,7 +225,7 @@ class _NotesViewState extends State<NotesView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: MemoryImage(Uint8List(0)),
+            backgroundImage: MemoryImage(_image!),
           ),
         ],
       ),
