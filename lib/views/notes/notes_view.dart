@@ -9,6 +9,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/views/profile_view.dart';
 
+import '../../Helper/loading/loading_screen.dart';
 import '../../constants/routes.dart';
 
 import 'package:hello/db/database_helper.dart';
@@ -35,6 +36,7 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _sqlHelper = SQLHelper();
+
     refreshJournals();
     super.initState();
   }
@@ -213,7 +215,7 @@ class _NotesViewState extends State<NotesView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: MemoryImage(_image!),
+            backgroundImage: MemoryImage(Uint8List(0)),
           ),
         ],
       ),
