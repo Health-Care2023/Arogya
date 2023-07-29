@@ -26,7 +26,6 @@ class Utility {
   static String base64String(Uint8List data) {
     return base64Encode(data);
   }
-  
 }
 
 class ProfileView extends StatefulWidget {
@@ -314,7 +313,6 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   dropdownColor: Colors.white,
                   value: _gender.text,
-
                   onChanged: (String? newValue) {
                     setState(() {
                       _gender.text = newValue!;

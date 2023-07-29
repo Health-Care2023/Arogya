@@ -30,7 +30,7 @@ class _NotesViewState extends State<NotesView> {
   int currentPageIndex = 0;
   String? _name;
   String? _email;
- Uint8List? _image;
+  Uint8List? _image;
   @override
   void initState() {
     _sqlHelper = SQLHelper();
