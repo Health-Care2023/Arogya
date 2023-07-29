@@ -131,7 +131,9 @@ class _NotesViewState extends State<NotesView> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(5, 50, 0, 0),
                 children: <Widget>[
-                  imageProfile(),
+                  _image == null
+                      ? Icon(Icons.account_circle_rounded)
+                      : imageProfile(),
                   const SizedBox(height: 10),
                   Text(
                     "  ${_name.toString()}",
