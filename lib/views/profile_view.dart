@@ -26,6 +26,7 @@ class Utility {
   static String base64String(Uint8List data) {
     return base64Encode(data);
   }
+  
 }
 
 class ProfileView extends StatefulWidget {
@@ -96,6 +97,8 @@ class _ProfileViewState extends State<ProfileView> {
     _dob.text = "";
     _countrycode.text = "+91";
     _imageFile = File("asset/user_image.png");
+    _gender.text = "Male";
+    _profession.text = "Service";
     // _photo.text = Utility.base64String(_imageFile.readAsBytesSync());
     // _photo.text = "";
     refreshJournals();
@@ -311,6 +314,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   dropdownColor: Colors.white,
                   value: _gender.text,
+
                   onChanged: (String? newValue) {
                     setState(() {
                       _gender.text = newValue!;
