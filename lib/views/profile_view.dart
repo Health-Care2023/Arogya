@@ -42,7 +42,7 @@ class _ProfileViewState extends State<ProfileView> {
   late File _imageFile;
   final ImagePicker _picker = ImagePicker();
   late final SQLHelper _sqlhelper;
-  Uint8List? _image;
+  Uint8List _image = "asset/user_image.png" as Uint8List;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
