@@ -528,7 +528,7 @@ class _ProfileViewState extends State<ProfileView> {
           CircleAvatar(
             radius: 70,
             // backgroundImage: FileImage(File(_imageFile.path)),
-            backgroundImage: MemoryImage(_image!),
+            backgroundImage: MemoryImage(_image ?? Uint8List(0)),
           ),
           Positioned(
               bottom: 21.0,
