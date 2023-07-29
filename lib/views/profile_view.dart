@@ -8,6 +8,7 @@ import 'package:hello/db/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../Helper/loading/loading_screen.dart';
 import '../services/auth/auth_service.dart';
 
 class Utility {
@@ -43,8 +44,7 @@ class _ProfileViewState extends State<ProfileView> {
   late File _imageFile;
   final ImagePicker _picker = ImagePicker();
   late final SQLHelper _sqlhelper;
-   Uint8List? _image;
-
+  Uint8List? _image;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -498,6 +498,14 @@ class _ProfileViewState extends State<ProfileView> {
                       image: _image!,
                     );
                     widget.onDataUpdated();
+                    LoadingScreen().show(
+                        context: context, text: "Please wait a moment...");
+                    Future.delayed(
+                      Duration(seconds: 6),
+                      () {
+                        LoadingScreen().hide();
+                      },
+                    );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         backgroundColor:
@@ -533,7 +541,7 @@ class _ProfileViewState extends State<ProfileView> {
           CircleAvatar(
             radius: 70,
             // backgroundImage: FileImage(File(_imageFile.path)),
-            backgroundImage: MemoryImage(_image!),
+            backgroundImage: MemoryImage(_image ?? Uint8List(0)),
           ),
           Positioned(
               bottom: 21.0,
