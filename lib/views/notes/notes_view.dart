@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -24,15 +25,12 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   String get userEmail => Authservice.firebase().currentUser!.email!;
   late final SQLHelper _sqlHelper;
-
   late String imageString;
-
   Map<String, dynamic>? patient;
   int currentPageIndex = 0;
   String? _name;
   String? _email;
-  Uint8List? _image;
-
+ Uint8List? _image;
   @override
   void initState() {
     _sqlHelper = SQLHelper();
