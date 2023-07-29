@@ -494,10 +494,9 @@ class _ProfileViewState extends State<ProfileView> {
                       image: _image!,
                     );
                     widget.onDataUpdated();
-                    LoadingScreen().show(
-                        context: context, text: "Please wait a moment...");
+                    LoadingScreen().show(context: context, text: "Updating...");
                     Future.delayed(
-                      Duration(seconds: 6),
+                      Duration(seconds: 4),
                       () {
                         LoadingScreen().hide();
                       },
