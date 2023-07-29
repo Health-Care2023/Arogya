@@ -38,3 +38,7 @@ class AuthEventLogin extends AuthEvent {
 class AuthEventLogOut extends AuthEvent {
   const AuthEventLogOut();
 }
+
+class AuthEventUpdateProfile extends AuthEvent {
+  const AuthEventUpdateProfile();
+}
