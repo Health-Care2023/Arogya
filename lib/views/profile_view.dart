@@ -8,6 +8,7 @@ import 'package:hello/db/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../Helper/loading/loading_screen.dart';
 import '../services/auth/auth_service.dart';
 
 class Utility {
@@ -25,10 +26,12 @@ class Utility {
   static String base64String(Uint8List data) {
     return base64Encode(data);
   }
+  
 }
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+  final void Function() onDataUpdated;
+  const ProfileView({required this.onDataUpdated});
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -41,6 +44,7 @@ class _ProfileViewState extends State<ProfileView> {
   late File _imageFile;
   final ImagePicker _picker = ImagePicker();
   late final SQLHelper _sqlhelper;
+  Uint8List? _image;
 
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
@@ -85,16 +89,16 @@ class _ProfileViewState extends State<ProfileView> {
     _district = TextEditingController();
     _pincode = TextEditingController();
     _dob = TextEditingController();
-    // _photo = TextEditingController();
+    _photo = TextEditingController();
 
     _firstname.text = " ";
     _middlename.text = "";
     _lastname.text = "";
     _dob.text = "";
-    _gender.text = 'Male';
-    _profession.text = 'Service';
     _countrycode.text = "+91";
     _imageFile = File("asset/user_image.png");
+    _gender.text = "Male";
+    _profession.text = "Service";
     // _photo.text = Utility.base64String(_imageFile.readAsBytesSync());
     // _photo.text = "";
     refreshJournals();
@@ -109,20 +113,24 @@ class _ProfileViewState extends State<ProfileView> {
     setState(() {
       _email.text = db.email;
 
-      _firstname.text = db.name;
+      List<String> name = db.name.split(" ");
+      _firstname.text = name[0];
+      _middlename.text = name[1];
+      _lastname.text = name[2];
 
       _dob.text = db.dateofbirth;
-      // _gender.text = _journals!['gender'];
-      // _profession.text = _journals!['profession'];
+      _gender.text = db.gender;
+      _profession.text = db.profession;
       _phone1.text = db.phone1;
       _phone2.text = db.phone2;
       _aadharNo.text = db.aadhar_no;
       _address1.text = db.address1;
       _address2.text = db.address2;
-
+      _address3.text = db.address3;
       _wordno.text = db.wardNo;
-      // _district.text = _journals!['district'];
+      _district.text = db.district;
       _pincode.text = db.pincode;
+      _image = db.image;
     });
   }
 
@@ -131,7 +139,8 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Your Profile"),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 5, 14, 82),
+          foregroundColor: Colors.white,
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -305,6 +314,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   dropdownColor: Colors.white,
                   value: _gender.text,
+
                   onChanged: (String? newValue) {
                     setState(() {
                       _gender.text = newValue!;
@@ -467,26 +477,11 @@ class _ProfileViewState extends State<ProfileView> {
                     style: TextStyle(color: Colors.white),
                   ), // <-- Text
                   backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                  icon: new Icon(Icons.update),
                   onPressed: () async {
-                    Map<String, dynamic> patient = {
-                      'name':
-                          _firstname.text + _middlename.text + _lastname.text,
-                      'email': _email.text,
-                      'aadhar_no': _aadharNo.text,
-                      'gender': _gender.text,
-                      'phone1': _phone1.text,
-                      'phone2': _phone2.text,
-                      'profession': _profession.text,
-                      'address1': _address1.text,
-                      'address2': _address2.text,
-                      'address3': _address3.text,
-                      'district': _district.text,
-                      'pincode': _pincode.text,
-                      'wordno': _wordno.text,
-                      'dateofbirth': _dob.text,
-                    };
                     await _sqlhelper.updateItem(
-                      name: _firstname.text + _middlename.text + _lastname.text,
+                      name:
+                          '${_firstname.text} ${_middlename.text} ${_lastname.text}',
                       email: _email.text,
                       aadhar_no: _aadharNo.text,
                       gender: _gender.text,
@@ -497,11 +492,42 @@ class _ProfileViewState extends State<ProfileView> {
                       district: _district.text,
                       dateofbirth: _dob.text,
                       address2: _address2.text,
+                      address3: _address3.text,
                       pincode: _pincode.text,
                       wardNo: _wordno.text,
+                      image: _image!,
+                    );
+                    widget.onDataUpdated();
+                    LoadingScreen().show(
+                        context: context, text: "Please wait a moment...");
+                    Future.delayed(
+                      Duration(seconds: 6),
+                      () {
+                        LoadingScreen().hide();
+                      },
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor:
+                            Colors.green, // Custom background color
+                        content: Row(
+                          children: [
+                            Icon(Icons.check_circle_outline,
+                                color: Colors.white), // Custom tick icon
+                            SizedBox(width: 8), // Spacing between icon and text
+                            Text(
+                              "Profile Updated",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        duration: Duration(
+                            seconds: 1), // Adjust the duration as needed
+                      ),
                     );
                   },
-                )
+                ),
+                const SizedBox(height: 50),
               ],
             ),
           ),
@@ -514,7 +540,8 @@ class _ProfileViewState extends State<ProfileView> {
         children: <Widget>[
           CircleAvatar(
             radius: 70,
-            backgroundImage: FileImage(File(_imageFile.path)),
+            // backgroundImage: FileImage(File(_imageFile.path)),
+            backgroundImage: MemoryImage(_image ?? Uint8List(0)),
           ),
           Positioned(
               bottom: 21.0,
@@ -580,6 +607,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
     setState(() {
       _imageFile = File(pickedFile!.path);
+      _image = _imageFile.readAsBytesSync();
     });
   }
 

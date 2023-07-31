@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,8 +39,10 @@ class SQLHelper {
         dateofbirth: '',
         district: '',
         address2: '',
+        address3: '',
         pincode: '',
         wardNo: '',
+        image: Uint8List(0),
       );
       return createdUser;
     } catch (e) {
@@ -97,8 +101,10 @@ class SQLHelper {
     required String district,
     required String dateofbirth,
     required String address2,
+    required String address3,
     required String pincode,
     required String wardNo,
+    required Uint8List image,
   }) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -115,8 +121,10 @@ class SQLHelper {
       dateofbirthColumn: dateofbirth,
       districtColumn: district,
       address2Column: address2,
+      address3Column: address3,
       pincodeColumn: pincode,
       wardNoColumn: wardNo,
+      imageColumn: image,
     });
     return DatabaseUser(
       id: userId,
@@ -131,8 +139,10 @@ class SQLHelper {
       dateofbirth: dateofbirth,
       district: district,
       address2: address2,
+      address3: address3,
       pincode: pincode,
       wardNo: wardNo,
+      image: image,
     );
   }
 
@@ -166,8 +176,10 @@ class SQLHelper {
     required String district,
     required String dateofbirth,
     required String address2,
+    required String address3,
     required String pincode,
     required String wardNo,
+    required Uint8List image,
   }) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -183,8 +195,10 @@ class SQLHelper {
       'district': district,
       'dateofbirth': dateofbirth,
       'address2': address2,
+      'address3': address3,
       'pincode': pincode,
       'wardNo': wardNo,
+      'image': image,
     };
     final result = await db
         .update('complaint', data, where: 'email=?', whereArgs: [email]);
@@ -215,14 +229,16 @@ class DatabaseUser {
   final String address1;
   final String district;
   final String address2;
+  final String address3;
   final String pincode;
   final String wardNo;
-
   final String dateofbirth;
+  final Uint8List image;
 
   const DatabaseUser({
     required this.gender,
     required this.address2,
+    required this.address3,
     required this.pincode,
     required this.wardNo,
     required this.id,
@@ -235,6 +251,7 @@ class DatabaseUser {
     required this.phone1,
     required this.phone2,
     required this.dateofbirth,
+    required this.image,
   });
   DatabaseUser.fromRow(Map<String, Object?> map)
       : id = map[idColumn] as int,
@@ -249,8 +266,10 @@ class DatabaseUser {
         district = map[districtColumn] as String,
         dateofbirth = map[dateofbirthColumn] as String,
         address2 = map[address2Column] as String,
+        address3 = map[address3Column] as String,
         pincode = map[pincodeColumn] as String,
-        wardNo = map[wardNoColumn] as String;
+        wardNo = map[wardNoColumn] as String,
+        image = map[imageColumn] as Uint8List;
 }
 
 const idColumn = 'id';
@@ -267,23 +286,27 @@ const districtColumn = 'district';
 const dateofbirthColumn = 'dateofbirth';
 
 const address2Column = 'address2';
+const address3Column = 'address3';
 const pincodeColumn = 'pincode';
 const wardNoColumn = 'wardNo';
+const imageColumn = 'image';
 const createTable = """CREATE TABLE "complaint" (
-	"id"	INTEGER NOT NULL UNIQUE,
- 	"name"	TEXT ,
-   "email"	TEXT,
- 	"aadhar_no"	TEXT,
+  "id" INTEGER NOT NULL UNIQUE,
+  "name" TEXT,
+  "email" TEXT,
+  "aadhar_no" TEXT,
   "gender" TEXT,
-   "phone1"	TEXT,
- 	"phone2"	TEXT,
+  "phone1" TEXT,
+  "phone2" TEXT,
   "profession" TEXT,
-   "address1"	TEXT,
- 	"district"	TEXT,
-  "dateofbirth"	TEXT, 	
+  "address1" TEXT,
+  "district" TEXT,
+  "dateofbirth" TEXT,
   "address2" TEXT,
+  "address3" TEXT,
   "pincode" TEXT,
-  "wardNo" TEXT,  
-   PRIMARY KEY("id" AUTOINCREMENT)
- );
-  """;
+  "wardNo" TEXT,
+  "image" BLOB,
+  PRIMARY KEY("id" AUTOINCREMENT)
+);
+""";

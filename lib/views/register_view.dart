@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hello/Utilities/show_error_dialog.dart';
-import 'package:hello/constants/routes.dart';
+
 import 'package:hello/services/auth/auth_exceptions.dart';
-import 'package:hello/services/auth/auth_service.dart';
+
 import 'package:hello/db/database_helper.dart';
+import 'package:hello/services/auth/bloc/auth_event.dart';
+
+import '../services/auth/bloc/auth_bloc.dart';
+import '../services/auth/bloc/auth_state.dart';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -14,62 +22,32 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   late final SQLHelper _sqlHelper;
-
+  //CloseDialog? _closeDialogHandle;
   late final TextEditingController _firstname;
   late final TextEditingController _lastname;
   late final TextEditingController _middlename;
-  // late final TextEditingController _countrycode;
-  // late final TextEditingController _phone1;
-  // late final TextEditingController _phone2;
-  // late final TextEditingController _profession;
   late final TextEditingController _email;
-  // late final TextEditingController _aadharNo;
-  // late final TextEditingController _gender;
   late final TextEditingController _pass;
-  // late final TextEditingController _dob;
-  // late final TextEditingController _address1;
-  // late final TextEditingController _address2;
-  // late final TextEditingController _address3;
-  // late final TextEditingController _wordno;
-  // late final TextEditingController _district;
-  // late final TextEditingController _pincode;
+  Uint8List _imageBytes = Uint8List(0);
 
-  //TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     _sqlHelper = SQLHelper();
     _firstname = TextEditingController();
     _lastname = TextEditingController();
     _middlename = TextEditingController();
-    // _countrycode = TextEditingController();
-    // _phone1 = TextEditingController();
-    // _phone2 = TextEditingController();
     _email = TextEditingController();
     _pass = TextEditingController();
-    // _aadharNo = TextEditingController();
-    // _gender = TextEditingController();
-    // _profession = TextEditingController();
-    // _address1 = TextEditingController();
-    // _address2 = TextEditingController();
-    // _address3 = TextEditingController();
-    // _wordno = TextEditingController();
-    // _district = TextEditingController();
-    // _pincode = TextEditingController();
-    // _dob = TextEditingController();
-    // _firstname.text = "";
-    // _middlename.text = "";
-    // _lastname.text = "";
-    // _dob.text = "";
-    // _gender.text = 'Male';
-    // _profession.text = 'Service';
-    // _countrycode.text = "+91";
+    loadImageFromAsset('asset/user_image.png').then((bytes) {
+      setState(() {
+        _imageBytes = bytes;
+      });
+    });
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _email.dispose();
     _pass.dispose();
     super.dispose();
@@ -77,190 +55,228 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      color: Color.fromARGB(255, 160, 173, 252),
-      alignment: Alignment.center,
-      child: Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
-              Image.asset(
-                'asset/healthcare.png',
-                width: double.infinity,
-                height: 200,
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _firstname,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: 'First Name',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) async {
+        // TODO: implement listener
+        if (state is AuthStateRegistering) {
+          if (state.exception is WeakPasswordException) {
+            await showErrorDialog(context, 'Weak Password');
+          } else if (state.exception is EmailAlreadyInUseException) {
+            await showErrorDialog(context, 'Email is already in Use');
+          } else if (state.exception is GenericException) {
+            await showErrorDialog(context, 'Failed to Register');
+          }
+        }
+      },
+      child: Scaffold(
+          body: Container(
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: Container(
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                Image.asset(
+                  'asset/healthcare.png',
+                  width: double.infinity,
+                  height: 200,
+                ),
+                const SizedBox(height: 30),
+                const Text("Register",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: TextField(
+                    controller: _firstname,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 5, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      labelText: 'First Name',
+                    ),
                   ),
                 ),
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _middlename,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Middle Name',
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: TextField(
+                    controller: _middlename,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 5, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      labelText: 'Middle Name',
+                    ),
                   ),
                 ),
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _lastname,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Last Name',
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: TextField(
+                    controller: _lastname,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 5, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      labelText: 'Last Name',
+                    ),
                   ),
                 ),
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Enter your email',
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: TextField(
+                    controller: _email,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 5, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      labelText: 'Email',
+                    ),
                   ),
                 ),
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _pass,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: InputDecoration(
-                  hintText: 'Enter password',
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
+                const SizedBox(height: 10),
+                SizedBox(
+                  child: TextField(
+                    controller: _pass,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 5, color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      labelText: 'Enter your Password',
+                    ),
                   ),
                 ),
-                style:
-                    const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(height: 30),
-              SizedBox(
-                  height: 40,
-                  width: 200,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final pass = _pass.text;
-                        try {
-                          await Authservice.firebase()
-                              .createUser(email: email, password: pass);
+                const SizedBox(height: 10),
+                FloatingActionButton.extended(
+                    extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                    label: const Text(
+                      'Register',
+                      style: TextStyle(color: Colors.white),
+                    ), // <-- Text
+                    backgroundColor: Color.fromARGB(255, 48, 143, 221),
+                    icon: new Icon(Icons.app_registration),
+                    onPressed: () async {
+                      final email = _email.text;
+                      final pass = _pass.text;
 
-                          Authservice.firebase().sendEmailVerification();
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventRegister(email, pass));
 
-                          await _sqlHelper.createUser(
-                              name:
-                                  '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                              email: _email.text,
-                              aadhar_no: '',
-                              gender: '',
-                              phone1: '',
-                              phone2: '',
-                              profession: '',
-                              address1: '',
-                              district: '',
-                              dateofbirth: '',
-                              address2: '',
-                              pincode: '',
-                              wardNo: '');
-
-                          Navigator.of(context).pushNamed(verifyEmailRoute);
-                        } on WeakPasswordException {
-                          await showErrorDialog(context, 'Weak password');
-                        } on EmailAlreadyInUseException {
-                          await showErrorDialog(
-                              context, 'email-already-in-use');
-                        } on InvalidEmailException {
-                          await showErrorDialog(
-                              context, 'Invalid Email Address');
-                        } on GenericException {
-                          await showErrorDialog(context, 'Failed to register');
-                        }
-                      },
-                      child: const Text('Register',
-                          style: TextStyle(fontSize: 15)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple,
-                        onPrimary: Colors.white70,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
-                        minimumSize: Size(150, 20),
-                      ))),
-              SizedBox(height: 10),
-              SizedBox(
-                  child: ElevatedButton(
+                      await _sqlHelper.createUser(
+                        name:
+                            '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                        email: _email.text,
+                        aadhar_no: '',
+                        gender: 'Male',
+                        phone1: '',
+                        phone2: '',
+                        profession: 'Service',
+                        address1: '',
+                        district: '',
+                        dateofbirth: '',
+                        address2: '',
+                        address3: '',
+                        pincode: '',
+                        wardNo: '',
+                        image: _imageBytes,
+                      );
+                      await openDialog(context);
+                    }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Already Registered?',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            loginroute, (route) => false);
+                        context.read<AuthBloc>().add(const AuthEventLogOut());
                       },
-                      child: const Text('Already Registered?Login',
-                          style: TextStyle(fontSize: 15)),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple,
-                        onPrimary: Colors.white70,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0)),
-                        minimumSize: Size(180, 50),
-                      ))),
-            ],
+                      child: const Text(
+                        'Log In',
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
+      )),
+    );
+  }
+
+  Future<Uint8List> loadImageFromAsset(String assetPath) async {
+    final ByteData byteData = await rootBundle.load(assetPath);
+    return byteData.buffer.asUint8List();
+  }
+
+  Future openDialog(BuildContext context) async {
+    // Obtain the AuthBloc using the closest ancestor BlocProvider
+    final authBloc = BlocProvider.of<AuthBloc>(context);
+
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Center(
+          // Wrap the Text widget with Center
+          child: Text("Verify Your Email"),
+        ),
+        alignment: Alignment.center,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Did not get it?',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                authBloc.add(const AuthEventSendEmailVerification());
+              },
+              child: const Text(
+                'Resend it',
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
