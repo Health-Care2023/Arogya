@@ -13,6 +13,8 @@ import 'package:hello/views/profile_view.dart';
 import '../../constants/routes.dart';
 
 import 'package:hello/db/database_helper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -79,31 +81,94 @@ class _NotesViewState extends State<NotesView> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,
+            color: Color.fromARGB(255, 5, 14, 82)),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.book_online),
-            label: 'Bookings',
+            icon: Icon(FontAwesomeIcons.stethoscope,
+            color: Color.fromARGB(255, 5, 14, 82)),
+            label: 'Appointment',
           ),
           NavigationDestination(
-            icon: Icon(Icons.place),
-            label: 'Maps',
+            icon: Icon(FontAwesomeIcons.truckMedical,
+            color: Color.fromARGB(255, 181, 19, 8)),
+            label: 'Emergency',
           ),
           NavigationDestination(
-            icon: Icon(Icons.medication),
-            label: 'Medicines',
+            icon: Icon(Icons.medication,
+            color: Color.fromARGB(255, 5, 14, 82)),
+            label: 'Tele-Medicine',
           ),
         ],
       ),
       body: <Widget>[
         Container(
-          alignment: Alignment.center,
-          child: const Text('Home', style: TextStyle(fontSize: 30)),
+          margin: const EdgeInsets.only(left: 5, right: 5, top: 10),
+          child: ImageSlideshow(
+             width: double.infinity,
+        
+            /// Height of the [ImageSlideshow].
+            height: (MediaQuery.of(context).size.height)/2,
+        
+            /// The page to show when first creating the [ImageSlideshow].
+            initialPage: 0,
+        
+            /// The color to paint the indicator.
+            indicatorColor: Colors.blue,
+        
+            /// The color to paint behind th indicator.
+            indicatorBackgroundColor: Colors.grey,
+        
+            /// The widgets to display in the [ImageSlideshow].
+            /// Add the sample image file into the images folder
+            children: [
+              Image.asset(
+                'asset/dept of health.jpg',
+                fit: BoxFit.cover,
+                
+              ),
+              Image.asset(
+                'asset/improving-healthcare-west-bengal-medium-term-expenditure-framework_6.jpeg',
+                fit: BoxFit.cover,
+               
+              ),
+              Image.asset(
+                'asset/Swasthya sathi 2.jpg',
+                fit: BoxFit.cover,
+                
+              ),
+              Image.asset(
+                'asset/Swasthya sathi.jpg',
+                fit: BoxFit.cover,
+                
+              ),
+              Image.asset(
+                'asset/West-Bengal-Health-Scheme.jpg',
+                fit: BoxFit.cover,
+                
+              ),
+            ],
+        
+            /// Called whenever the page in the center of the viewport changes.
+            onPageChanged: (value) {
+              print('Page changed: $value');
+            },
+        
+            /// Auto scroll interval.
+            /// Do not auto scroll with null or 0.
+            autoPlayInterval: 1000,
+        
+            /// Loops back to first slide.
+            isLoop: true,
+            // alignment: Alignment.center,
+            // child: const Text('Home', style: TextStyle(fontSize: 30)),
+            
+          ),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Bookings', style: TextStyle(fontSize: 30)),
+          child: const Text('Appointments', style: TextStyle(fontSize: 30)),
         ),
         Container(
           alignment: Alignment.center,
@@ -111,7 +176,7 @@ class _NotesViewState extends State<NotesView> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Medicines', style: TextStyle(fontSize: 30)),
+          child: const Text('Tele-Medicine', style: TextStyle(fontSize: 30)),
         ),
       ][currentPageIndex],
       floatingActionButton: FloatingActionButton(
