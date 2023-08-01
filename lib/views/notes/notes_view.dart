@@ -32,6 +32,7 @@ class _NotesViewState extends State<NotesView> {
   String? _name;
   String? _email;
  Uint8List? _image;
+
   @override
   void initState() {
     _sqlHelper = SQLHelper();
@@ -54,7 +55,7 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold = Scaffold(
       appBar: AppBar(
         leading: Builder(
           builder: (BuildContext context) {
@@ -70,6 +71,22 @@ class _NotesViewState extends State<NotesView> {
           },
         ),
         title: const Text('Arogya', style: TextStyle(color: Colors.white)),
+         actions: <Widget>[
+          Row(
+            children: <Widget>[
+              IconButton(
+                  onPressed: () {},
+                  icon: Stack(
+                    children: <Widget>[
+                      Icon(
+                        Icons.notifications,
+                        color: Color.fromARGB(255, 249, 246, 246),
+                      ),
+                    ],
+                  ))
+            ],
+          )
+        ],
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
       ),
       bottomNavigationBar: NavigationBar(
@@ -86,104 +103,224 @@ class _NotesViewState extends State<NotesView> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(FontAwesomeIcons.stethoscope,
-            color: Color.fromARGB(255, 5, 14, 82)),
-            label: 'Appointment',
-          ),
-          NavigationDestination(
             icon: Icon(FontAwesomeIcons.truckMedical,
             color: Color.fromARGB(255, 181, 19, 8)),
             label: 'Emergency',
           ),
           NavigationDestination(
-            icon: Icon(Icons.medication,
+            icon: Icon(FontAwesomeIcons.stethoscope,
             color: Color.fromARGB(255, 5, 14, 82)),
-            label: 'Tele-Medicine',
+            label: 'Appointment',
           ),
+          // NavigationDestination(
+          //   icon: Icon(Icons.medication,
+          //   color: Color.fromARGB(255, 5, 14, 82)),
+          //   label: 'Tele-Medicine',
+          // ),
         ],
       ),
-      body: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(left: 5, right: 5, top: 10),
-          child: ImageSlideshow(
-             width: double.infinity,
-        
-            /// Height of the [ImageSlideshow].
-            height: (MediaQuery.of(context).size.height)/2,
-        
-            /// The page to show when first creating the [ImageSlideshow].
-            initialPage: 0,
-        
-            /// The color to paint the indicator.
-            indicatorColor: Colors.blue,
-        
-            /// The color to paint behind th indicator.
-            indicatorBackgroundColor: Colors.grey,
-        
-            /// The widgets to display in the [ImageSlideshow].
-            /// Add the sample image file into the images folder
-            children: [
-              Image.asset(
-                'asset/dept of health.jpg',
-                fit: BoxFit.cover,
-                
+      body: SingleChildScrollView(
+        child: 
+          <Widget>[
+            Column(children: [
+              const SizedBox(height: 10,),
+              Row(children: [
+                const SizedBox(width: 10,),
+                SizedBox(
+                  width:  (MediaQuery.of(context).size.width)*(0.45),
+                  height: (MediaQuery.of(context).size.height)*(0.15),
+                child: FloatingActionButton.extended(
+                      //  extendedPadding: EdgeInsets.only(left: 1, right: 1),
+                      label: const Text(
+                        'Book Lab Tests',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ), // <-- Text
+                      backgroundColor: Color.fromARGB(255, 229, 230, 234),
+                      icon: new Icon(FontAwesomeIcons.stethoscope),
+                      onPressed: () {
+                        
+                      },
+                    ),
               ),
-              Image.asset(
-                'asset/improving-healthcare-west-bengal-medium-term-expenditure-framework_6.jpeg',
-                fit: BoxFit.cover,
-               
+              const SizedBox(width: 10),
+              SizedBox(
+                width: (MediaQuery.of(context).size.width)*(0.45),
+                height: (MediaQuery.of(context).size.height)*(0.15),
+                child: FloatingActionButton.extended(
+                      //  extendedPadding: EdgeInsets.only(left: 1, right: 1),
+                      label: const Text(
+                        'Medical History',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ), // <-- Text
+                      backgroundColor:Color.fromARGB(255, 229, 230, 234),
+                      icon: new Icon(FontAwesomeIcons.bookMedical),
+                      onPressed: () {
+                        
+                      },
+                    ),
               ),
-              Image.asset(
-                'asset/Swasthya sathi 2.jpg',
-                fit: BoxFit.cover,
-                
-              ),
-              Image.asset(
-                'asset/Swasthya sathi.jpg',
-                fit: BoxFit.cover,
-                
-              ),
-              Image.asset(
-                'asset/West-Bengal-Health-Scheme.jpg',
-                fit: BoxFit.cover,
-                
-              ),
-            ],
-        
-            /// Called whenever the page in the center of the viewport changes.
-            onPageChanged: (value) {
-              print('Page changed: $value');
-            },
-        
-            /// Auto scroll interval.
-            /// Do not auto scroll with null or 0.
-            autoPlayInterval: 1000,
-        
-            /// Loops back to first slide.
-            isLoop: true,
-            // alignment: Alignment.center,
-            // child: const Text('Home', style: TextStyle(fontSize: 30)),
+              ],),
+              const SizedBox(height: 5,),
+               Row(children: [
+                const SizedBox(width: 10,),
+                SizedBox(
+                  width:  (MediaQuery.of(context).size.width)*(0.45),
+                  height: (MediaQuery.of(context).size.height)*(0.15),
+                child: FloatingActionButton.extended(
+                      //  extendedPadding: EdgeInsets.only(left: 1, right: 1),
+                      label: const Text(
+                        'Blood Group',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ), // <-- Text
+                      backgroundColor: Color.fromARGB(255, 229, 230, 234),
+                      icon: new Icon(FontAwesomeIcons.droplet,
+                      color: Color.fromARGB(255, 209, 51, 39),
+                      ),
+                      onPressed: () { 
+                      },
+                    ),
+                    ),
+                    const SizedBox(width: 10),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width)*(0.45),
+                        height: (MediaQuery.of(context).size.height)*(0.15),
+                        child: FloatingActionButton.extended(
+                              //  extendedPadding: EdgeInsets.only(left: 1, right: 1),
+                              label: const Text(
+                                'Tele-Medicine',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ), // <-- Text
+                              backgroundColor:Color.fromARGB(255, 229, 230, 234),
+                              icon: new Icon(FontAwesomeIcons.phone),
+                              onPressed: () {
+                                
+                              },
+                            ),
+                      ),
+                    ]
+                    ),
+                    
+              Container(
+              margin: const EdgeInsets.only(left: 10, right: 16, top: 10),
+              child: ImageSlideshow(
+                 width: double.infinity,
             
+                /// Height of the [ImageSlideshow].
+                 height: (MediaQuery.of(context).size.height)*0.47,
+                /// The page to show when first creating the [ImageSlideshow].
+                initialPage: 0,
+            
+                /// The color to paint the indicator.
+                indicatorColor: Colors.blue,
+            
+                /// The color to paint behind th indicator.
+                indicatorBackgroundColor: Colors.grey,
+            
+                /// The widgets to display in the [ImageSlideshow].
+                /// Add the sample image file into the images folder
+                children: [
+                  Image.asset(
+                    'asset/dept_of_health.jpg',
+                    fit: BoxFit.cover,
+                    
+                  ),
+                  Image.asset(
+                    'asset/improving-healthcare-west-bengal-medium-term-expenditure-framework_6.jpeg',
+                    fit: BoxFit.cover,
+                   
+                  ),
+                  Image.asset(
+                    'asset/Swasthya sathi 2.jpg',
+                    fit: BoxFit.cover,
+                    
+                  ),
+                  Image.asset(
+                    'asset/Swasthya sathi.jpg',
+                    fit: BoxFit.cover,
+                    
+                  ),
+                  Image.asset(
+                    'asset/West-Bengal-Health-Scheme.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ],
+            
+                /// Called whenever the page in the center of the viewport changes.
+                onPageChanged: (value) {
+                  print('Page changed: $value');
+                },
+            
+                /// Auto scroll interval.
+                /// Do not auto scroll with null or 0.
+                autoPlayInterval: 1000,
+            
+                /// Loops back to first slide.
+                isLoop: true,
+                // alignment: Alignment.center,
+                // child: const Text('Home', style: TextStyle(fontSize: 30)),
+                
+              ),
+            ),
+                  ],
+                ),
+                Container(
+              alignment: Alignment.center,
+              child: const Text('Emergency', style: TextStyle(fontSize: 30)),
+            ),
+             Container(
+              alignment: Alignment.bottomCenter,
+              width: (MediaQuery.of(context).size.width),
+              height: (MediaQuery.of(context).size.height),
+            child: GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            crossAxisCount: 2,
+            children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[100],
+              child: const Text("He'd have you all unravel at the"),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[200],
+              child: const Text('Heed not the rabble'),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[300],
+              child: const Text('Sound of screams but the'),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[400],
+              child: const Text('Who scream'),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[500],
+              child: const Text('Revolution is coming...'),
+            ),
+            Container(
+              padding: const EdgeInsets.all(8),
+              color: Colors.teal[600],
+              child: const Text('Revolution, they...'),
+            ),
+              ],
+            ),
+            ),
+          ][currentPageIndex],
+      ),
+      floatingActionButton: Container(
+        width: (MediaQuery.of(context).size.width)*(0.20),
+        child: FloatingActionButton(
+            child: const Icon(Icons.smart_toy_rounded),
+            onPressed: () {
+              Navigator.of(context).pushNamed(chatroute);
+            },
           ),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Appointments', style: TextStyle(fontSize: 30)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Maps', style: TextStyle(fontSize: 30)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Tele-Medicine', style: TextStyle(fontSize: 30)),
-        ),
-      ][currentPageIndex],
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.smart_toy_rounded),
-        onPressed: () {
-          Navigator.of(context).pushNamed(chatroute);
-        },
       ),
       drawer: Drawer(
         child: Column(
@@ -270,6 +407,7 @@ class _NotesViewState extends State<NotesView> {
         ),
       ),
     );
+    return scaffold;
   }
 
   Widget imageProfile() {
