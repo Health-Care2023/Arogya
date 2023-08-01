@@ -22,7 +22,6 @@ import 'package:hello/views/notes/chat_view.dart';
 
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
-import 'package:hello/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,8 +76,6 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const NotesView();
-        } else if (state is AuthStateNeedsVerification) {
-          return const VerifyEmailView();
         } else if (state is AuthStateForgotPassword) {
           return const ForgotPasswordView();
         } else if (state is AuthStateLoggedOut) {

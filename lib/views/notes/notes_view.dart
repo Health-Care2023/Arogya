@@ -10,6 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/views/profile_view.dart';
 
+import '../../Helper/loading/loading_screen.dart';
 import '../../constants/routes.dart';
 
 import 'package:hello/db/database_helper.dart';
@@ -31,11 +32,13 @@ class _NotesViewState extends State<NotesView> {
   int currentPageIndex = 0;
   String? _name;
   String? _email;
+
  Uint8List? _image;
 
   @override
   void initState() {
     _sqlHelper = SQLHelper();
+
     refreshJournals();
     super.initState();
   }
@@ -355,11 +358,19 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProfileView(
-                          onDataUpdated: onDataUpdated,
-                        ),
-                      ));
+                      LoadingScreen().show(
+                          context: context, text: "Please wait a moment...");
+                      Future.delayed(
+                        Duration(seconds: 1),
+                        () {
+                          LoadingScreen().hide();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfileView(
+                              onDataUpdated: onDataUpdated,
+                            ),
+                          ));
+                        },
+                      );
                     },
                     child: const Row(
                       children: [

@@ -45,9 +45,10 @@ class _LoginViewState extends State<LoginView> {
 
         if (state is AuthStateLoggedOut) {
           if (state.exception is UserNotFoundException) {
-            await showErrorDialog(context, 'User Not Found');
+            await showErrorDialog(context, 'Sorry!!! You are not registered..');
           } else if (state.exception is WrongPasswordException) {
-            await showErrorDialog(context, 'Wrong Credentials');
+            await showErrorDialog(
+                context, 'Please check your entered Email and Password..');
           } else if (state.exception is GenericException) {
             await showErrorDialog(context, 'Authentication Error');
           }

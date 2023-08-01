@@ -10,7 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 
 import '../services/auth/bloc/auth_bloc.dart';
 import '../services/auth/bloc/auth_state.dart';
-import 'dart:typed_data';
+
 import 'package:flutter/services.dart';
 
 class RegisterView extends StatefulWidget {
@@ -60,11 +60,12 @@ class _RegisterViewState extends State<RegisterView> {
         // TODO: implement listener
         if (state is AuthStateRegistering) {
           if (state.exception is WeakPasswordException) {
-            await showErrorDialog(context, 'Weak Password');
+            await showErrorDialog(context, 'Please choose a strong password');
           } else if (state.exception is EmailAlreadyInUseException) {
-            await showErrorDialog(context, 'Email is already in Use');
+            await showErrorDialog(
+                context, 'Email is already in use.Please login..');
           } else if (state.exception is GenericException) {
-            await showErrorDialog(context, 'Failed to Register');
+            await showErrorDialog(context, 'Something went wrong..');
           }
         }
       },
