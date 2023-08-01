@@ -18,7 +18,7 @@ class CouldNotFindUser implements Exception {}
 class SQLHelper {
   Database? _db;
 
-  static final SQLHelper _shared = SQLHelper._sharedInstance();
+  static final SQLHelper _shared = SQLHelper._sharedInstance(); //Singleton object
   SQLHelper._sharedInstance();
   factory SQLHelper() => _shared;
 

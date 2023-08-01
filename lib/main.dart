@@ -36,7 +36,7 @@ void main() {
       ),
     ],
     child: MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //To avoid the debug tag from the screen
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme:
