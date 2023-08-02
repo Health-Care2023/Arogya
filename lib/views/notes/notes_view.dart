@@ -12,6 +12,11 @@ import '../../Helper/loading/loading_screen.dart';
 import '../../constants/routes.dart';
 
 import 'package:hello/db/database_helper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:hello/views/pages/emergency_page.dart';
+import 'package:hello/views/pages/appoinment_page.dart';
+import 'package:hello/views/pages/home_page.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -28,7 +33,9 @@ class _NotesViewState extends State<NotesView> {
   int currentPageIndex = 0;
   String? _name;
   String? _email;
+
   Uint8List? _image;
+
   @override
   void initState() {
     _sqlHelper = SQLHelper();
@@ -52,7 +59,7 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    var scaffold = Scaffold(
       appBar: AppBar(
         leading: Builder(
           builder: (BuildContext context) {
@@ -68,6 +75,22 @@ class _NotesViewState extends State<NotesView> {
           },
         ),
         title: const Text('Arogya', style: TextStyle(color: Colors.white)),
+        actions: <Widget>[
+          Row(
+            children: <Widget>[
+              IconButton(
+                  onPressed: () {},
+                  icon: Stack(
+                    children: <Widget>[
+                      Icon(
+                        Icons.notifications,
+                        color: Color.fromARGB(255, 249, 246, 246),
+                      ),
+                    ],
+                  ))
+            ],
+          )
+        ],
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
       ),
       bottomNavigationBar: NavigationBar(
@@ -79,46 +102,36 @@ class _NotesViewState extends State<NotesView> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, color: Color.fromARGB(255, 5, 14, 82)),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.book_online),
-            label: 'Bookings',
+            icon: Icon(FontAwesomeIcons.truckMedical,
+                color: Color.fromARGB(255, 181, 19, 8)),
+            label: 'Emergency',
           ),
           NavigationDestination(
-            icon: Icon(Icons.place),
-            label: 'Maps',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.medication),
-            label: 'Medicines',
+            icon: Icon(FontAwesomeIcons.stethoscope,
+                color: Color.fromARGB(255, 5, 14, 82)),
+            label: 'Appointment',
           ),
         ],
       ),
-      body: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Home', style: TextStyle(fontSize: 30)),
+      body: SingleChildScrollView(
+        child: <Widget>[
+          const HomePage(),
+          const EmergencyPage(),
+          const AppointmentPage(),
+        ][currentPageIndex],
+      ),
+      floatingActionButton: Container(
+        width: (MediaQuery.of(context).size.width) * (0.20),
+        child: FloatingActionButton(
+          child: const Icon(Icons.smart_toy_rounded),
+          onPressed: () {
+            Navigator.of(context).pushNamed(chatroute);
+          },
         ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Bookings', style: TextStyle(fontSize: 30)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Maps', style: TextStyle(fontSize: 30)),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Medicines', style: TextStyle(fontSize: 30)),
-        ),
-      ][currentPageIndex],
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.smart_toy_rounded),
-        onPressed: () {
-          Navigator.of(context).pushNamed(chatroute);
-        },
       ),
       drawer: Drawer(
         child: Column(
@@ -216,6 +229,7 @@ class _NotesViewState extends State<NotesView> {
         ),
       ),
     );
+    return scaffold;
   }
 
   Widget imageProfile() {
