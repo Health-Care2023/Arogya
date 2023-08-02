@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hello/db/database_helper.dart';
 import 'package:hello/services/auth/auth_provider.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(AuthProvider provider)
+  AuthBloc(AuthProvider provider, SQLHelper sqlhelper)
       : super(const AuthStateUninitialized(isloading: true)) {
     on<AuthEventSendEmailVerification>(
       (event, emit) async {
@@ -66,6 +69,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             isloading: false));
       },
     );
+    on<AuthEventUpdatingProfile>(
+      (event, emit) async {
+        emit(const AuthStateUpdatingProfile(
+            isloading: false, loadingtext: null));
+
+        await sqlhelper.updateItem(
+          name: event.name,
+          email: event.email,
+          aadhar_no: event.aadhar_no,
+          gender: event.gender,
+          phone1: event.phone1,
+          phone2: event.phone2,
+          profession: event.profession,
+          address1: event.address1,
+          district: event.district,
+          address2: event.address2,
+          address3: event.address3,
+          pincode: event.pincode,
+          wardNo: event.wardNo,
+          dateofbirth: event.dateofbirth,
+          image: event.image,
+        );
+
+        emit(const AuthStateUpdatingProfile(
+            isloading: true, loadingtext: "Updating..."));
+        await Future.delayed(const Duration(seconds: 3));
+        emit(const AuthStateUpdatedProfile(isloading: false));
+      },
+    );
     on<AuthEventLogin>((event, emit) async {
       emit(const AuthStateLoggedOut(
           exception: null, isloading: true, loadingtext: "Logging in.."));
@@ -88,6 +120,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ));
       }
     });
+    on<AuthEventUpdateProfile>(
+      (event, emit) {
+        emit(AuthstateUpdateProfile(
+            isloading: false,
+            loadingtext: null,
+            onDataUpdated: event.onDataUpdated));
+      },
+    );
     on<AuthEventLogOut>((event, emit) async {
       try {
         await provider.logOut();

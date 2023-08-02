@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hello/services/auth/auth_user.dart';
@@ -51,4 +53,24 @@ class AuthStateLoggedOut extends AuthState with EquatableMixin {
 class AuthStateNeedsVerification extends AuthState {
   const AuthStateNeedsVerification({required bool isloading})
       : super(isloading: isloading);
+}
+
+class AuthstateUpdateProfile extends AuthState {
+  final void Function() onDataUpdated;
+  const AuthstateUpdateProfile(
+      {required bool isloading,
+      String? loadingtext,
+      required this.onDataUpdated})
+      : super(isloading: isloading, loadingText: loadingtext);
+}
+
+class AuthStateUpdatingProfile extends AuthState {
+  const AuthStateUpdatingProfile(
+      {required isloading, required String? loadingtext})
+      : super(isloading: isloading, loadingText: loadingtext);
+}
+
+class AuthStateUpdatedProfile extends AuthState {
+  const AuthStateUpdatedProfile({required isloading, String? loadingtext})
+      : super(isloading: isloading, loadingText: loadingtext);
 }

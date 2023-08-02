@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello/Helper/loading/loading_screen.dart';
 import 'package:hello/constants/routes.dart';
+import 'package:hello/db/database_helper.dart';
 
 import 'package:hello/providers/models_provider.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 import 'package:hello/services/auth/firebase_auth_provide.dart';
 import 'package:hello/views/forgot_password_view.dart';
+import 'package:hello/views/profile_view.dart';
 
 import 'package:provider/provider.dart';
 
@@ -44,7 +46,7 @@ void main() {
         useMaterial3: true,
       ),
       home: BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(FirebaseAuthProvider()),
+          create: (context) => AuthBloc(FirebaseAuthProvider(), SQLHelper()),
           child: const HomePage()),
       routes: {
         myphone: (context) => const MyPhone(),
@@ -76,10 +78,14 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const NotesView();
+        } else if (state is AuthStateUpdatedProfile) {
+          return const NotesView();
         } else if (state is AuthStateForgotPassword) {
           return const ForgotPasswordView();
         } else if (state is AuthStateLoggedOut) {
           return const LoginView();
+        } else if (state is AuthstateUpdateProfile) {
+          return ProfileView(onDataUpdated: state.onDataUpdated);
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
         } else {

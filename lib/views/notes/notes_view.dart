@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
 
-import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/views/profile_view.dart';
 
 import '../../Helper/loading/loading_screen.dart';
@@ -155,19 +153,22 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      LoadingScreen().show(
-                          context: context, text: "Please wait a moment...");
-                      Future.delayed(
-                        Duration(seconds: 1),
-                        () {
-                          LoadingScreen().hide();
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProfileView(
-                              onDataUpdated: onDataUpdated,
-                            ),
-                          ));
-                        },
-                      );
+                      // LoadingScreen().show(
+                      //     context: context, text: "Please wait a moment...");
+                      // Future.delayed(
+                      //   Duration(seconds: 1),
+                      //   () {
+                      //     LoadingScreen().hide();
+                      //     Navigator.of(context).push(MaterialPageRoute(
+                      //       builder: (context) => ProfileView(
+                      //         onDataUpdated: onDataUpdated,
+                      //       ),
+                      //     ));
+                      //   },
+                      // );
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventUpdateProfile(onDataUpdated));
                     },
                     child: const Row(
                       children: [
