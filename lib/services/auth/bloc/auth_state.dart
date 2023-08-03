@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hello/services/auth/auth_user.dart';
