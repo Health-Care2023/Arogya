@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:hello/constants/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,7 +59,13 @@ class _HomePageState extends State<HomePage> {
                 ), // <-- Text
                 backgroundColor: Color.fromARGB(255, 229, 230, 234),
                 icon: new Icon(FontAwesomeIcons.bookMedical),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    prescription,
+                    (route) => false,
+                  );
+                },
               ),
             ),
           ],

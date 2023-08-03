@@ -46,6 +46,10 @@ class AuthEventUpdateProfile extends AuthEvent {
   const AuthEventUpdateProfile(this.onDataUpdated);
 }
 
+class AuthEventUpdatedProfile extends AuthEvent {
+  const AuthEventUpdatedProfile();
+}
+
 class AuthEventUpdatingProfile extends AuthEvent {
   final String name;
   final String email;

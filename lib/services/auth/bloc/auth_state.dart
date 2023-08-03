@@ -56,12 +56,10 @@ class AuthStateNeedsVerification extends AuthState {
 }
 
 class AuthstateUpdateProfile extends AuthState {
-  final void Function() onDataUpdated;
-  const AuthstateUpdateProfile(
-      {required bool isloading,
-      String? loadingtext,
-      required this.onDataUpdated})
-      : super(isloading: isloading, loadingText: loadingtext);
+  const AuthstateUpdateProfile({
+    required bool isloading,
+    String? loadingtext,
+  }) : super(isloading: isloading, loadingText: loadingtext);
 }
 
 class AuthStateUpdatingProfile extends AuthState {

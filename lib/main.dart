@@ -10,6 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 import 'package:hello/services/auth/firebase_auth_provide.dart';
 import 'package:hello/views/forgot_password_view.dart';
+import 'package:hello/views/prescription/prescription_view.dart';
 import 'package:hello/views/profile_view.dart';
 
 import 'package:provider/provider.dart';
@@ -38,7 +39,8 @@ void main() {
       ),
     ],
     child: MaterialApp(
-      debugShowCheckedModeBanner: false, //To avoid the debug tag from the screen
+      debugShowCheckedModeBanner:
+          false, //To avoid the debug tag from the screen
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme:
@@ -53,6 +55,7 @@ void main() {
         myverify: (context) => const MyVerify(),
 
         chatroute: (context) => const ChatView(),
+        prescription: (context) => const PrescriptionView(),
         // profileroute: (context) => const ProfileView(),
       },
     ),
@@ -85,7 +88,7 @@ class HomePage extends StatelessWidget {
         } else if (state is AuthStateLoggedOut) {
           return const LoginView();
         } else if (state is AuthstateUpdateProfile) {
-          return ProfileView(onDataUpdated: state.onDataUpdated);
+          return const ProfileView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
         } else {

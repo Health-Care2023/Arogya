@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello/db/database_helper.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
+import 'package:hello/views/notes/notes_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -33,8 +34,7 @@ class Utility {
 }
 
 class ProfileView extends StatefulWidget {
-  final void Function() onDataUpdated;
-  const ProfileView({required this.onDataUpdated});
+  const ProfileView({super.key});
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -142,8 +142,15 @@ class _ProfileViewState extends State<ProfileView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         // TODO: implement listener
-        if (state is AuthStateUpdatingProfile) {
-          widget.onDataUpdated;
+        if (state is AuthstateUpdateProfile) {
+          Future.delayed(
+            Duration(seconds: 3),
+            () {
+              refreshJournals();
+              LoadingScreen().hide();
+              context.read<AuthBloc>().add(const AuthEventUpdatedProfile());
+            },
+          );
         }
       },
       child: Scaffold(
@@ -524,15 +531,7 @@ class _ProfileViewState extends State<ProfileView> {
                             wardNo: _wordno.text,
                             image: _image!,
                           ));
-                      widget.onDataUpdated();
-                      LoadingScreen()
-                          .show(context: context, text: "Updating...");
-                      Future.delayed(
-                        Duration(seconds: 4),
-                        () {
-                          LoadingScreen().hide();
-                        },
-                      );
+
                       // ScaffoldMessenger.of(context).showSnackBar(
                       //   const SnackBar(
                       //     backgroundColor:
@@ -633,6 +632,7 @@ class _ProfileViewState extends State<ProfileView> {
     final pickedFile = await _picker.pickImage(
       source: source,
     );
+
     setState(() {
       _imageFile = File(pickedFile!.path);
       _image = _imageFile.readAsBytesSync();

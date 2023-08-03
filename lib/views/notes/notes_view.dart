@@ -41,6 +41,7 @@ class _NotesViewState extends State<NotesView> {
     _sqlHelper = SQLHelper();
 
     refreshJournals();
+    print("Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
     super.initState();
   }
 

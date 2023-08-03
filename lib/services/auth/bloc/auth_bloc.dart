@@ -71,8 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     on<AuthEventUpdatingProfile>(
       (event, emit) async {
-        emit(const AuthStateUpdatingProfile(
-            isloading: false, loadingtext: null));
+        emit(const AuthstateUpdateProfile(isloading: false));
 
         await sqlhelper.updateItem(
           name: event.name,
@@ -91,10 +90,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           dateofbirth: event.dateofbirth,
           image: event.image,
         );
-
-        emit(const AuthStateUpdatingProfile(
-            isloading: true, loadingtext: "Updating..."));
-        await Future.delayed(const Duration(seconds: 3));
+        emit(const AuthstateUpdateProfile(
+            isloading: true, loadingtext: "Updating"));
+      },
+    );
+    on<AuthEventUpdatedProfile>(
+      (event, emit) {
         emit(const AuthStateUpdatedProfile(isloading: false));
       },
     );
@@ -122,10 +123,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<AuthEventUpdateProfile>(
       (event, emit) {
-        emit(AuthstateUpdateProfile(
-            isloading: false,
-            loadingtext: null,
-            onDataUpdated: event.onDataUpdated));
+        emit(const AuthstateUpdateProfile(
+          isloading: false,
+          loadingtext: null,
+        ));
       },
     );
     on<AuthEventLogOut>((event, emit) async {
