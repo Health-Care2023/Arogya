@@ -39,12 +39,14 @@ class _HomePageState extends State<HomePage> {
               child: FloatingActionButton.extended(
                 //  extendedPadding: EdgeInsets.only(left: 1, right: 1),
                 label: const Text(
-                  'Book Lab Tests',
+                  'Find a doctor',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ), // <-- Text
                 backgroundColor: Color.fromARGB(255, 229, 230, 234),
                 icon: new Icon(FontAwesomeIcons.stethoscope),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(findocroute);
+                },
               ),
             ),
             const SizedBox(width: 10),

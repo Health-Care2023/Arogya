@@ -22,6 +22,7 @@ import 'package:hello/views/login_view.dart';
 import 'package:hello/views/notes/notes_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/notes/chat_view.dart';
+import 'package:hello/views/notes/findoc_view.dart';
 
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
@@ -56,6 +57,7 @@ void main() {
 
         chatroute: (context) => const ChatView(),
         prescription: (context) => const PrescriptionView(),
+        findocroute: (context) => const FindocView(),
         // profileroute: (context) => const ProfileView(),
       },
     ),
