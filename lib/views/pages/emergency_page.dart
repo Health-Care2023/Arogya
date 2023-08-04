@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:local_auth/local_auth.dart';
 
 class EmergencyPage extends StatefulWidget {
@@ -37,30 +38,30 @@ class _EmergencyPageState extends State<EmergencyPage> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      //Optional it is written for testing purpose
       children: <Widget>[
         if(_support)
             const Text('This device supports biometrics')
         else
             const Text('This device is not supported'),
           
-        const Divider(height: 100),
-
-           Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             
-             children: [
-               FloatingActionButton.extended(
-                      extendedPadding: EdgeInsets.only(left: 150, right: 150),
+        //  const Divider(height: 100),
+           Container(   
+             margin: EdgeInsets.only(left: 20, right: 20, top:(MediaQuery.of(context).size.height)* 0.40),
+             child: FloatingActionButton.extended(
+                      extendedPadding: EdgeInsets.only(left: 120, right: 120),
                       label: const Text(
                         'Authenticate',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+                      ),
+                       icon: const Icon(
+                        FontAwesomeIcons.fingerprint,
+                        color: Colors.black,
                       ), // <-- Text
-                      backgroundColor: Colors.black,
+                      backgroundColor: const Color.fromARGB(255, 8, 100, 176),
                       onPressed: _authin,
                     ),
-             ],
-           ),
-          
+             )      
       ],
     );
   }
@@ -74,33 +75,65 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   biometricOnly: true,
                 )
         );
-
-        print("Authenticated : $authinticate");
-
-
-      
+        if(authinticate){
+                final ConfirmAction? action = await _asyncConfirmDialog(context);  
+                print("Confirm Action $action" );  
+        }
+        print("Authenticated : $authinticate");      
     } on PlatformException catch (e) {
       print(e);
     }
-
-
-
   }
-
-
   Future<void> _getBiometrics() async {
     List<BiometricType> availableBios =
        await auth.getAvailableBiometrics();
-
     print("List of availableBios : $availableBios");
-
     if (!mounted){
       return ;
     }
-    
-
-
   }
-
-
+}
+  enum ConfirmAction { Cancel, Accept}
+Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context) async {  
+  return showDialog<ConfirmAction>(  
+    context: context,  
+    barrierDismissible: false, // user must tap button for close dialog!  
+    builder: (BuildContext context) {  
+      return AlertDialog(  
+        title: const Text('Are you sure to access the emergency sevices?',
+         style: TextStyle(
+              fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,
+          )
+        ),  
+        content: const Text(  
+            'If the emergency service is activated for fun,then actions will be taken according to the terms and conditions.\nPress cancel to return back to the page',
+             style:TextStyle(
+              fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black,
+              )
+             ),  
+        actions: <Widget>[  
+          ElevatedButton(  
+            child: const Text('Cancel',
+            style:TextStyle(
+              fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,
+             )
+            ),  
+            onPressed: () {  
+              Navigator.of(context).pop(ConfirmAction.Cancel);  
+            },  
+          ),  
+          ElevatedButton(  
+            child: const Text('Ok',
+            style:TextStyle(
+              fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black,
+              )
+            ),  
+            onPressed: () {  
+              Navigator.of(context).pop(ConfirmAction.Accept);  
+            },  
+          )  
+        ],  
+      );  
+    },  
+  );  
 }
