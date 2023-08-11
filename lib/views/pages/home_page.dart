@@ -88,8 +88,8 @@ class _HomePageState extends State<HomePage> {
                 'Blood Group',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ), // <-- Text
-              backgroundColor: Color.fromARGB(255, 229, 230, 234),
-              icon: new Icon(
+              backgroundColor: const Color.fromARGB(255, 229, 230, 234),
+              icon: const Icon(
                 FontAwesomeIcons.droplet,
                 color: Color.fromARGB(255, 209, 51, 39),
               ),
