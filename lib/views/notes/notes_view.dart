@@ -249,21 +249,41 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Log out'),
-        content: const Text("Are you sure You Want to Log out"),
+         title: const Text('Log out',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
+        content: const Text('Are you sure You Want to Log out',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
         actions: [
-          TextButton(
-            onPressed: () {
+           ElevatedButton(
+            child: const Text('Ok',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            onPressed: () async {
               Navigator.of(context).pop(true);
             },
-            child: const Text('Ok'),
           ),
-          TextButton(
+          ElevatedButton(
+            child: const Text('Cancel',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('Cancel'),
-          )
+          ),
         ],
       );
     },

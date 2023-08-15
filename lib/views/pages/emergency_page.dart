@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:background_sms/background_sms.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
@@ -125,7 +127,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             biometricOnly: true,
           ));
       if (authinticate) {
-        final ConfirmAction? action = await _asyncConfirmDialog(
+        final action = await showConfirmDialog(
             context, _currentPosition, _currentAddress);
         print("Confirm Action $action");
       }
@@ -144,7 +146,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
   }
 }
 
-enum ConfirmAction { Cancel, Accept }
+// enum ConfirmAction { Cancel, Accept }
 
 _sendSms(String phoneNumber, String message, {int? simSlot}) async {
   await BackgroundSms.sendMessage(
@@ -159,27 +161,91 @@ _sendSms(String phoneNumber, String message, {int? simSlot}) async {
   });
 }
 
-Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context,
-    Position? _currentPosition, String? _currentAddress) async {
-  return showDialog<ConfirmAction>(
+// Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context,
+//     Position? _currentPosition, String? _currentAddress) async {
+//   return showDialog<ConfirmAction>(
+//     context: context,
+//     barrierDismissible: false, // user must tap button for close dialog!
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: const Text('Are you sure to access the emergency sevices?',
+//             style: TextStyle(
+//               fontSize: 20,
+//               fontWeight: FontWeight.bold,
+//               color: Colors.black,
+//             )),
+//         content: const Text(
+//             'If the emergency service is activated for fun,then actions will be taken according to the terms and conditions.\nPress cancel to return back to the page',
+//             style: TextStyle(
+//               fontSize: 15,
+//               fontWeight: FontWeight.bold,
+//               color: Colors.black,
+//             )),
+//         actions: <Widget>[
+//           ElevatedButton(
+//             child: const Text('Cancel',
+//                 style: TextStyle(
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black,
+//                 )),
+//             onPressed: () {
+//               Navigator.of(context).pop(ConfirmAction.Cancel);
+//             },
+//           ),
+//           ElevatedButton(
+//             child: const Text('Ok',
+//                 style: TextStyle(
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black,
+//                 )),
+//             onPressed: () async {
+//               String message =
+//                   "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
+//               _sendSms("8335998335", " Please Help I am at: $message ");
+//               Navigator.of(context).pop(ConfirmAction.Accept);
+//             },
+//           )
+//         ],
+//       );
+//     },
+//   );
+// }
+Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition, String? _currentAddress) {
+  return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button for close dialog!
-    builder: (BuildContext context) {
+    builder: (context) {
       return AlertDialog(
-        title: const Text('Are you sure to access the emergency sevices?',
+         title: const Text('Are you sure to access the emergency sevices?',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             )),
-        content: const Text(
-            'If the emergency service is activated for fun,then actions will be taken according to the terms and conditions.\nPress cancel to return back to the page',
+        content: const Text('If the emergency service is activated for fun,then actions will be taken according to the terms and conditions.\nPress cancel to return back to the page',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             )),
-        actions: <Widget>[
+        actions: [
+           ElevatedButton(
+            child: const Text('Ok',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            onPressed: () async {
+             
+            //  await Future.delayed( const Duration(seconds: 3),);
+                 String message = "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
+              _sendSms("8017285383", " Please Help I am at: $message ");
+              Navigator.of(context).pop(false);
+            },
+          ),
           ElevatedButton(
             child: const Text('Cancel',
                 style: TextStyle(
@@ -188,25 +254,11 @@ Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context,
                   color: Colors.black,
                 )),
             onPressed: () {
-              Navigator.of(context).pop(ConfirmAction.Cancel);
+              Navigator.of(context).pop(true);
             },
           ),
-          ElevatedButton(
-            child: const Text('Ok',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-            onPressed: () async {
-              String message =
-                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
-              _sendSms("9874230424", " Please Help I am at: $message ");
-              Navigator.of(context).pop(ConfirmAction.Accept);
-            },
-          )
         ],
       );
     },
-  );
+  ).then((value) => value ?? false);
 }
