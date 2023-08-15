@@ -82,7 +82,7 @@ class _ChatViewState extends State<ChatView> {
           children: [
             Flexible(
               child: ListView.builder(
-                  controller: _listScrollController,
+                  // controller: _listScrollController,
                   itemCount: chatProvider.getChatList.length,
                   itemBuilder: (context, index) {
                     return ChatWidget(
@@ -206,28 +206,28 @@ class _ChatViewState extends State<ChatView> {
   Future<void> sendMessageFCT(
       {required ModelsProvider modelsProvider,
       required ChatProvider chatProvider}) async {
-    if (_isTyping) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: TextWidget(
-            label: "You cant send multiple messages at a time",
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-    if (textEditingController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: TextWidget(
-            label: "Please type a message",
-          ),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
+    // if (_isTyping) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: TextWidget(
+    //         label: "You cant send multiple messages at a time",
+    //       ),
+    //       backgroundColor: Colors.red,
+    //     ),
+    //   );
+    //   return;
+    // }
+    // if (textEditingController.text.isEmpty) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: TextWidget(
+    //         label: "Please type a message",
+    //       ),
+    //       backgroundColor: Colors.red,
+    //     ),
+    //   );
+    //   return;
+    // }
     try {
       String msg = textEditingController.text;
       setState(() {
