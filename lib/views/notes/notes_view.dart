@@ -9,6 +9,8 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 
 import 'package:hello/services/chat/assets_manager.dart';
 import 'package:hello/db/database_helper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
 import '../../constants/routes.dart';
 import '../profile_view.dart';
@@ -29,6 +31,7 @@ class _NotesViewState extends State<NotesView> {
   String? _email;
   int currentPageIndex = 0;
   Uint8List? _image;
+
   @override
   void initState() {
     _sqlHelper = SQLHelper();
@@ -68,6 +71,22 @@ class _NotesViewState extends State<NotesView> {
         ),
         title: const Text('Arogya', style: TextStyle(color: Colors.white)),
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
+        actions: <Widget>[
+          Row(
+            children: <Widget>[
+              IconButton(
+                  onPressed: () {},
+                  icon: Stack(
+                    children: <Widget>[
+                      Icon(
+                        Icons.notifications,
+                        color: Color.fromARGB(255, 249, 246, 246),
+                      ),
+                    ],
+                  ))
+            ],
+          )
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -78,31 +97,86 @@ class _NotesViewState extends State<NotesView> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, color: Color.fromARGB(255, 8, 26, 194)),
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.book_online),
-            label: 'Bookings',
+            icon: Icon(FontAwesomeIcons.stethoscope,
+                color: Color.fromARGB(255, 0, 0, 0)),
+            label: 'Appointment',
           ),
           NavigationDestination(
-            icon: Icon(Icons.place),
-            label: 'Maps',
+            icon: Icon(FontAwesomeIcons.truckMedical,
+                color: Color.fromARGB(255, 203, 4, 4)),
+            label: 'Emergency',
           ),
           NavigationDestination(
-            icon: Icon(Icons.medication),
-            label: 'Medicines',
+            icon: Icon(Icons.medication, color: Colors.blue),
+            label: 'TeleMedicines',
           ),
         ],
       ),
       body: <Widget>[
         Container(
-          alignment: Alignment.center,
-          child: const Text('Home', style: TextStyle(fontSize: 30)),
+          margin: EdgeInsets.only(left: 20, right: 10, top: 10),
+          child: ImageSlideshow(
+            width: double.infinity,
+
+            /// Height of the [ImageSlideshow].
+            height: 400,
+
+            /// The page to show when first creating the [ImageSlideshow].
+            initialPage: 0,
+
+            /// The color to paint the indicator.
+            indicatorColor: const Color.fromARGB(255, 0, 3, 6),
+
+            /// The color to paint behind th indicator.
+            indicatorBackgroundColor: Color.fromARGB(255, 186, 170, 190),
+
+            /// The widgets to display in the [ImageSlideshow].
+            /// Add the sample image file into the images folder
+            children: [
+              Image.asset(
+                'asset/dept of health.jpg',
+                fit: BoxFit.cover,
+              ),
+              Image.asset(
+                'asset/improving-healthcare-west-bengal-medium-term-expenditure-framework_6.jpeg',
+                fit: BoxFit.cover,
+              ),
+              Image.asset(
+                'asset/Swasthya sathi 2.jpg',
+                fit: BoxFit.cover,
+              ),
+              Image.asset(
+                'asset/Swasthya sathi.jpg',
+                fit: BoxFit.cover,
+              ),
+              Image.asset(
+                'asset/West-Bengal-Health-Scheme.jpg',
+                fit: BoxFit.cover,
+              ),
+            ],
+
+            /// Called whenever the page in the center of the viewport changes.
+            onPageChanged: (value) {
+              // print('Page changed: $value');
+            },
+
+            /// Auto scroll interval.
+            /// Do not auto scroll with null or 0.
+            autoPlayInterval: 3000,
+
+            /// Loops back to first slide.
+            isLoop: true,
+            // alignment: Alignment.center,
+            // child: const Text('Home', style: TextStyle(fontSize: 30)),
+          ),
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Bookings', style: TextStyle(fontSize: 30)),
+          child: const Text('Appointment', style: TextStyle(fontSize: 30)),
         ),
         Container(
           alignment: Alignment.center,
@@ -110,7 +184,7 @@ class _NotesViewState extends State<NotesView> {
         ),
         Container(
           alignment: Alignment.center,
-          child: const Text('Medicines', style: TextStyle(fontSize: 30)),
+          child: const Text('TeleMedicines', style: TextStyle(fontSize: 30)),
         ),
       ][currentPageIndex],
       floatingActionButton: FloatingActionButton(
@@ -187,7 +261,7 @@ class _NotesViewState extends State<NotesView> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 183, 18, 6),
                     width: 2.0,
                   ),
                 ),
