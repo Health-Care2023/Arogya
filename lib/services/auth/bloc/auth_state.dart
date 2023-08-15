@@ -52,3 +52,21 @@ class AuthStateNeedsVerification extends AuthState {
   const AuthStateNeedsVerification({required bool isloading})
       : super(isloading: isloading);
 }
+
+class AuthstateUpdateProfile extends AuthState {
+  const AuthstateUpdateProfile({
+    required bool isloading,
+    String? loadingtext,
+  }) : super(isloading: isloading, loadingText: loadingtext);
+}
+
+class AuthStateUpdatingProfile extends AuthState {
+  const AuthStateUpdatingProfile(
+      {required isloading, required String? loadingtext})
+      : super(isloading: isloading, loadingText: loadingtext);
+}
+
+class AuthStateUpdatedProfile extends AuthState {
+  const AuthStateUpdatedProfile({required isloading, String? loadingtext})
+      : super(isloading: isloading, loadingText: loadingtext);
+}

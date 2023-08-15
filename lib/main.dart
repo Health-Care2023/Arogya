@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello/Helper/loading/loading_screen.dart';
 import 'package:hello/constants/routes.dart';
+import 'package:hello/db/database_helper.dart';
 
 import 'package:hello/providers/models_provider.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
@@ -9,6 +10,8 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 import 'package:hello/services/auth/firebase_auth_provide.dart';
 import 'package:hello/views/forgot_password_view.dart';
+import 'package:hello/views/prescription/prescription_view.dart';
+import 'package:hello/views/profile_view.dart';
 
 import 'package:provider/provider.dart';
 
@@ -19,10 +22,10 @@ import 'package:hello/views/login_view.dart';
 import 'package:hello/views/notes/notes_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/notes/chat_view.dart';
+import 'package:hello/views/notes/findoc_view.dart';
 
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
-import 'package:hello/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +40,8 @@ void main() {
       ),
     ],
     child: MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner:
+          false, //To avoid the debug tag from the screen
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme:
@@ -45,13 +49,15 @@ void main() {
         useMaterial3: true,
       ),
       home: BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(FirebaseAuthProvider()),
+          create: (context) => AuthBloc(FirebaseAuthProvider(), SQLHelper()),
           child: const HomePage()),
       routes: {
         myphone: (context) => const MyPhone(),
         myverify: (context) => const MyVerify(),
 
         chatroute: (context) => const ChatView(),
+        prescription: (context) => const PrescriptionView(),
+        findocroute: (context) => const FindocView(),
         // profileroute: (context) => const ProfileView(),
       },
     ),
@@ -77,12 +83,14 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
           return const NotesView();
-        } else if (state is AuthStateNeedsVerification) {
-          return const VerifyEmailView();
+        } else if (state is AuthStateUpdatedProfile) {
+          return const NotesView();
         } else if (state is AuthStateForgotPassword) {
           return const ForgotPasswordView();
         } else if (state is AuthStateLoggedOut) {
           return const LoginView();
+        } else if (state is AuthstateUpdateProfile) {
+          return const ProfileView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
         } else {
