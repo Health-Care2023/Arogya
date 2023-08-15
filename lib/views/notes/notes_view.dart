@@ -6,9 +6,6 @@ import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
 
-import 'package:hello/views/profile_view.dart';
-
-import '../../Helper/loading/loading_screen.dart';
 import '../../constants/routes.dart';
 
 import 'package:hello/db/database_helper.dart';

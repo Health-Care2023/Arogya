@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:hello/db/database_helper.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
-import 'package:hello/views/notes/notes_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
 import '../Helper/loading/loading_screen.dart';
 import '../services/auth/auth_service.dart';
 import '../services/auth/bloc/auth_state.dart';

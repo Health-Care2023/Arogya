@@ -56,6 +56,13 @@ dependencies:
   font_awesome_flutter: ^10.5.0
   flutter_image_slideshow: ^0.1.6
   local_auth: ^2.1.6
+  permission_handler: ^10.4.3
+  background_sms: ^0.0.4
+  fluttertoast: ^8.2.2
+  geocode: ^1.0.3
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  baseflow_plugin_template: ^2.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
