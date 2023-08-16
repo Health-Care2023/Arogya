@@ -17,7 +17,7 @@ class EmergencyPage extends StatefulWidget {
   @override
   State<EmergencyPage> createState() => _EmergencyPageState();
 }
-
+String snackbarMessage = "";
 class _EmergencyPageState extends State<EmergencyPage> {
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
   Position? _currentPosition;
@@ -155,8 +155,10 @@ _sendSms(String phoneNumber, String message, {int? simSlot}) async {
   ).then((SmsStatus status) {
     if (status == SmsStatus.sent) {
       Fluttertoast.showToast(msg: "sent");
+      snackbarMessage = "Message has been sent";
     } else {
       Fluttertoast.showToast(msg: "failed to send message ${status}");
+      snackbarMessage = "failed to send message ${status}";
     }
   });
 }
@@ -239,11 +241,68 @@ Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition,
                   color: Colors.black,
                 )),
             onPressed: () async {
-             
-            //  await Future.delayed( const Duration(seconds: 3),);
                  String message = "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
               _sendSms("8017285383", " Please Help I am at: $message ");
-              Navigator.of(context).pop(false);
+               // Show the loading popup for 3 seconds
+               showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          content: Row(
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(width: 10),
+                              Text("Sending the message...",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                )),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                    await Future.delayed(const Duration(seconds: 3));
+                     IconData iconData = snackbarMessage == "Message has been sent"
+                      ? Icons.check_circle_outline
+                      : Icons.close;
+                      Color iconColour = snackbarMessage == "Message has been sent"
+                      ? Colors.green
+                      : Colors.red;
+                     ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(
+                          backgroundColor:
+                              Color.fromARGB(189, 255, 255, 255), // Custom background color
+                          content: Container(
+                            // margin: EdgeInsets.only(
+                            // top: (MediaQuery.of(context).size.height) * 0.50),
+                            alignment: Alignment.center,
+                            width: 300,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(iconData,
+                                      color: iconColour), // Custom tick icon
+                                  SizedBox(width: 8), // Spacing between icon and text
+                                  Text(
+                                   snackbarMessage,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          duration: Duration(
+                              seconds: 3), // Adjust the duration as needed
+                        ),
+                      );
+              // Navigator.of(context).pop(true);
+               Navigator.of(context).pop(true);
+              Navigator.of(context).pop(true);
             },
           ),
           ElevatedButton(
@@ -262,3 +321,4 @@ Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition,
     },
   ).then((value) => value ?? false);
 }
+
