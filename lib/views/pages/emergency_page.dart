@@ -83,10 +83,10 @@ class _EmergencyPageState extends State<EmergencyPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       //Optional it is written for testing purpose
       children: <Widget>[
-        if (_support)
-          const Text('This device supports biometrics')
-        else
-          const Text('This device is not supported'),
+        // if (_support)
+        //   const Text('This device supports biometrics')
+        // else
+        //   const Text('This device is not supported'),
 
         //  const Divider(height: 100),
         Container(
@@ -95,7 +95,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
               right: 20,
               top: (MediaQuery.of(context).size.height) * 0.40),
           child: FloatingActionButton.extended(
-            extendedPadding: EdgeInsets.only(left: 120, right: 120),
+            extendedPadding: const EdgeInsets.only(left: 120, right: 120),
             label: const Text(
               'Authenticate',
               style: TextStyle(
@@ -154,10 +154,10 @@ _sendSms(String phoneNumber, String message, {int? simSlot}) async {
     message: message,
   ).then((SmsStatus status) {
     if (status == SmsStatus.sent) {
-      Fluttertoast.showToast(msg: "sent");
+      // Fluttertoast.showToast(msg: "sent");
       snackbarMessage = "Message has been sent";
     } else {
-      Fluttertoast.showToast(msg: "failed to send message ${status}");
+      // Fluttertoast.showToast(msg: "failed to send message ${status}");
       snackbarMessage = "failed to send message ${status}";
     }
   });
@@ -264,7 +264,7 @@ Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition,
                         );
                       },
                     );
-                    await Future.delayed(const Duration(seconds: 3));
+                    await Future.delayed(const Duration(seconds: 1));
                      IconData iconData = snackbarMessage == "Message has been sent"
                       ? Icons.check_circle_outline
                       : Icons.close;
@@ -273,31 +273,36 @@ Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition,
                       : Colors.red;
                      ScaffoldMessenger.of(context).showSnackBar(
                          SnackBar(
-                          backgroundColor:
-                              Color.fromARGB(189, 255, 255, 255), // Custom background color
+                          backgroundColor: Colors.white ,
                           content: Container(
                             // margin: EdgeInsets.only(
-                            // top: (MediaQuery.of(context).size.height) * 0.50),
+                            // bottom: (MediaQuery.of(context).size.height) * 0.50),
                             alignment: Alignment.center,
-                            width: 300,
+                            height: (MediaQuery.of(context).size.height) * 0.10,
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(iconData,
-                                      color: iconColour), // Custom tick icon
-                                  SizedBox(width: 8), // Spacing between icon and text
+                                      color: iconColour,
+                                      size: 35.0,), // Custom tick icon
+                                  SizedBox(width: 10), // Spacing between icon and text
                                   Text(
                                    snackbarMessage,
-                                    style: TextStyle(color: Colors.black),
+                                    style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    )
                                   ),
                                 ],
                               ),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(color: iconColour, width: 2),
                           ),
                           duration: Duration(
-                              seconds: 3), // Adjust the duration as needed
+                              seconds: 1), // Adjust the duration as needed
                         ),
                       );
               // Navigator.of(context).pop(true);
