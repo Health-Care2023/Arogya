@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello/db/database_helper.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
@@ -63,7 +64,7 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _wordno;
   late final TextEditingController _district;
   late final TextEditingController _pincode;
-  late final TextEditingController _photo;
+  // late final TextEditingController _photo;
 
   //TextEditingController();
   @override
@@ -88,7 +89,7 @@ class _ProfileViewState extends State<ProfileView> {
     _district = TextEditingController();
     _pincode = TextEditingController();
     _dob = TextEditingController();
-    _photo = TextEditingController();
+    // _photo = TextEditingController();
 
     _firstname.text = " ";
     _middlename.text = "";
@@ -140,7 +141,7 @@ class _ProfileViewState extends State<ProfileView> {
         // TODO: implement listener
         if (state is AuthstateUpdateProfile) {
           Future.delayed(
-            Duration(seconds: 3),
+            const Duration(seconds: 3),
             () {
               refreshJournals();
               LoadingScreen().hide();
@@ -151,8 +152,8 @@ class _ProfileViewState extends State<ProfileView> {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text("Your Profile"),
-            backgroundColor: Color.fromARGB(255, 5, 14, 82),
+            title: const Text("Your Profile"),
+            backgroundColor: const Color.fromARGB(255, 5, 14, 82),
             foregroundColor: Colors.white,
           ),
           body: SingleChildScrollView(
@@ -160,7 +161,7 @@ class _ProfileViewState extends State<ProfileView> {
             color: Colors.white,
             alignment: Alignment.center,
             child: Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -175,7 +176,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'Enter your email',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -223,7 +224,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'Middle Name',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -239,7 +240,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'Last Name',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -251,7 +252,11 @@ class _ProfileViewState extends State<ProfileView> {
                     controller: _phone1,
                     enableSuggestions: false,
                     autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
                     decoration: InputDecoration(
                       labelText: 'Alternate Phone No 1',
                       border: OutlineInputBorder(
@@ -267,11 +272,15 @@ class _ProfileViewState extends State<ProfileView> {
                     controller: _phone2,
                     enableSuggestions: false,
                     autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
+                     inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
                     decoration: InputDecoration(
                       labelText: 'Enter Alternate Phone No 2',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -282,11 +291,11 @@ class _ProfileViewState extends State<ProfileView> {
                   TextField(
                       controller: _dob, //editing controller of this TextField
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.calendar_today),
+                        prefixIcon: const Icon(Icons.calendar_today),
                         iconColor: Colors.blue, //icon of text field
                         labelText: "Enter Date Of Birth", //label text of field
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(width: 1, color: Colors.black),
+                          borderSide: const BorderSide(width: 1, color: Colors.black),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
@@ -314,12 +323,12 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderSide:const BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
                         //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderSide: const BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       filled: true,
@@ -338,7 +347,7 @@ class _ProfileViewState extends State<ProfileView> {
                         value: value,
                         child: Text(
                           value,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
                         ),
                       );
@@ -349,11 +358,17 @@ class _ProfileViewState extends State<ProfileView> {
                     controller: _aadharNo,
                     enableSuggestions: false,
                     autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
+                     inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(12),
+                        AadharInputFormatter(),
+                      ],
                     decoration: InputDecoration(
+                      hintText: 'XXXX XXXX XXXX',
                       labelText: 'Adhaar Card Number',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -365,12 +380,12 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderSide: const BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
                         //<-- SEE HERE
-                        borderSide: BorderSide(color: Colors.black, width: 1),
+                        borderSide: const BorderSide(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       filled: true,
@@ -395,7 +410,7 @@ class _ProfileViewState extends State<ProfileView> {
                         value: value,
                         child: Text(
                           value,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w500),
                         ),
                       );
@@ -410,7 +425,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'Addressline-1',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -426,7 +441,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'addressline-2,post office,landmark',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -442,7 +457,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'City/town/village name',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -454,11 +469,15 @@ class _ProfileViewState extends State<ProfileView> {
                     controller: _wordno,
                     enableSuggestions: false,
                     autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
+                     inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(3),
+                      ],
                     decoration: InputDecoration(
                       labelText: 'Word No/Block No',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -474,7 +493,7 @@ class _ProfileViewState extends State<ProfileView> {
                     decoration: InputDecoration(
                       labelText: 'District',
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderSide: const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -483,13 +502,13 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   const SizedBox(height: 10),
                   FloatingActionButton.extended(
-                    extendedPadding: EdgeInsets.only(left: 150, right: 150),
+                    extendedPadding: const EdgeInsets.only(left: 150, right: 150),
                     label: const Text(
                       'Update',
                       style: TextStyle(color: Colors.white),
                     ), // <-- Text
-                    backgroundColor: Color.fromARGB(255, 48, 143, 221),
-                    icon: new Icon(Icons.update),
+                    backgroundColor: const Color.fromARGB(255, 48, 143, 221),
+                    icon: const Icon(Icons.update),
                     onPressed: () async {
                       // await _sqlhelper.updateItem(
                       //   name:
@@ -576,7 +595,7 @@ class _ProfileViewState extends State<ProfileView> {
                       builder: ((builder) => bottomSheet()),
                     );
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.camera_alt,
                     size: 25.0,
                     color: Colors.teal,
@@ -590,34 +609,34 @@ class _ProfileViewState extends State<ProfileView> {
     return Container(
         height: 100.0,
         width: MediaQuery.of(context as BuildContext).size.width,
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 20,
         ),
         child: Column(children: <Widget>[
-          Text(
+          const Text(
             "Choose your profile picture",
             style: TextStyle(
               fontSize: 20.0,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextButton.icon(
-                icon: Icon(Icons.camera),
+                icon: const Icon(Icons.camera),
                 onPressed: () {
                   takePhoto(ImageSource.camera);
                 },
-                label: Text("Camera"),
+                label: const Text("Camera"),
               ),
               TextButton.icon(
-                icon: Icon(Icons.camera),
+                icon: const Icon(Icons.camera),
                 onPressed: () {
                   takePhoto(ImageSource.gallery);
                 },
-                label: Text("Gallery"),
+                label: const Text("Gallery"),
               ),
             ],
           )
@@ -633,5 +652,27 @@ class _ProfileViewState extends State<ProfileView> {
       _imageFile = File(pickedFile!.path);
       _image = _imageFile.readAsBytesSync();
     });
+  }
+}
+class AadharInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    var text = newValue.text;
+if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+var buffer = StringBuffer();
+    for (int i = 0; i < text.length; i++) {
+      buffer.write(text[i]);
+      var nonZeroIndex = i + 1;
+      if (nonZeroIndex % 4 == 0 && nonZeroIndex != text.length) {
+        buffer.write(' '); // Add double spaces.
+      }
+    }
+var string = buffer.toString();
+    return newValue.copyWith(
+        text: string,
+        selection: TextSelection.collapsed(offset: string.length));
   }
 }
