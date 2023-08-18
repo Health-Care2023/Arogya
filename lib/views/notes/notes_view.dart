@@ -2,10 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as location;
 
 import '../../constants/routes.dart';
 
@@ -33,6 +34,23 @@ class _NotesViewState extends State<NotesView> {
   String? _email;
 
   Uint8List? _image;
+  Future<void> _checkAndEnableLocation(BuildContext context) async {
+    location.Location loc = location.Location();
+
+    bool serviceEnabled = await loc.serviceEnabled();
+    if (!serviceEnabled) {
+      bool serviceRequested = await loc.requestService();
+      if (!serviceRequested) {
+        // The user declined to enable location services
+        _showLocationDisabledDialog(context);
+      }
+    } else {
+      // Location services are already enabled, proceed with your app logic
+      // For example, fetch user's location here
+      Fluttertoast.showToast(msg: "Location services Enabled");
+    }
+  }
+
   void _showLocationDisabledDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -53,26 +71,11 @@ class _NotesViewState extends State<NotesView> {
     );
   }
 
-  Future<void> _checkAndEnableLocation(BuildContext context) async {
-    Location location = Location();
-
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      bool serviceRequested = await location.requestService();
-      if (!serviceRequested) {
-        // The user declined to enable location services
-        _showLocationDisabledDialog(context);
-      }
-    } else {
-      // Location services are already enabled, proceed with your app logic
-      // For example, fetch user's location here
-    }
-  }
-
   @override
   void initState() {
     _sqlHelper = SQLHelper();
-
+    print('hiiiiiiiiiiiiiiiiii');
+    _checkAndEnableLocation(context);
     refreshJournals();
 
     super.initState();

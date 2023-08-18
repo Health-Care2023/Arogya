@@ -11,7 +11,6 @@ import 'package:local_auth/local_auth.dart';
 
 import '../../db/database_helper.dart';
 import '../../services/auth/auth_service.dart';
-import 'package:location/location.dart' as location;
 
 class EmergencyPage extends StatefulWidget {
   const EmergencyPage({super.key});
@@ -93,43 +92,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
     super.dispose();
   }
 
-  void _showLocationDisabledDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Location Services Disabled'),
-          content: Text('Please enable location services to use this feature.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _checkAndEnableLocation(BuildContext context) async {
-    location.Location loc = location.Location();
-
-    bool serviceEnabled = await loc.serviceEnabled();
-    if (!serviceEnabled) {
-      bool serviceRequested = await loc.requestService();
-      if (!serviceRequested) {
-        // The user declined to enable location services
-        _showLocationDisabledDialog(context);
-      }
-    } else {
-      // Location services are already enabled, proceed with your app logic
-      // For example, fetch user's location here
-      Fluttertoast.showToast(msg: "Location services Enabled");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -162,7 +124,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ), // <-- Text
             backgroundColor: const Color.fromARGB(255, 8, 100, 176),
             onPressed: () async {
-              await _checkAndEnableLocation(context);
               await _getCurrentLocation();
               await _authin();
             },
