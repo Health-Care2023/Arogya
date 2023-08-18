@@ -31,11 +31,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
 
   void refreshJournals() async {
     DatabaseUser db = await _sqlhelper.getUser(email: userEmail);
-    print("HIIIIIIIIIIIIIIIIIII");
 
     phoneNo.add(db.phone1);
     phoneNo.add(db.phone2);
-    print(phoneNo);
   }
 
   _getCurrentLocation() async {
@@ -224,7 +222,6 @@ Future<ConfirmAction?> _asyncConfirmDialog(
               String message =
                   "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
               for (String number in phoneNo) {
-                print(number);
                 _sendSms(number, " Please Help I am at: $message ");
               }
 
