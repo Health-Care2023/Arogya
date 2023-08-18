@@ -10,6 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 import 'package:hello/services/auth/firebase_auth_provide.dart';
 import 'package:hello/views/forgot_password_view.dart';
+import 'package:hello/views/pages/appoinment_page.dart';
 import 'package:hello/views/prescription/prescription_view.dart';
 import 'package:hello/views/profile_view.dart';
 
@@ -22,8 +23,7 @@ import 'package:hello/views/login_view.dart';
 import 'package:hello/views/notes/notes_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/notes/chat_view.dart';
-import 'package:hello/views/notes/findoc_view.dart';
-
+// import 'package:hello/views/notes/findoc_view.dart';
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
 
@@ -57,7 +57,6 @@ void main() {
 
         chatroute: (context) => const ChatView(),
         prescription: (context) => const PrescriptionView(),
-        findocroute: (context) => const FindocView(),
         // profileroute: (context) => const ProfileView(),
       },
     ),
