@@ -11,9 +11,9 @@ import '../../constants/routes.dart';
 import 'package:hello/db/database_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:hello/views/pages/emergency_page.dart';
-import 'package:hello/views/pages/appoinment_page.dart';
-import 'package:hello/views/pages/home_page.dart';
+import 'package:hello/views/emergency/emergency_page.dart';
+import 'package:hello/views/emergency/appoinment_page.dart';
+import 'package:hello/views/emergency/home_page.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
