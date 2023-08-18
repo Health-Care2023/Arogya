@@ -18,6 +18,7 @@ import 'package:hello/views/pages/home_page.dart';
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
+
   @override
   State<NotesView> createState() => _NotesViewState();
 }
@@ -116,11 +117,21 @@ class _NotesViewState extends State<NotesView> {
         ],
       ),
       body: SingleChildScrollView(
-        child: <Widget>[
-          const HomePage(),
-          const EmergencyPage(),
-          const AppointmentPage(),
-        ][currentPageIndex],
+        child: Expanded(
+          child: [
+            HomePage(
+              appointment:(){
+                setState(() {
+                   setState(() {
+                    currentPageIndex = 2;
+                    });
+                });
+          }
+            ),
+            const EmergencyPage(),
+            const AppointmentPage(),
+          ][currentPageIndex],
+        ),
       ),
       floatingActionButton: Container(
         width: (MediaQuery.of(context).size.width) * (0.20),
