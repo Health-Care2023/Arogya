@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
+import 'package:location/location.dart';
 
 import '../../constants/routes.dart';
 
@@ -32,6 +33,41 @@ class _NotesViewState extends State<NotesView> {
   String? _email;
 
   Uint8List? _image;
+  void _showLocationDisabledDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Location Services Disabled'),
+          content: Text('Please enable location services to use this feature.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _checkAndEnableLocation(BuildContext context) async {
+    Location location = Location();
+
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      bool serviceRequested = await location.requestService();
+      if (!serviceRequested) {
+        // The user declined to enable location services
+        _showLocationDisabledDialog(context);
+      }
+    } else {
+      // Location services are already enabled, proceed with your app logic
+      // For example, fetch user's location here
+    }
+  }
 
   @override
   void initState() {
@@ -95,6 +131,7 @@ class _NotesViewState extends State<NotesView> {
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
+            //_checkAndEnableLocation(context);
           });
         },
         selectedIndex: currentPageIndex,
