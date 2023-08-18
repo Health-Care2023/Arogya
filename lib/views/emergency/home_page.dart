@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:hello/constants/routes.dart';
-
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Function appointment;
+  const HomePage({Key? key, required this.appointment}):super(key:key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,8 +44,8 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Color.fromARGB(255, 229, 230, 234),
                 icon: new Icon(FontAwesomeIcons.stethoscope),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(findocroute);
-                },
+                widget.appointment();
+                }
               ),
             ),
             const SizedBox(width: 10),
