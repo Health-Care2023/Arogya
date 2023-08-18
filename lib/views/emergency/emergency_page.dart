@@ -9,6 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:local_auth/local_auth.dart';
 
+import '../../db/database_helper.dart';
+import '../../services/auth/auth_service.dart';
+
 class EmergencyPage extends StatefulWidget {
   const EmergencyPage({super.key});
 
@@ -17,10 +20,24 @@ class EmergencyPage extends StatefulWidget {
 }
 
 class _EmergencyPageState extends State<EmergencyPage> {
+  List<String> phoneNo = [];
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
   Position? _currentPosition;
   String? _currentAddress;
   LocationPermission? permission;
+  late final _sqlhelper;
+
+  String get userEmail => Authservice.firebase().currentUser!.email!;
+
+  void refreshJournals() async {
+    DatabaseUser db = await _sqlhelper.getUser(email: userEmail);
+    print("HIIIIIIIIIIIIIIIIIII");
+
+    phoneNo.add(db.phone1);
+    phoneNo.add(db.phone2);
+    print(phoneNo);
+  }
+
   _getCurrentLocation() async {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -62,6 +79,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
   @override
   void initState() {
     _isPermissionGranted();
+    _sqlhelper = SQLHelper();
+    refreshJournals();
     // TODO: implement initState
     super.initState();
     auth = LocalAuthentication();
@@ -126,7 +145,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
           ));
       if (authinticate) {
         final ConfirmAction? action = await _asyncConfirmDialog(
-            context, _currentPosition, _currentAddress);
+            context, _currentPosition, _currentAddress, phoneNo);
         print("Confirm Action $action");
       }
       print("Authenticated : $authinticate");
@@ -159,9 +178,11 @@ _sendSms(String phoneNumber, String message, {int? simSlot}) async {
   });
 }
 
-Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context,
-    Position? _currentPosition, String? _currentAddress) async {
-  List<String> phoneNo = ["7595800225", "9432428598"];
+Future<ConfirmAction?> _asyncConfirmDialog(
+    BuildContext context,
+    Position? _currentPosition,
+    String? _currentAddress,
+    List<String> phoneNo) async {
   return showDialog<ConfirmAction>(
     context: context,
     barrierDismissible: false,
@@ -203,6 +224,7 @@ Future<ConfirmAction?> _asyncConfirmDialog(BuildContext context,
               String message =
                   "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
               for (String number in phoneNo) {
+                print(number);
                 _sendSms(number, " Please Help I am at: $message ");
               }
 
