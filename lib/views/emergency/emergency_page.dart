@@ -124,8 +124,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ), // <-- Text
             backgroundColor: const Color.fromARGB(255, 8, 100, 176),
             onPressed: () async {
+              _authin();
               await _getCurrentLocation();
-              await _authin();
             },
           ),
         )
@@ -220,7 +220,7 @@ Future<ConfirmAction?> _asyncConfirmDialog(
                 )),
             onPressed: () async {
               String message =
-                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition?.latitude}%2C${_currentPosition?.longitude}";
+                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
               for (String number in phoneNo) {
                 _sendSms(number, " Please Help I am at: $message ");
               }
