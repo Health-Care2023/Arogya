@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:hello/constants/routes.dart';
 import 'package:hello/services/auth/auth_exceptions.dart';

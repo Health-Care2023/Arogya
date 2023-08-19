@@ -10,7 +10,7 @@ import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:hello/services/auth/bloc/auth_state.dart';
 import 'package:hello/services/auth/firebase_auth_provide.dart';
 import 'package:hello/views/forgot_password_view.dart';
-import 'package:hello/views/pages/appoinment_page.dart';
+
 import 'package:hello/views/prescription/prescription_view.dart';
 import 'package:hello/views/profile_view.dart';
 

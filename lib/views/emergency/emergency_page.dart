@@ -1,4 +1,5 @@
 import 'package:background_sms/background_sms.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -176,6 +177,12 @@ _sendSms(String phoneNumber, String message, {int? simSlot}) async {
   });
 }
 
+_callNumber(String number) async {
+  //set the number here
+  bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+  print(res);
+}
+
 Future<ConfirmAction?> _asyncConfirmDialog(
     BuildContext context,
     Position? _currentPosition,
@@ -224,7 +231,7 @@ Future<ConfirmAction?> _asyncConfirmDialog(
               for (String number in phoneNo) {
                 _sendSms(number, " Please Help I am at: $message ");
               }
-
+              _callNumber(phoneNo[0]);
               Navigator.of(context).pop(ConfirmAction.Accept);
             },
           )
