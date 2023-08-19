@@ -17,8 +17,25 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   int selectedIndex = -1;
-  
+  TextEditingController searchController = TextEditingController();
+List<String> allDoctorNames = [
+  // Add doctor names here
+  "Varun",
+  "Ankan",
+  "Parthib",
+  "Arka",
+  "Soutik"
+];
 
+List<String> allSpecialties = [
+  // Add doctor specialties here
+  "oncologist",
+  "cardiologist",
+  "padaetrician",
+  "dermatologists",
+  "eye specialist"
+];
+List<String> filteredDoctorNames = [];
   @override
   void initState() {
     super.initState();
@@ -51,6 +68,21 @@ Widget build(BuildContext context) {
                             flex: 3,
                            child: TextField(
                             // onChanged: (value) => _runFilter(value),
+                            controller: searchController,
+                  onChanged: (value) {
+                    setState(() {
+                      // Filter suggestions based on entered text
+                       if (value.isEmpty) {
+                          filteredDoctorNames.clear();
+                        }
+                        else{
+                      filteredDoctorNames = allDoctorNames
+                          .where((name) =>
+                              name.toLowerCase().contains(value.toLowerCase()))
+                          .toList();
+                        }
+                    });
+                  },
                             
                             decoration: InputDecoration(
                             contentPadding:
@@ -70,21 +102,7 @@ Widget build(BuildContext context) {
                           Expanded(
                             flex: 2,
                            child: Container(
-                            //  child: TextField(
-                            //   // onChanged: (value) => _runFilter(value),
-                            //   decoration: InputDecoration(
-                            //   contentPadding:
-                            //       const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                            //   hintText: "Search by speciality",
-                            //   hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                            //   suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
-                            //   // prefix: Icon(Icons.search),
-                            //   border: OutlineInputBorder(
-                            //     borderSide: BorderSide(width: 1, color: Colors.black),
-                            //     borderRadius: BorderRadius.circular(20),
-                            //     ),
-                            //    ),
-                            //  ),
+                           
                               decoration: BoxDecoration(
                                       border: Border.all(width:1 , color: Colors.black),
                                       borderRadius: BorderRadius.circular(10.0),
@@ -99,28 +117,94 @@ Widget build(BuildContext context) {
                          ),
                        ],
                      ),
-                     
+                     const SizedBox(height: 10),
+          //            if (filteredDoctorNames.isNotEmpty)
+          //            ListView.builder(
+          //   shrinkWrap: true,
+          //   itemCount: filteredDoctorNames.length,
+          //   itemBuilder: (context, index) {
+          //     return ListTile(
+          //       title: Text(filteredDoctorNames[index]),
+          //       onTap: () {
+          //         searchController.text = filteredDoctorNames[index];
+          //       },
+          //     );
+          //   },
+          // ),
               //  ),
             const SizedBox(height: 20),
-              GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // You can adjust the number of columns here
-                childAspectRatio: 1.0, // Ensure square grid items
-                mainAxisExtent: (MediaQuery.of(context).size.height)*0.15,
-              ),
-              itemCount: doctors.length,
-              itemBuilder: (context, index) {
-                  // First row with 2 doctors
-                  return buildDoctorCard(doctors[index],index, index == selectedIndex);
+            //   Stack(
+            //     children: [ GridView.builder(
+            //       physics: const NeverScrollableScrollPhysics(),
+            //       shrinkWrap: true,
+            //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: 2, // You can adjust the number of columns here
+            //       childAspectRatio: 1.0, // Ensure square grid items
+            //       mainAxisExtent: (MediaQuery.of(context).size.height)*0.15,
+            //     ),
+            //     itemCount: doctors.length,
+            //     itemBuilder: (context, index) {
+            //         // First row with 2 doctors
+            //         return buildDoctorCard(doctors[index],index, index == selectedIndex);
+            //         },
+            //       ),
+            // ]),
+             Stack(
+              children: [
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.0,
+                    mainAxisExtent: (MediaQuery.of(context).size.height) * 0.15,
+                  ),
+                  itemCount: doctors.length,
+                  itemBuilder: (context, index) {
+                    return buildDoctorCard(
+                        doctors[index], index, index == selectedIndex);
                   },
                 ),
-              ]
+                if (filteredDoctorNames.isNotEmpty)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      color: Color.fromARGB(255, 255, 255, 255).withOpacity(1.0),
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: filteredDoctorNames.length,
+                        itemBuilder: (context, index) {
+                          final doctorName = filteredDoctorNames[index];
+                          final doctorBio = getDoctorBio(doctorName);
+                          return ListTile(
+                            leading: Icon(FontAwesomeIcons.userDoctor),
+                            title: Text(filteredDoctorNames[index]),
+                             subtitle: Text(doctorBio), 
+                            onTap: () {
+                              searchController.text =
+                                  filteredDoctorNames[index];
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+              ],
             ),
+          ],
         ),
-      );
+      ),
+              
+            );
   }
+String getDoctorBio(String doctorName) {
+  
+    return "One-line bio of $doctorName";
+  }
+
 
 List<Doctor> doctors = [
   Doctor(name: "Dentist", icon: Icon(FontAwesomeIcons.tooth)),
