@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:hello/Utilities/show_error_dialog.dart';
 
@@ -38,6 +39,7 @@ class _RegisterViewState extends State<RegisterView> {
     _middlename = TextEditingController();
     _email = TextEditingController();
     _pass = TextEditingController();
+
     loadImageFromAsset('asset/user_image.png').then((bytes) {
       setState(() {
         _imageBytes = bytes;

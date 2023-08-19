@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
@@ -17,6 +18,7 @@ import 'package:hello/views/emergency/home_page.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
+
 
   @override
   State<NotesView> createState() => _NotesViewState();
@@ -34,6 +36,7 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _sqlHelper = SQLHelper();
+    print('hiiiiiiiiiiiiiiiiii');
 
     refreshJournals();
 
@@ -130,11 +133,21 @@ class _NotesViewState extends State<NotesView> {
         ],
       ),
       body: SingleChildScrollView(
-        child: <Widget>[
-          const HomePage(),
-          const EmergencyPage(),
-          const AppointmentPage(),
-        ][currentPageIndex],
+        child: Expanded(
+          child: [
+            HomePage(
+              appointment:(){
+                setState(() {
+                   setState(() {
+                    currentPageIndex = 2;
+                    });
+                });
+          }
+            ),
+            const EmergencyPage(),
+            const AppointmentPage(),
+          ][currentPageIndex],
+        ),
       ),
       floatingActionButton: Container(
         width: (MediaQuery.of(context).size.width) * (0.20),
@@ -263,21 +276,41 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Log out'),
-        content: const Text("Are you sure You Want to Log out"),
+         title: const Text('Log out',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
+        content: const Text('Are you sure You Want to Log out',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
         actions: [
-          TextButton(
-            onPressed: () {
+           ElevatedButton(
+            child: const Text('Ok',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            onPressed: () async {
               Navigator.of(context).pop(true);
             },
-            child: const Text('Ok'),
           ),
-          TextButton(
+          ElevatedButton(
+            child: const Text('Cancel',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('Cancel'),
-          )
+          ),
         ],
       );
     },
