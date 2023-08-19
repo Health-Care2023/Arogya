@@ -19,7 +19,6 @@ import 'package:hello/views/emergency/home_page.dart';
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
-
   @override
   State<NotesView> createState() => _NotesViewState();
 }
@@ -93,6 +92,22 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
+// actions: <Widget>[
+        //   Row(
+        //     children: <Widget>[
+        //       IconButton(
+        //           onPressed: () {},
+        //           icon: Stack(
+        //             children: <Widget>[
+        //               Icon(
+        //                 Icons.notifications,
+        //                 color: Color.fromARGB(255, 249, 246, 246),
+        //               ),
+        //             ],
+        //           ))
+        //     ],
+        //   )
+        // ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -121,15 +136,13 @@ class _NotesViewState extends State<NotesView> {
       body: SingleChildScrollView(
         child: Expanded(
           child: [
-            HomePage(
-              appointment:(){
+            HomePage(appointment: () {
+              setState(() {
                 setState(() {
-                   setState(() {
-                    currentPageIndex = 2;
-                    });
+                  currentPageIndex = 2;
                 });
-          }
-            ),
+              });
+            }),
             const EmergencyPage(),
             const AppointmentPage(),
           ][currentPageIndex],
@@ -177,7 +190,7 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      // LoadingScreen().show(
+// LoadingScreen().show(
                       //     context: context, text: "Please wait a moment...");
                       // Future.delayed(
                       //   Duration(seconds: 1),
@@ -223,7 +236,7 @@ class _NotesViewState extends State<NotesView> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 183, 18, 6),
                     width: 2.0,
                   ),
                 ),
@@ -262,7 +275,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-         title: const Text('Log out',
+        title: const Text('Log out',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -275,7 +288,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
               color: Colors.black,
             )),
         actions: [
-           ElevatedButton(
+          ElevatedButton(
             child: const Text('Ok',
                 style: TextStyle(
                   fontSize: 20,
@@ -302,3 +315,34 @@ Future<bool> showLogOutDialog(BuildContext context) {
     },
   ).then((value) => value ?? false);
 }
+
+  // Widget bottomSheet() {
+  //   return Container(
+  //       height: 100.0,
+  //       // width: MediaQuery.of(context).size.width,
+  //       margin: EdgeInsets.symmetric(
+  //         horizontal: 20,
+  //         vertical: 20,
+  //       ),
+  //       child: Column(children: <Widget>[
+  //         Text(
+  //           "Choose your profile picture",
+  //           style: const TextStyle(
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 20,
+  //         ),
+  //         Row(children: <Widget>[
+  //           TextButton.icon(
+  //             icon: Icon(Icons.camera),
+  //             label: Text("Camera"),
+  //             onPressed: () {},
+  //           )
+  //         ])
+  //       ]));
+  // }
+
+
