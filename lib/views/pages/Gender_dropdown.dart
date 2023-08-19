@@ -33,6 +33,10 @@ class _GenderDropdownState extends State<GenderDropdown> {
       items: widget.genderOptions.map((gender) {
         return DropdownMenuItem<String>(
           value: gender,
+          child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0), // Adjust the border radius as needed
+              ),
           child: Expanded(
             child: Row(
               children: [
@@ -50,7 +54,7 @@ class _GenderDropdownState extends State<GenderDropdown> {
               ],
             ),
           ),
-        );
+        ));
       }).toList(),
     );
   }

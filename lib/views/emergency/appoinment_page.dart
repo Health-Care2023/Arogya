@@ -83,7 +83,7 @@ Widget build(BuildContext context) {
                             //  ),
                               decoration: BoxDecoration(
                                       border: Border.all(width:1 , color: Colors.black),
-                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderRadius: BorderRadius.circular(10.0),
                                     ),
                                 child: GenderDropdown(
                                 genderOptions: ['All', 'Male', 'Female', 'Others'],
