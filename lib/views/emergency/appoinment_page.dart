@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
+// ignore: depend_on_referenced_packages
 
 import '../pages/Gender_dropdown.dart';
 
@@ -15,6 +16,7 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  int selectedIndex = -1;
   
 
   @override
@@ -31,6 +33,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
 Widget build(BuildContext context) {
       return Container(
         margin: const EdgeInsets.all(20),
+        
         //  width: (MediaQuery.of(context).size.width),
         // height: (MediaQuery.of(context).size.height),
         // color: Colors.red,
@@ -48,6 +51,7 @@ Widget build(BuildContext context) {
                             flex: 3,
                            child: TextField(
                             // onChanged: (value) => _runFilter(value),
+                            
                             decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
@@ -109,7 +113,7 @@ Widget build(BuildContext context) {
               itemCount: doctors.length,
               itemBuilder: (context, index) {
                   // First row with 2 doctors
-                  return buildDoctorCard(doctors[index],index);
+                  return buildDoctorCard(doctors[index],index, index == selectedIndex);
                   },
                 ),
               ]
@@ -117,7 +121,7 @@ Widget build(BuildContext context) {
         ),
       );
   }
-}
+
 List<Doctor> doctors = [
   Doctor(name: "Dentist", icon: Icon(FontAwesomeIcons.tooth)),
   Doctor(name: "Cardiologist", icon: Icon(FontAwesomeIcons.heartPulse , color: Color.fromARGB(255, 240, 26, 10),)),
@@ -129,24 +133,45 @@ List<Doctor> doctors = [
   Doctor(name: "Orthologist", icon: Icon(FontAwesomeIcons.bone , color: Color.fromARGB(255, 170, 169, 169))),
   // Add more doctors here
 ];
-Widget buildDoctorCard(Doctor doctor,index) {
+Widget buildDoctorCard(Doctor doctor,index,bool selected) {
     return GestureDetector(
        onTap: () {
+
+         setState(() {
+        selectedIndex = index;
+      });
+       
+      
         print('Hello ${index}');
       },
       child: Container(
           margin: const EdgeInsets.all(0),
           decoration: BoxDecoration(
               border: Border.all(width: 1, color: Color.fromARGB(255, 4, 100, 178)), 
+              color: selected ? Colors.blue : Colors.white,
+              boxShadow: selected
+            ? [
+                BoxShadow(
+                  color: Color.fromARGB(255, 99, 179, 245).withOpacity(0.5), // Glow color
+                  spreadRadius: 5, // Spread radius for the glow effect
+                  blurRadius: 5, // Blur radius for the glow effect
+                ),
+              ]
+            : null,
           ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             doctor.icon,
             SizedBox(height: 8),
-            Text(doctor.name),
+            Text(doctor.name , 
+             style: TextStyle(
+              color: selected ? Colors.white : Colors.black, // Change text color when selected
+            ),),
           ],
         ),
       ),
     );
   }
+} 
+  
