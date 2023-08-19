@@ -4,14 +4,19 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
 
+import '../pages/Gender_dropdown.dart';
+
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({super.key});
 
+  
   @override
   State<AppointmentPage> createState() => _AppointmentPageState();
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  
+
   @override
   void initState() {
     super.initState();
@@ -39,12 +44,14 @@ Widget build(BuildContext context) {
                      Row(
                        children: [
                          Expanded(
+
+                            flex: 3,
                            child: TextField(
                             // onChanged: (value) => _runFilter(value),
                             decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                            labelText: "Search by name/speciality",
+                            labelText: "Search by name",
                             labelStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                             suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
                             // prefix: Icon(Icons.search),
@@ -55,22 +62,35 @@ Widget build(BuildContext context) {
                              ),
                            ),
                          ),
-                         const SizedBox(width: 5),
-                         Expanded(
-                           child: TextField(
-                            // onChanged: (value) => _runFilter(value),
-                            decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                            hintText: "Search by speciality",
-                            hintStyle: const TextStyle(fontWeight: FontWeight.bold),
-                            suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
-                            // prefix: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(width: 1, color: Colors.black),
-                              borderRadius: BorderRadius.circular(20),
+                         const SizedBox(width: 10),
+                          Expanded(
+                            flex: 2,
+                           child: Container(
+                            //  child: TextField(
+                            //   // onChanged: (value) => _runFilter(value),
+                            //   decoration: InputDecoration(
+                            //   contentPadding:
+                            //       const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                            //   hintText: "Search by speciality",
+                            //   hintStyle: const TextStyle(fontWeight: FontWeight.bold),
+                            //   suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
+                            //   // prefix: Icon(Icons.search),
+                            //   border: OutlineInputBorder(
+                            //     borderSide: BorderSide(width: 1, color: Colors.black),
+                            //     borderRadius: BorderRadius.circular(20),
+                            //     ),
+                            //    ),
+                            //  ),
+                              decoration: BoxDecoration(
+                                      border: Border.all(width:1 , color: Colors.black),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                child: GenderDropdown(
+                                genderOptions: ['All', 'Male', 'Female', 'Others'],
+                                onChanged: (selectedGender) {
+                                print('Selected Gender: $selectedGender');
+                                 },
                               ),
-                             ),
                            ),
                          ),
                        ],
