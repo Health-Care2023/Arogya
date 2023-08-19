@@ -65,7 +65,7 @@ dependencies:
   dialogflow_flutter: ^1.0.0
   baseflow_plugin_template: ^2.1.2
   flutter_phone_direct_caller: ^2.1.1
-  url_launcher: ^6.1.12
+ 
 dev_dependencies:
   flutter_test:
     sdk: flutter
