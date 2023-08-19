@@ -37,7 +37,6 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _sqlHelper = SQLHelper();
-    print('hiiiiiiiiiiiiiiiiii');
 
     refreshJournals();
 
@@ -92,22 +91,6 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
-// actions: <Widget>[
-        //   Row(
-        //     children: <Widget>[
-        //       IconButton(
-        //           onPressed: () {},
-        //           icon: Stack(
-        //             children: <Widget>[
-        //               Icon(
-        //                 Icons.notifications,
-        //                 color: Color.fromARGB(255, 249, 246, 246),
-        //               ),
-        //             ],
-        //           ))
-        //     ],
-        //   )
-        // ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -190,19 +173,6 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-// LoadingScreen().show(
-                      //     context: context, text: "Please wait a moment...");
-                      // Future.delayed(
-                      //   Duration(seconds: 1),
-                      //   () {
-                      //     LoadingScreen().hide();
-                      //     Navigator.of(context).push(MaterialPageRoute(
-                      //       builder: (context) => ProfileView(
-                      //         onDataUpdated: onDataUpdated,
-                      //       ),
-                      //     ));
-                      //   },
-                      // );
                       context
                           .read<AuthBloc>()
                           .add(AuthEventUpdateProfile(onDataUpdated));
@@ -315,34 +285,3 @@ Future<bool> showLogOutDialog(BuildContext context) {
     },
   ).then((value) => value ?? false);
 }
-
-  // Widget bottomSheet() {
-  //   return Container(
-  //       height: 100.0,
-  //       // width: MediaQuery.of(context).size.width,
-  //       margin: EdgeInsets.symmetric(
-  //         horizontal: 20,
-  //         vertical: 20,
-  //       ),
-  //       child: Column(children: <Widget>[
-  //         Text(
-  //           "Choose your profile picture",
-  //           style: const TextStyle(
-  //             fontSize: 20,
-  //             fontWeight: FontWeight.bold,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           height: 20,
-  //         ),
-  //         Row(children: <Widget>[
-  //           TextButton.icon(
-  //             icon: Icon(Icons.camera),
-  //             label: Text("Camera"),
-  //             onPressed: () {},
-  //           )
-  //         ])
-  //       ]));
-  // }
-
-

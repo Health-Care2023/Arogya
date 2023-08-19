@@ -97,7 +97,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      //Optional it is written for testing purpose
       children: <Widget>[
         if (_support)
           const Text('This device supports biometrics')
