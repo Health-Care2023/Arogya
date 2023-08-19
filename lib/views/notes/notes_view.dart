@@ -29,6 +29,7 @@ class _NotesViewState extends State<NotesView> {
   late final SQLHelper _sqlHelper;
   late String imageString;
   Map<String, dynamic>? patient;
+  int currentPageIndex = 0 ;
   String? _name;
   String? _email;
   Uint8List? _image;
@@ -91,22 +92,22 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
         backgroundColor: Color.fromARGB(255, 5, 14, 82),
-        actions: <Widget>[
-          Row(
-            children: <Widget>[
-              IconButton(
-                  onPressed: () {},
-                  icon: Stack(
-                    children: <Widget>[
-                      Icon(
-                        Icons.notifications,
-                        color: Color.fromARGB(255, 249, 246, 246),
-                      ),
-                    ],
-                  ))
-            ],
-          )
-        ],
+        // actions: <Widget>[
+        //   Row(
+        //     children: <Widget>[
+        //       IconButton(
+        //           onPressed: () {},
+        //           icon: Stack(
+        //             children: <Widget>[
+        //               Icon(
+        //                 Icons.notifications,
+        //                 color: Color.fromARGB(255, 249, 246, 246),
+        //               ),
+        //             ],
+        //           ))
+        //     ],
+        //   )
+        // ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {

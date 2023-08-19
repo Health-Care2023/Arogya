@@ -321,23 +321,6 @@ Future<bool> showConfirmDialog(BuildContext context, Position? _currentPosition,
               Navigator.of(context).pop(true);
             },
           ),
-<<<<<<< HEAD
-          ElevatedButton(
-            child: const Text('Ok',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                )),
-            onPressed: () async {
-              String message =
-                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
-              _sendSms("8335998335", " Please Help I am at: $message ");
-              Navigator.of(context).pop(ConfirmAction.Accept);
-            },
-          )
-=======
->>>>>>> 1e01e201ad91600b51433ded722d0bc17f1541cd
         ],
       );
     },
