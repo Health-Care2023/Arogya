@@ -1312,4 +1312,21 @@ class _ProfileViewState extends State<ProfileView> {
       _image = _imageFile.readAsBytesSync();
     });
   }
+
+  // gridView() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(5.0),
+  //     child: GridView.count(
+  //       crossAxisCount: 2,
+  //       childAspectRatio: 1.0,
+  //       mainAxisSpacing: 4.0,
+  //       crossAxisSpacing: 4.0,
+  //       children: images.map((photo) {
+  //         // print("photo name");
+  //         // print(photo.photoName);
+  //         // return Utility.imageFromBase64String(photo.photoName ?? "");
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
 }
