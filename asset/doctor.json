@@ -1,0 +1,28 @@
+[
+    {
+      "name": "Dr. John Smith",
+      "speciality": "Cardiologist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Sarah Johnson",
+      "speciality": "Pediatrician",
+      "gender": "Female"
+    },
+    {
+      "name": "Dr. Michael Davis",
+      "speciality": "Orthopedic Surgeon",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Emily White",
+      "speciality": "Dermatologist",
+      "gender": "Female"
+    },
+    {
+      "name": "Dr. James Lee",
+      "speciality": "Ophthalmologist",
+      "gender": "Male"
+    }
+  ]
+  

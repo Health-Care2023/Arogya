@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:hello/views/pages/find_doctorList/Doctor.dart';
+import 'package:flutter/services.dart';
+import 'package:hello/views/pages/find_doctorList/DoctorList.dart';
+import 'package:hello/views/pages/find_doctorList/doctor.dart';
 
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({super.key});
@@ -9,16 +13,54 @@ class AppointmentPage extends StatefulWidget {
 }
 
 class _AppointmentPageState extends State<AppointmentPage> {
+  List<DoctorList> doctors = [];
   @override
   void initState() {
     super.initState();
+    loadDoctors();
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+Future<void> loadDoctors() async {
+    // Load the JSON file from the assets directory
+    final String jsonString = await rootBundle.loadString('assets/doctor.json');
+    final List<dynamic> jsonList = json.decode(jsonString);
 
+    setState(() {
+      doctors = jsonList.map((json) => DoctorList.fromJson(json)).toList();
+    });
+  }
+
+  List<DoctorList> allDoctors() {
+    return doctors;
+  }
+  List<DoctorList> maleDoctors() {
+    return doctors.where((doctor) => doctor.gender == "Male").toList();
+  }
+   List<DoctorList> femaleDoctors() {
+    return doctors.where((doctor) => doctor.gender == "Female").toList();
+  }
+   List<DoctorList> otherDoctors() {
+    return doctors.where((doctor) => doctor.gender == "Others").toList();
+  }
+   List<String> extractSpecialties(List<DoctorList> doctors) {
+    // Extract and deduplicate specialties
+    Set<String> specialtySet = {};
+    for (var doctor in doctors) {
+      specialtySet.add(doctor.speciality);
+    }
+    return specialtySet.toList();
+  }
+   List<DoctorList> searchDoctors(String query) {
+    return doctors.where((doctor) {
+      final lowerQuery = query.toLowerCase();
+      return doctor.name.toLowerCase().contains(lowerQuery) ||
+          doctor.speciality.toLowerCase().contains(lowerQuery);
+    }).toList();
+  }
   @override
 Widget build(BuildContext context) {
       return Container(
@@ -83,10 +125,10 @@ Widget build(BuildContext context) {
                 childAspectRatio: 1.0, // Ensure square grid items
                 mainAxisExtent: (MediaQuery.of(context).size.height)*0.15,
               ),
-              itemCount: doctors.length,
+              itemCount: doctorSpeciality.length,
               itemBuilder: (context, index) {
                   // First row with 2 doctors
-                  return buildDoctorCard(doctors[index],index);
+                  return buildDoctorCard(doctorSpeciality[index],index);
                   },
                 ),
               ]
@@ -95,7 +137,7 @@ Widget build(BuildContext context) {
       );
   }
 }
-List<Doctor> doctors = [
+List<Doctor> doctorSpeciality = [
   Doctor(name: "Doctor 1", icon: Icons.local_hospital),
   Doctor(name: "Doctor 2", icon: Icons.local_hospital),
   Doctor(name: "Doctor 3", icon: Icons.local_hospital),
