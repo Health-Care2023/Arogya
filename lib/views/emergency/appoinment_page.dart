@@ -249,14 +249,14 @@ String getDoctorBio(String doctorName) {
 
 
 List<Doctor> doctorSpeciality = [
-  Doctor(name: "Dentist", icon: Icon(FontAwesomeIcons.tooth)),
-  Doctor(name: "Cardiologist", icon: Icon(FontAwesomeIcons.heartPulse , color: Color.fromARGB(255, 240, 26, 10),)),
-  Doctor(name: "Pulmonologist", icon: Icon(FontAwesomeIcons.lungs , color: Colors.pink)),
-  Doctor(name: "Oncologist", icon: Icon(FontAwesomeIcons.brain , color: Color.fromARGB(255, 240, 131, 167))),
-  Doctor(name: "General physician", icon: Icon(FontAwesomeIcons.stethoscope , color: Colors.black)),
-  Doctor(name: "Radiologist", icon: Icon(FontAwesomeIcons.xRay)),
-  Doctor(name: "Pediatrician", icon: Icon(FontAwesomeIcons.baby)),
-  Doctor(name: "Orthologist", icon: Icon(FontAwesomeIcons.bone , color: Color.fromARGB(255, 170, 169, 169))),
+  Doctor(name: "Dentist", icon: const Icon(FontAwesomeIcons.tooth)),
+  Doctor(name: "Cardiologist", icon: const Icon(FontAwesomeIcons.heartPulse , color: Color.fromARGB(255, 240, 26, 10),)),
+  Doctor(name: "Pulmonologist", icon: const Icon(FontAwesomeIcons.lungs , color: Colors.pink)),
+  Doctor(name: "Oncologist", icon: const Icon(FontAwesomeIcons.brain , color: Color.fromARGB(255, 240, 131, 167))),
+  Doctor(name: "General physician", icon: const Icon(FontAwesomeIcons.stethoscope , color: Colors.black)),
+  Doctor(name: "Radiologist", icon: const Icon(FontAwesomeIcons.xRay)),
+  Doctor(name: "Pediatrician", icon: const Icon(FontAwesomeIcons.baby)),
+  Doctor(name: "Orthologist", icon: const Icon(FontAwesomeIcons.bone , color: Color.fromARGB(255, 170, 169, 169))),
   // Add more doctors here
 ];
 Widget buildDoctorCard(Doctor doctor,index,bool selected) {
