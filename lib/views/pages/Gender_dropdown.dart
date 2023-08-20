@@ -23,17 +23,20 @@ class _GenderDropdownState extends State<GenderDropdown> {
     return DropdownButtonFormField<String>(
       value: selectedGender.isEmpty ? null : selectedGender,
       hint: Text('Select Gender'),
-      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 2),
+      // padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 2),
       onChanged: (value) {
         setState(() {
           selectedGender = value!;
           widget.onChanged(selectedGender);
         });
       },
+      dropdownColor: Color.fromARGB(255, 255, 254, 254), // Customize the dropdown background color
+      // dropdownWidth: 120,
       items: widget.genderOptions.map((gender) {
         return DropdownMenuItem<String>(
           value: gender,
           child: Container(
+            // width : 5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0), // Adjust the border radius as needed
               ),
