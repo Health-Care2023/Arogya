@@ -1,9 +1,6 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
 // ignore: depend_on_referenced_packages
@@ -53,7 +50,7 @@ List<String> filteredDoctorNames = [];
   }
 Future<void> loadDoctors() async {
     // Load the JSON file from the assets directory
-    final String jsonString = await rootBundle.loadString('assets/doctor.json');
+    final String jsonString = await rootBundle.loadString('asset/doctor.json');
     final List<dynamic> jsonList = json.decode(jsonString);
 
     setState(() {
@@ -81,11 +78,19 @@ Future<void> loadDoctors() async {
     }
     return specialtySet.toList();
   }
+   List<String> extractNames(List<DoctorList> doctors) {
+    // Extract and deduplicate specialties
+    Set<String> nameSet = {};
+    for (var doctor in doctors) {
+      nameSet.add(doctor.name);
+    }
+    return nameSet.toList();
+  }
    List<DoctorList> searchDoctors(String query) {
     return doctors.where((doctor) {
       final lowerQuery = query.toLowerCase();
-      return doctor.name.toLowerCase().contains(lowerQuery) ||
-          doctor.speciality.toLowerCase().contains(lowerQuery);
+      return doctor.name.toLowerCase().contains(lowerQuery);
+          // doctor.speciality.toLowerCase().contains(lowerQuery);
     }).toList();
   }
   @override
@@ -118,10 +123,13 @@ Widget build(BuildContext context) {
                           filteredDoctorNames.clear();
                         }
                         else{
-                      filteredDoctorNames = allDoctorNames
-                          .where((name) =>
-                              name.toLowerCase().contains(value.toLowerCase()))
-                          .toList();
+                      // filteredDoctorNames = extractNames(doctors)
+                      //     .where((name) =>
+                      //         name.toLowerCase().contains(value.toLowerCase()))
+                      //     .toList();
+                      filteredDoctorNames = extractNames(searchDoctors(value));
+                      // filteredDoctorNames = extractSpecialties(searchDoctors(value));
+                      print("hello doctors names ${filteredDoctorNames.length}");
                         }
                     });
                   },
@@ -143,8 +151,7 @@ Widget build(BuildContext context) {
                          const SizedBox(width: 10),
                           Expanded(
                             flex: 2,
-                           child: Container(
-                           
+                           child: Container(                    
                               decoration: BoxDecoration(
                                       border: Border.all(width:1 , color: Colors.black),
                                       borderRadius: BorderRadius.circular(10.0),
@@ -159,38 +166,7 @@ Widget build(BuildContext context) {
                          ),
                        ],
                      ),
-                     const SizedBox(height: 10),
-          //            if (filteredDoctorNames.isNotEmpty)
-          //            ListView.builder(
-          //   shrinkWrap: true,
-          //   itemCount: filteredDoctorNames.length,
-          //   itemBuilder: (context, index) {
-          //     return ListTile(
-          //       title: Text(filteredDoctorNames[index]),
-          //       onTap: () {
-          //         searchController.text = filteredDoctorNames[index];
-          //       },
-          //     );
-          //   },
-          // ),
-              //  ),
             const SizedBox(height: 20),
-            //   Stack(
-            //     children: [ GridView.builder(
-            //       physics: const NeverScrollableScrollPhysics(),
-            //       shrinkWrap: true,
-            //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2, // You can adjust the number of columns here
-            //       childAspectRatio: 1.0, // Ensure square grid items
-            //       mainAxisExtent: (MediaQuery.of(context).size.height)*0.15,
-            //     ),
-            //     itemCount: doctors.length,
-            //     itemBuilder: (context, index) {
-            //         // First row with 2 doctors
-            //         return buildDoctorCard(doctors[index],index, index == selectedIndex);
-            //         },
-            //       ),
-            // ]),
              Stack(
               children: [
                 GridView.builder(
@@ -212,25 +188,30 @@ Widget build(BuildContext context) {
                     top: 0,
                     left: 0,
                     right: 0,
-                    child: Container(
-                      color: Color.fromARGB(255, 255, 255, 255).withOpacity(1.0),
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: filteredDoctorNames.length,
-                        itemBuilder: (context, index) {
-                          final doctorName = filteredDoctorNames[index];
-                          final doctorBio = getDoctorBio(doctorName);
-                          return ListTile(
-                            leading: Icon(FontAwesomeIcons.userDoctor),
-                            title: Text(filteredDoctorNames[index]),
-                             subtitle: Text(doctorBio), 
-                            onTap: () {
-                              searchController.text =
-                                  filteredDoctorNames[index];
-                            },
-                          );
-                        },
+                    child: SingleChildScrollView(
+                      child: Container(
+                        height: (MediaQuery.of(context).size.height)*0.5,
+                        color: const Color.fromARGB(255, 255, 255, 255).withOpacity(1.0),
+                        padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
+                        child: ListView.builder(
+                          // physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: filteredDoctorNames.length,
+                          itemBuilder: (context, index) {
+                            final doctorName = filteredDoctorNames[index];
+                            final doctorBio = getDoctorBio(doctorName);
+                            return ListTile(
+                              leading: const Icon(FontAwesomeIcons.userDoctor),
+                              title: Text(filteredDoctorNames[index]),
+                               subtitle: Text(doctorBio), 
+                               hoverColor: Colors.black,
+                              onTap: () {
+                                searchController.text = filteredDoctorNames[index];
+                                print("hello ${doctorName}");
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
