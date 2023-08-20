@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hello/services/auth/auth_service.dart';
 import 'package:hello/services/auth/bloc/auth_bloc.dart';
 import 'package:hello/services/auth/bloc/auth_event.dart';
@@ -11,13 +12,12 @@ import '../../constants/routes.dart';
 import 'package:hello/db/database_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:hello/views/pages/emergency_page.dart';
-import 'package:hello/views/pages/appoinment_page.dart';
-import 'package:hello/views/pages/home_page.dart';
+import 'package:hello/views/emergency/emergency_page.dart';
+import 'package:hello/views/emergency/appoinment_page.dart';
+import 'package:hello/views/emergency/home_page.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
-
 
   @override
   State<NotesView> createState() => _NotesViewState();
@@ -119,15 +119,13 @@ class _NotesViewState extends State<NotesView> {
       body: SingleChildScrollView(
         child: Expanded(
           child: [
-            HomePage(
-              appointment:(){
+            HomePage(appointment: () {
+              setState(() {
                 setState(() {
-                   setState(() {
-                    currentPageIndex = 2;
-                    });
+                  currentPageIndex = 2;
                 });
-          }
-            ),
+              });
+            }),
             const EmergencyPage(),
             const AppointmentPage(),
           ][currentPageIndex],
@@ -175,19 +173,6 @@ class _NotesViewState extends State<NotesView> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () {
-                      // LoadingScreen().show(
-                      //     context: context, text: "Please wait a moment...");
-                      // Future.delayed(
-                      //   Duration(seconds: 1),
-                      //   () {
-                      //     LoadingScreen().hide();
-                      //     Navigator.of(context).push(MaterialPageRoute(
-                      //       builder: (context) => ProfileView(
-                      //         onDataUpdated: onDataUpdated,
-                      //       ),
-                      //     ));
-                      //   },
-                      // );
                       context
                           .read<AuthBloc>()
                           .add(AuthEventUpdateProfile(onDataUpdated));
@@ -221,7 +206,7 @@ class _NotesViewState extends State<NotesView> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 183, 18, 6),
                     width: 2.0,
                   ),
                 ),
@@ -260,7 +245,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-         title: const Text('Log out',
+        title: const Text('Log out',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -273,7 +258,7 @@ Future<bool> showLogOutDialog(BuildContext context) {
               color: Colors.black,
             )),
         actions: [
-           ElevatedButton(
+          ElevatedButton(
             child: const Text('Ok',
                 style: TextStyle(
                   fontSize: 20,

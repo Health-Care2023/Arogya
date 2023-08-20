@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class Doctor {
   final String name;
-  final IconData icon;
+  final Icon icon;
 
   Doctor({required this.name, required this.icon});
 }
