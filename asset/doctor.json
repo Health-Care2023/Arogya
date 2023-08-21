@@ -11,57 +11,87 @@
     },
     {
       "name": "Dr. Michael Davis",
-      "speciality": "Orthopedic Surgeon",
+      "speciality": "Orthologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Emily White",
-      "speciality": "Dermatologist",
+      "speciality": "Oncologist",
       "gender": "Female"
     },
     {
       "name": "Dr. James Lee",
-      "speciality": "Ophthalmologist",
+      "speciality": "Oncologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Ankan",
-      "speciality": "Ophthalmologist",
+      "speciality": "General Pediatrician",
       "gender": "Male"
     },
     {
       "name": "Dr. Varun",
-      "speciality": "Ophthalmologist",
+      "speciality": "Radiologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Arka",
-      "speciality": "Ophthalmologist",
+      "speciality": "Orthologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Soutik",
-      "speciality": "Ophthalmologist",
+      "speciality": "Cardiologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Parthib",
-      "speciality": "Ophthalmologist",
+      "speciality": "Cardiologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Aritra",
-      "speciality": "Ophthalmologist",
+      "speciality": "Cardiologist",
       "gender": "Male"
     },
     {
       "name": "Dr. Ankur",
-      "speciality": "Ophthalmologist",
+      "speciality": "Dentist",
       "gender": "Male"
     },
     {
       "name": "Dr. Tunir",
-      "speciality": "Ophthalmologist",
+      "speciality": "Dentist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Susmita",
+      "speciality": "Cardiologist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Sumana",
+      "speciality": "Dentist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Vartika",
+      "speciality": "Dentist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Suparna",
+      "speciality": "Cardiologist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Rakhi",
+      "speciality": "Cardiologist",
+      "gender": "Male"
+    },
+    {
+      "name": "Dr. Rama",
+      "speciality": "Dentist",
       "gender": "Male"
     }
   ]

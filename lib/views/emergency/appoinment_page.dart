@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
 // ignore: depend_on_referenced_packages
 
-import '../pages/Gender_dropdown.dart';
+import '../pages/Custom_dropdown.dart';
 import '../pages/find_doctorList/DoctorList.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -19,25 +19,12 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   int selectedIndex = -1;
   TextEditingController searchController = TextEditingController();
-   List<DoctorList> doctors = [];
-List<String> allDoctorNames = [
-  // Add doctor names here
-  "Varun",
-  "Ankan",
-  "Parthib",
-  "Arka",
-  "Soutik"
-];
+  List<DoctorList> doctors = [];
+  String selectedSpecialty = ''; 
+  String selectedGender = 'All';
 
-List<String> allSpecialties = [
-  // Add doctor specialties here
-  "oncologist",
-  "cardiologist",
-  "padaetrician",
-  "dermatologists",
-  "eye specialist"
-];
-List<String> filteredDoctorNames = [];
+List<String> DoctorNames = [];
+List<String> filterDoctorNames = [];
   @override
   void initState() {
     super.initState();
@@ -78,6 +65,14 @@ Future<void> loadDoctors() async {
     }
     return specialtySet.toList();
   }
+  List<String> dropDownSpecialties(List<Doctor> doctorSpeciality) {
+    // Extract and deduplicate specialties
+    Set<String> specialtySet = {};
+    for (var doctor in doctorSpeciality) {
+      specialtySet.add(doctor.name);
+    }
+    return specialtySet.toList();
+  }
    List<String> extractNames(List<DoctorList> doctors) {
     // Extract and deduplicate specialties
     Set<String> nameSet = {};
@@ -89,51 +84,56 @@ Future<void> loadDoctors() async {
    List<DoctorList> searchDoctors(String query) {
     return doctors.where((doctor) {
       final lowerQuery = query.toLowerCase();
-      return doctor.name.toLowerCase().contains(lowerQuery);
-          // doctor.speciality.toLowerCase().contains(lowerQuery);
+      return (doctor.name.toLowerCase().contains(lowerQuery) || doctor.speciality.toLowerCase().contains(lowerQuery));
     }).toList();
   }
+   // Function to filter doctors by specialty
+  List<DoctorList> filterDoctorsBySpecialty(String specialty) {
+    if (specialty.isEmpty) {
+      return allDoctors();
+    } else {
+      return doctors.where((doctor) => doctor.speciality == specialty).toList();
+    }
+  }
+  List<DoctorList> filterDoctors() {
+    return doctors.where((doctor) {
+      final lowerQuery = searchController.text.toLowerCase();
+      return (doctor.name.toLowerCase().contains(lowerQuery) ||
+          doctor.name.toLowerCase().contains(lowerQuery)) &&
+          (selectedGender == 'All' || doctor.gender.toLowerCase() == selectedGender.toLowerCase()) &&
+          (selectedSpecialty.isEmpty || doctor.speciality.toLowerCase() == selectedSpecialty.toLowerCase());
+    }).toList();
+  }
+
+  void handleGridOptionClick(Doctor selectedDoctor) {
+  setState(() {
+    // selectedIndex = index;
+    selectedSpecialty = selectedDoctor.name;
+    filterDoctorNames = extractNames(filterDoctorsBySpecialty(selectedSpecialty));
+  });
+}
   @override
 Widget build(BuildContext context) {
       return Container(
         margin: const EdgeInsets.all(20),
-        
-        //  width: (MediaQuery.of(context).size.width),
-        // height: (MediaQuery.of(context).size.height),
-        // color: Colors.red,
-      child: SingleChildScrollView(
+        child: SingleChildScrollView(
          scrollDirection: Axis.vertical,
         child: Column(
             children:[
-            //    SingleChildScrollView(
-            //     scrollDirection: Axis.horizontal,
-                 
-                     Row(
-                       children: [
-                         Expanded(
-
-                            flex: 3,
-                           child: TextField(
+                        TextField(
                             // onChanged: (value) => _runFilter(value),
                             controller: searchController,
                   onChanged: (value) {
                     setState(() {
-                      // Filter suggestions based on entered text
                        if (value.isEmpty) {
-                          filteredDoctorNames.clear();
+                          DoctorNames.clear();
                         }
                         else{
-                      // filteredDoctorNames = extractNames(doctors)
-                      //     .where((name) =>
-                      //         name.toLowerCase().contains(value.toLowerCase()))
-                      //     .toList();
-                      filteredDoctorNames = extractNames(searchDoctors(value));
-                      // filteredDoctorNames = extractSpecialties(searchDoctors(value));
-                      print("hello doctors names ${filteredDoctorNames.length}");
+                      DoctorNames = extractNames(searchDoctors(value));
+                      print("hello doctors names ${DoctorNames.length}");
                         }
                     });
                   },
-                            
                             decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
@@ -147,25 +147,47 @@ Widget build(BuildContext context) {
                               ),
                              ),
                            ),
-                         ),
-                         const SizedBox(width: 10),
-                          Expanded(
-                            flex: 2,
-                           child: Container(                    
-                              decoration: BoxDecoration(
-                                      border: Border.all(width:1 , color: Colors.black),
-                                      borderRadius: BorderRadius.circular(10.0),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(         
+                                  width: (MediaQuery.of(context).size.width)*0.30,      
+                                    decoration: BoxDecoration(
+                                            border: Border.all(width:1 , color: Colors.black),
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ),
+                                      child: CustomDropdown(
+                                      options: ['All', 'Male', 'Female', 'Others'],
+                                      onChanged: (selectedGender) {
+                                        setState(() {
+                                this.selectedGender = selectedGender;
+                                     });
+                                      print('Selected Gender: $selectedGender');
+                                       },
                                     ),
-                                child: GenderDropdown(
-                                genderOptions: ['All', 'Male', 'Female', 'Others'],
-                                onChanged: (selectedGender) {
-                                print('Selected Gender: $selectedGender');
-                                 },
+                                 ),
                               ),
-                           ),
-                         ),
-                       ],
-                     ),
+                                Expanded(
+                                
+                                  child: Container(
+                                    width: (MediaQuery.of(context).size.width)*0.66,                     
+                                    decoration: BoxDecoration(
+                                            border: Border.all(width:1 , color: Colors.black),
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ),
+                                      child: CustomDropdown(
+                                      options: dropDownSpecialties(doctorSpeciality),
+                                      onChanged: (selectedGender) {
+                                        setState(() {
+                                          this.selectedGender = selectedGender;
+                                      });
+                                      print('Selected Gender: $selectedGender');
+                                       },
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
             const SizedBox(height: 20),
              Stack(
               children: [
@@ -183,7 +205,7 @@ Widget build(BuildContext context) {
                         doctorSpeciality[index], index, index == selectedIndex);
                   },
                 ),
-                if (filteredDoctorNames.isNotEmpty)
+                if (DoctorNames.isNotEmpty)
                   Positioned(
                     top: 0,
                     left: 0,
@@ -196,17 +218,17 @@ Widget build(BuildContext context) {
                         child: ListView.builder(
                           // physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: filteredDoctorNames.length,
+                          itemCount: DoctorNames.length,
                           itemBuilder: (context, index) {
-                            final doctorName = filteredDoctorNames[index];
+                            final doctorName = DoctorNames[index];
                             final doctorBio = getDoctorBio(doctorName);
                             return ListTile(
                               leading: const Icon(FontAwesomeIcons.userDoctor),
-                              title: Text(filteredDoctorNames[index]),
+                              title: Text(DoctorNames[index]),
                                subtitle: Text(doctorBio), 
                                hoverColor: Colors.black,
                               onTap: () {
-                                searchController.text = filteredDoctorNames[index];
+                                searchController.text = DoctorNames[index];
                                 print("hello ${doctorName}");
                               },
                             );
@@ -243,7 +265,8 @@ List<Doctor> doctorSpeciality = [
 Widget buildDoctorCard(Doctor doctor,index,bool selected) {
     return GestureDetector(
        onTap: () {
-
+        handleGridOptionClick(doctor);
+        print('Hello ${ filterDoctorNames.length}');
          setState(() {
         selectedIndex = index;
       });

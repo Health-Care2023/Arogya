@@ -5,17 +5,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GenderDropdown extends StatefulWidget {
-  final List<String> genderOptions;
+class CustomDropdown extends StatefulWidget {
+  final List<String> options;
   final Function(String) onChanged;
 
-  GenderDropdown({required this.genderOptions, required this.onChanged});
+  CustomDropdown({required this.options, required this.onChanged});
 
   @override
-  _GenderDropdownState createState() => _GenderDropdownState();
+  _CustomDropdownState createState() => _CustomDropdownState();
 }
 
-class _GenderDropdownState extends State<GenderDropdown> {
+class _CustomDropdownState extends State<CustomDropdown> {
   String selectedGender = '';
 
   @override
@@ -32,7 +32,7 @@ class _GenderDropdownState extends State<GenderDropdown> {
       },
       dropdownColor: Color.fromARGB(255, 255, 254, 254), // Customize the dropdown background color
       // dropdownWidth: 120,
-      items: widget.genderOptions.map((gender) {
+      items: widget.options.map((gender) {
         return DropdownMenuItem<String>(
           value: gender,
           child: Container(
