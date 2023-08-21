@@ -17,29 +17,14 @@ class AppointmentPage extends StatefulWidget {
 class _AppointmentPageState extends State<AppointmentPage> {
   int selectedIndex = -1;
   TextEditingController searchController = TextEditingController();
-  List<String> allDoctorNames = [
-    // Add doctor names here
-    "Varun",
-    "Ankan",
-    "Parthib",
-    "Arka",
-    "Soutik"
-  ];
+
   List<Map<String, String>> doctorNames = [
-    {"name": "Varun", "specialist": "oncologist"},
-    {"name": "Soutik", "specialist": "cardiologist"},
-    {"name": "Parthib", "specialist": "padaetrician"},
-    {"name": "Arka", "specialist": "eye specialist"}
+    {"name": "varun", "specialist": "oncologist"},
+    {"name": "soutik", "specialist": "cardiologist"},
+    {"name": "parthib", "specialist": "padaetrician"},
+    {"name": "arka", "specialist": "eye specialist"}
   ];
 
-  List<String> allSpecialties = [
-    // Add doctor specialties here
-    "oncologist",
-    "cardiologist",
-    "padaetrician",
-    "dermatologists",
-    "eye specialist"
-  ];
   List<Map<String, String>> _foundUsers = [];
   void _runFilter(String enteredKeyword) {
     List<Map<String, String>> results = [];
@@ -47,7 +32,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
       results = doctorNames;
     } else {
       results = doctorNames.where((user) {
-        return user["name"]!.contains(enteredKeyword.toLowerCase());
+        return user["name"]!.contains(enteredKeyword.toLowerCase()) ||
+            user["specialist"]!.contains(enteredKeyword.toLowerCase());
       }).toList();
     }
 
@@ -70,17 +56,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(20),
-
-      //  width: (MediaQuery.of(context).size.width),
-      // height: (MediaQuery.of(context).size.height),
-      // color: Colors.red,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            //    SingleChildScrollView(
-            //     scrollDirection: Axis.horizontal,
-
             Row(
               children: [
                 Expanded(
@@ -124,37 +103,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               ],
             ),
             const SizedBox(height: 10),
-            //            if (filteredDoctorNames.isNotEmpty)
-            //            ListView.builder(
-            //   shrinkWrap: true,
-            //   itemCount: filteredDoctorNames.length,
-            //   itemBuilder: (context, index) {
-            //     return ListTile(
-            //       title: Text(filteredDoctorNames[index]),
-            //       onTap: () {
-            //         searchController.text = filteredDoctorNames[index];
-            //       },
-            //     );
-            //   },
-            // ),
-            //  ),
             const SizedBox(height: 20),
-            //   Stack(
-            //     children: [ GridView.builder(
-            //       physics: const NeverScrollableScrollPhysics(),
-            //       shrinkWrap: true,
-            //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2, // You can adjust the number of columns here
-            //       childAspectRatio: 1.0, // Ensure square grid items
-            //       mainAxisExtent: (MediaQuery.of(context).size.height)*0.15,
-            //     ),
-            //     itemCount: doctors.length,
-            //     itemBuilder: (context, index) {
-            //         // First row with 2 doctors
-            //         return buildDoctorCard(doctors[index],index, index == selectedIndex);
-            //         },
-            //       ),
-            // ]),
             Stack(
               children: [
                 GridView.builder(
