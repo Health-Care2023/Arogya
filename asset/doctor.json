@@ -1,68 +1,97 @@
 [
-    {
-      "name": "Dr. John Smith",
-      "speciality": "Cardiologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Sarah Johnson",
-      "speciality": "Pediatrician",
-      "gender": "Female"
-    },
-    {
-      "name": "Dr. Michael Davis",
-      "speciality": "Orthopedic Surgeon",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Emily White",
-      "speciality": "Dermatologist",
-      "gender": "Female"
-    },
-    {
-      "name": "Dr. James Lee",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Ankan",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Varun",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Arka",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Soutik",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Parthib",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Aritra",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Ankur",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    },
-    {
-      "name": "Dr. Tunir",
-      "speciality": "Ophthalmologist",
-      "gender": "Male"
-    }
-  ]
-  
+  {
+    "name": "Dr. John Smith",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Sarah Johnson",
+    "speciality": "Pediatrician",
+    "gender": "Female"
+  },
+  {
+    "name": "Dr. Michael Davis",
+    "speciality": "Orthologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Emily White",
+    "speciality": "Oncologist",
+    "gender": "Female"
+  },
+  {
+    "name": "Dr. James Lee",
+    "speciality": "Oncologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Ankan",
+    "speciality": "General Pediatrician",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Varun",
+    "speciality": "Radiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Arka",
+    "speciality": "Orthologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Soutik",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Parthib",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Aritra",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Ankur",
+    "speciality": "Dentist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Tunir",
+    "speciality": "Dentist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Susmita",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Sumana",
+    "speciality": "Dentist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Vartika",
+    "speciality": "Dentist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Suparna",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Rakhi",
+    "speciality": "Cardiologist",
+    "gender": "Male"
+  },
+  {
+    "name": "Dr. Rama",
+    "speciality": "Dentist",
+    "gender": "Male"
+  }
+]
