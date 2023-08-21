@@ -11,98 +11,98 @@
     "speciality": "Pediatrician",
     "gender": "Female",
     "experience": "22 yrs",
-    "degree": "MD"
+    "degree": "DNP"
   },
   {
     "name": "Dr. Michael Davis",
     "speciality": "Orthologist",
     "gender": "Male",
     "experience": "24 yrs",
-    "degree": "MD"
+    "degree": "DO"
   },
   {
     "name": "Dr. Emily White",
     "speciality": "Oncologist",
     "gender": "Female",
     "experience": "21 yrs",
-    "degree": "MD"
+    "degree": "MBBS"
   },
   {
     "name": "Dr. James Lee",
     "speciality": "Oncologist",
     "gender": "Male",
     "experience": "25 yrs",
-    "degree": "MD"
+    "degree": "MBBS"
   },
   {
     "name": "Dr. Ankan",
     "speciality": "General Pediatrician",
     "gender": "Male",
     "experience": "28 yrs",
-    "degree": "MD"
+    "degree": "DNP"
   },
   {
     "name": "Dr. Varun",
     "speciality": "Radiologist",
     "gender": "Male",
     "experience": "30 yrs",
-    "degree": "MD"
+    "degree": "MBBS"
   },
   {
     "name": "Dr. Arka",
     "speciality": "Orthologist",
     "gender": "Male",
     "experience": "29 yrs",
-    "degree": "MD"
+    "degree": "DO"
   },
   {
     "name": "Dr. Soutik",
     "speciality": "Cardiologist",
     "gender": "Male",
     "experience": "27 yrs",
-    "degree": "MD"
+    "degree": "DM"
   },
   {
     "name": "Dr. Parthib",
     "speciality": "Cardiologist",
     "gender": "Male",
     "experience": "35 yrs",
-    "degree": "MD"
+    "degree": "DM"
   },
   {
     "name": "Dr. Aritra",
     "speciality": "Cardiologist",
     "gender": "Male",
     "experience": "28 yrs",
-    "degree": "MD"
+    "degree": "DM"
   },
   {
     "name": "Dr. Ankur",
     "speciality": "Dentist",
     "gender": "Male",
     "experience": "20 yrs",
-    "degree": "MD"
+    "degree": "DDS"
   },
   {
     "name": "Dr. Tunir",
     "speciality": "Dentist",
     "gender": "Male",
     "experience": "18 yrs",
-    "degree": "MD"
+    "degree": "DMD"
   },
   {
     "name": "Dr. Susmita",
     "speciality": "Cardiologist",
     "gender": "Male",
     "experience": "19 yrs",
-    "degree": "MD"
+    "degree": "MSc"
   },
   {
     "name": "Dr. Sumana",
     "speciality": "Dentist",
     "gender": "Male",
     "experience": "20 yrs",
-    "degree": "MD"
+    "degree": "DMD"
   },
   {
     "name": "Dr. Vartika",
@@ -130,6 +130,6 @@
     "speciality": "Dentist",
     "gender": "Male",
     "experience": "26 yrs",
-    "degree": "MD"
+    "degree": "DMD"
   }
 ]

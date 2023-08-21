@@ -58,10 +58,24 @@ Future<void> loadDoctors() async {
     // Extract and deduplicate specialties
     Set<String> specialtySet = {};
     for (var doctor in doctors) {
+      
       specialtySet.add(doctor.speciality);
+      
+
     }
     return specialtySet.toList();
   }
+  //  List<String> extractExperience(List<DoctorList> doctors) {
+  //   // Extract and deduplicate specialties
+  //   Set<String> experienceSet = {};
+  //   for (var doctor in doctors) {
+      
+  //     experienceSet.add(doctor.experience);
+      
+
+  //   }
+  //   return experienceSet.toList();
+  // }
    List<String> extractNames(List<DoctorList> doctors) {
     // Extract and deduplicate specialties
     Set<String> nameSet = {};
@@ -193,7 +207,6 @@ Widget build(BuildContext context) {
                                   color: isSelected ? Color.fromARGB(255, 11, 11, 11) : Colors.black,
                                 ),), 
                                  hoverColor: Colors.black,
-                                 tileColor: isSelected ? Colors.blue : null,
                                 onTap: () {
                                    setState(() {
                                   searchController.text = filteredDoctorNames[index];
@@ -221,7 +234,8 @@ String getDoctorBio(String doctorName) {
      final doctor = doctors.firstWhere((doc) => doc.name == doctorName);
   
   
-    return "Specialty: ${doctor.speciality}";
+    // ignore: prefer_adjacent_string_concatenation
+    return "${doctor.speciality} | Experience: ${doctor.experience} | ${doctor.degree}";
  
   
   }
@@ -276,6 +290,7 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
              style: TextStyle(
               color: doctor.selected ? Colors.white : Colors.black, // Change text color when selected
             ),),
+          
           ],
         ),
       ),
