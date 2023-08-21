@@ -24,6 +24,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
     {"name": "parthib", "specialist": "padaetrician"},
     {"name": "arka", "specialist": "eye specialist"}
   ];
+  String capitalizeFirstLetter(String input) {
+    if (input.isEmpty) {
+      return input;
+    }
+
+    return input[0].toUpperCase() + input.substring(1);
+  }
 
   List<Map<String, String>> _foundUsers = [];
   void _runFilter(String enteredKeyword) {
@@ -137,7 +144,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           final doctorBio = getDoctorBio(doctorName);
                           return ListTile(
                             leading: Icon(FontAwesomeIcons.userDoctor),
-                            title: Text(_foundUsers[index]["name"]!),
+                            title: Text(capitalizeFirstLetter(
+                                _foundUsers[index]["name"]!)),
                             subtitle: Text(doctorBio),
                             onTap: () {
                               // searchController.text =
