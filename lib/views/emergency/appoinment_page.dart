@@ -218,7 +218,12 @@ Widget build(BuildContext context) {
   }
 String getDoctorBio(String doctorName) {
   
-    return "One-line bio of $doctorName";
+     final doctor = doctors.firstWhere((doc) => doc.name == doctorName);
+  
+  
+    return "Specialty: ${doctor.speciality}";
+ 
+  
   }
 
 

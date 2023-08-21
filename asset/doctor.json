@@ -2,96 +2,134 @@
   {
     "name": "Dr. John Smith",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "20 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Sarah Johnson",
     "speciality": "Pediatrician",
-    "gender": "Female"
+    "gender": "Female",
+    "experience": "22 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Michael Davis",
     "speciality": "Orthologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "24 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Emily White",
     "speciality": "Oncologist",
-    "gender": "Female"
+    "gender": "Female",
+    "experience": "21 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. James Lee",
     "speciality": "Oncologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "25 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Ankan",
     "speciality": "General Pediatrician",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "28 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Varun",
     "speciality": "Radiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "30 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Arka",
     "speciality": "Orthologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "29 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Soutik",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "27 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Parthib",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "35 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Aritra",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "28 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Ankur",
     "speciality": "Dentist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "20 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Tunir",
     "speciality": "Dentist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "18 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Susmita",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "19 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Sumana",
     "speciality": "Dentist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "20 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Vartika",
     "speciality": "Dentist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "22 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Suparna",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "23 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Rakhi",
     "speciality": "Cardiologist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "25 yrs",
+    "degree": "MD"
   },
   {
     "name": "Dr. Rama",
     "speciality": "Dentist",
-    "gender": "Male"
+    "gender": "Male",
+    "experience": "26 yrs",
+    "degree": "MD"
   }
 ]
