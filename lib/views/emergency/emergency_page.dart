@@ -33,8 +33,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
   void refreshJournals() async {
     DatabaseUser db = await _sqlhelper.getUser(email: userEmail);
 
-    phoneNo.add(db.phone1);
-    phoneNo.add(db.phone2);
+    phoneNo.add(db.emergency1);
+    phoneNo.add(db.emergency2);
   }
 
   _getCurrentLocation() async {

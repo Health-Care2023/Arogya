@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
-// ignore: depend_on_referenced_packages
-
 import '../pages/Gender_dropdown.dart';
 
 class AppointmentPage extends StatefulWidget {
@@ -93,7 +90,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(width: 1, color: Colors.black),

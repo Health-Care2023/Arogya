@@ -72,22 +72,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(const AuthstateUpdateProfile(isloading: false));
 
         await sqlhelper.updateItem(
-          name: event.name,
-          email: event.email,
-          aadhar_no: event.aadhar_no,
-          gender: event.gender,
-          phone1: event.phone1,
-          phone2: event.phone2,
-          profession: event.profession,
-          address1: event.address1,
-          district: event.district,
-          address2: event.address2,
-          address3: event.address3,
-          pincode: event.pincode,
-          wardNo: event.wardNo,
-          dateofbirth: event.dateofbirth,
-          image: event.image,
-        );
+            name: event.name,
+            email: event.email,
+            aadhar_no: event.aadhar_no,
+            gender: event.gender,
+            phone1: event.phone1,
+            phone2: event.phone2,
+            profession: event.profession,
+            address1: event.address1,
+            district: event.district,
+            address2: event.address2,
+            address3: event.address3,
+            pincode: event.pincode,
+            wardNo: event.wardNo,
+            dateofbirth: event.dateofbirth,
+            image: event.image,
+            emergency1: event.emergency1,
+            emergency2: event.emergency2);
         emit(const AuthstateUpdateProfile(
             isloading: true, loadingtext: "Updating"));
       },

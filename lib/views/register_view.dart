@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:hello/Utilities/show_error_dialog.dart';
 
@@ -207,6 +206,8 @@ class _RegisterViewState extends State<RegisterView> {
                         pincode: '',
                         wardNo: '',
                         image: _imageBytes,
+                        emergency1: '',
+                        emergency2: '',
                       );
                       await openDialog(context);
                     }),
