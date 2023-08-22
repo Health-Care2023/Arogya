@@ -21,7 +21,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   TextEditingController searchController = TextEditingController();
   List<DoctorList> doctors = [];
   String selectedSpecialty = ''; 
-  String selectedGender = 'All';
+  String selectedGender = '';
 
 List<String> DoctorNames = [];
 List<String> filterDoctorNames = [];
@@ -95,22 +95,64 @@ Future<void> loadDoctors() async {
       return doctors.where((doctor) => doctor.speciality == specialty).toList();
     }
   }
-  List<DoctorList> filterDoctors() {
-    return doctors.where((doctor) {
-      final lowerQuery = searchController.text.toLowerCase();
-      return (doctor.name.toLowerCase().contains(lowerQuery) ||
-          doctor.name.toLowerCase().contains(lowerQuery)) &&
-          (selectedGender == 'All' || doctor.gender.toLowerCase() == selectedGender.toLowerCase()) &&
-          (selectedSpecialty.isEmpty || doctor.speciality.toLowerCase() == selectedSpecialty.toLowerCase());
-    }).toList();
+ 
+List<DoctorList> filteredDoctors() {
+  if (selectedGender.isEmpty && selectedSpecialty.isEmpty) {
+    // Show an alert if neither gender nor speciality is selected
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Please select at least one filter',
+          style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+          actions: [
+             ElevatedButton(
+            child: const Text('Ok',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          ],
+        );
+      },
+    );
+    return []; 
   }
 
+  // Apply filters based on selected gender and speciality
+  List<DoctorList> filteredList = doctors;
+
+  if (selectedGender.isNotEmpty && selectedGender != "All") {
+    filteredList = filteredList.where((doctor) => doctor.gender == selectedGender).toList();
+  }
+  if (selectedSpecialty.isNotEmpty) {
+    filteredList = filteredList.where((doctor) => doctor.speciality == selectedSpecialty).toList();
+  }
+
+  return filteredList;
+}
   void handleGridOptionClick(Doctor selectedDoctor) {
   setState(() {
     // selectedIndex = index;
     selectedSpecialty = selectedDoctor.name;
     filterDoctorNames = extractNames(filterDoctorsBySpecialty(selectedSpecialty));
   });
+}
+ void handleSearchClick() {
+  setState(() {
+    // selectedIndex = index;
+    filterDoctorNames = extractNames(filteredDoctors());
+  });
+   print("Hello ${filterDoctorNames.length}");
 }
   @override
 Widget build(BuildContext context) {
@@ -120,77 +162,114 @@ Widget build(BuildContext context) {
          scrollDirection: Axis.vertical,
         child: Column(
             children:[
-                        TextField(
-                            // onChanged: (value) => _runFilter(value),
-                            controller: searchController,
-                  onChanged: (value) {
-                    setState(() {
-                       if (value.isEmpty) {
-                          DoctorNames.clear();
-                        }
-                        else{
-                      DoctorNames = extractNames(searchDoctors(value));
-                      print("hello doctors names ${DoctorNames.length}");
-                        }
-                    });
-                  },
-                            decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                            labelText: "Search by name",
-                            labelStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
-                            suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
-                            // prefix: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(width: 1, color: Colors.black),
-                              borderRadius: BorderRadius.circular(20),
-                              ),
-                             ),
-                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(         
-                                  width: (MediaQuery.of(context).size.width)*0.30,      
-                                    decoration: BoxDecoration(
-                                            border: Border.all(width:1 , color: Colors.black),
-                                            borderRadius: BorderRadius.circular(10.0),
-                                          ),
-                                      child: CustomDropdown(
-                                      options: ['All', 'Male', 'Female', 'Others'],
-                                      onChanged: (selectedGender) {
-                                        setState(() {
-                                this.selectedGender = selectedGender;
-                                     });
-                                      print('Selected Gender: $selectedGender');
-                                       },
-                                    ),
-                                 ),
-                              ),
-                                Expanded(
-                                
-                                  child: Container(
-                                    width: (MediaQuery.of(context).size.width)*0.66,                     
-                                    decoration: BoxDecoration(
-                                            border: Border.all(width:1 , color: Colors.black),
-                                            borderRadius: BorderRadius.circular(10.0),
-                                          ),
-                                      child: CustomDropdown(
-                                      options: dropDownSpecialties(doctorSpeciality),
-                                      onChanged: (selectedGender) {
-                                        setState(() {
-                                          this.selectedGender = selectedGender;
-                                      });
-                                      print('Selected Gender: $selectedGender');
-                                       },
-                                    ),
-                                  ),
-                                ),
-                            ],
+                      TextField(
+                          controller: searchController,
+                          onChanged: (value) {
+                            setState(() {
+                              if (value.isEmpty) {
+                                  DoctorNames.clear();
+                                }
+                                else{
+                              DoctorNames = extractNames(searchDoctors(value));
+                              print("hello doctors names ${DoctorNames.length}");
+                                }
+                            });
+                          },
+                          decoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                          labelText: "Search by name",
+                          labelStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                          suffixIcon: const Icon(Icons.search,color: Color.fromARGB(255, 8, 4, 104),),
+                          // prefix: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(width: 1, color: Colors.black),
+                            borderRadius: BorderRadius.circular(20),
+                            ),
+                            ),
                           ),
+                           Stack(
+                         children: [
+                          Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              Container(         
+                                      width: (MediaQuery.of(context).size.width)*0.80,      
+                                        decoration: BoxDecoration(
+                                                border: Border.all(width:1 , color: Colors.black),
+                                                // borderRadius: BorderRadius.circular(10.0),
+                                              ),
+                                          child: CustomDropdown(
+                                          text: 'Select Gender',
+                                          options: ['All', 'Male', 'Female', 'Others'],
+                                          onChanged: (selectedGender) {
+                                            setState(() {
+                                    this.selectedGender = selectedGender;
+                                         });
+                                          print('Selected Gender: $selectedGender');
+                                           },
+                                        ),
+                                     ),
+                                      Container(
+                                        width: (MediaQuery.of(context).size.width)*0.80,                     
+                                        decoration: BoxDecoration(
+                                                border: Border.all(width:1 , color: Colors.black),
+                                                // borderRadius: BorderRadius.circular(10.0),
+                                              ),
+                                          child: CustomDropdown(
+                                          text: 'Choose Speciality',
+                                          options: dropDownSpecialties(doctorSpeciality),
+                                          onChanged: (selectedSpecialty) {
+                                            setState(() {
+                                              this.selectedSpecialty = selectedSpecialty;
+                                          });
+                                          print('Selected Gender: ${selectedSpecialty}');
+                                           },
+                                        ),
+                                      ),
+                                      Container(
+                                         width: (MediaQuery.of(context).size.width)*0.80,
+                                         alignment: Alignment.center,
+                                         decoration: BoxDecoration(
+                                                border: Border.all(width:0.2 , color: Colors.grey),
+                                                // borderRadius: BorderRadius.circular(10.0),
+                                              ),
+                                        child: Container(
+                                          width: (MediaQuery.of(context).size.width) * 0.40, // Set the width as desired
+                                          decoration: BoxDecoration(
+                                            // color: Colors.blue, // Set the background color
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: const Color.fromARGB(255, 8, 100, 176), // Make the button background transparent
+                                              elevation: 2, // Remove elevation
+                                            ),
+                                            child: const Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.search,
+                                                  color: Colors.white,
+                                                ),
+                                               SizedBox(width: 5), // Add some spacing between the icon and text
+                                                Text(
+                                                  'Search',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            onPressed: () {
+                                                handleSearchClick();
+                                            },
+                                          ),
+                                        ),
+                                      ),
             const SizedBox(height: 20),
-             Stack(
-              children: [
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -205,6 +284,7 @@ Widget build(BuildContext context) {
                         doctorSpeciality[index], index, index == selectedIndex);
                   },
                 ),
+                          ],),
                 if (DoctorNames.isNotEmpty)
                   Positioned(
                     top: 0,
@@ -216,29 +296,29 @@ Widget build(BuildContext context) {
                         color: const Color.fromARGB(255, 255, 255, 255).withOpacity(1.0),
                         padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
                         child: ListView.builder(
-                          // physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: DoctorNames.length,
-                          itemBuilder: (context, index) {
-                            final doctorName = DoctorNames[index];
-                            final doctorBio = getDoctorBio(doctorName);
-                            return ListTile(
-                              leading: const Icon(FontAwesomeIcons.userDoctor),
-                              title: Text(DoctorNames[index]),
-                               subtitle: Text(doctorBio), 
-                               hoverColor: Colors.black,
-                              onTap: () {
-                                searchController.text = DoctorNames[index];
-                                print("hello ${doctorName}");
+                              // physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: DoctorNames.length,
+                              itemBuilder: (context, index) {
+                                final doctorName = DoctorNames[index];
+                                final doctorBio = getDoctorBio(doctorName);
+                                return ListTile(
+                                  leading: const Icon(FontAwesomeIcons.userDoctor),
+                                  title: Text(DoctorNames[index]),
+                                   subtitle: Text(doctorBio), 
+                                   hoverColor: Colors.black,
+                                  onTap: () {
+                                    searchController.text = DoctorNames[index];
+                                    print("hello ${doctorName}");
+                                  },
+                                );
                               },
-                            );
-                          },
                         ),
                       ),
                     ),
                   ),
-              ],
-            ),
+                            ],
+                          ),
           ],
         ),
       ),

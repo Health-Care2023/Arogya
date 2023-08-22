@@ -67,32 +67,47 @@
     {
       "name": "Dr. Susmita",
       "speciality": "Cardiologist",
-      "gender": "Male"
+      "gender": "Female"
     },
     {
       "name": "Dr. Sumana",
       "speciality": "Dentist",
-      "gender": "Male"
+      "gender": "Female"
     },
     {
       "name": "Dr. Vartika",
       "speciality": "Dentist",
-      "gender": "Male"
+      "gender": "Female"
     },
     {
       "name": "Dr. Suparna",
       "speciality": "Cardiologist",
-      "gender": "Male"
+      "gender": "Female"
     },
     {
       "name": "Dr. Rakhi",
       "speciality": "Cardiologist",
+      "gender": "Female"
+    },
+    {
+      "name": "Dr. Sudeshna",
+      "speciality": "Pulmonologist",
+      "gender": "Female"
+    },
+    {
+      "name": "Dr. Shonku",
+      "speciality": "Pulmonologist",
       "gender": "Male"
     },
     {
-      "name": "Dr. Rama",
-      "speciality": "Dentist",
+      "name": "Dr. Krishna",
+      "speciality": "Pulmonologist",
       "gender": "Male"
+    },
+    {
+      "name": "Dr. Aruna",
+      "speciality": "Dentist",
+      "gender": "Female"
     }
   ]
   
