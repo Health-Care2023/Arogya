@@ -11,7 +11,6 @@ import '../pages/find_doctorList/DoctorList.dart';
 class AppointmentPage extends StatefulWidget {
   const AppointmentPage({super.key});
 
-  
   @override
   State<AppointmentPage> createState() => _AppointmentPageState();
 }
@@ -421,5 +420,4 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
       ),
     );
   }
-} 
-  
+}

@@ -64,6 +64,8 @@ class _ProfileViewState extends State<ProfileView> {
   late final TextEditingController _district;
   late final TextEditingController _pincode;
   late final TextEditingController _photo;
+  late final TextEditingController _emergency1;
+  late final TextEditingController _emergency2;
 
   //TextEditingController();
   @override
@@ -89,6 +91,8 @@ class _ProfileViewState extends State<ProfileView> {
     _pincode = TextEditingController();
     _dob = TextEditingController();
     _photo = TextEditingController();
+    _emergency1 = TextEditingController();
+    _emergency2 = TextEditingController();
 
     _firstname.text = " ";
     _middlename.text = "";
@@ -130,6 +134,8 @@ class _ProfileViewState extends State<ProfileView> {
       _district.text = db.district;
       _pincode.text = db.pincode;
       _image = db.image;
+      _emergency1.text = db.emergency1;
+      _emergency2.text = db.emergency2;
     });
   }
 
@@ -269,7 +275,39 @@ class _ProfileViewState extends State<ProfileView> {
                     autocorrect: false,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      labelText: 'Enter Alternate Phone No 2',
+                      labelText: 'Alternate Phone No 2',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _emergency1,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Emergency Contact 1',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1, color: Colors.black),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _emergency2,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Emergency Contact 2',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(10),
@@ -491,62 +529,25 @@ class _ProfileViewState extends State<ProfileView> {
                     backgroundColor: Color.fromARGB(255, 48, 143, 221),
                     icon: new Icon(Icons.update),
                     onPressed: () async {
-                      // await _sqlhelper.updateItem(
-                      //   name:
-                      //       '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                      //   email: _email.text,
-                      //   aadhar_no: _aadharNo.text,
-                      //   gender: _gender.text,
-                      //   phone1: _phone1.text,
-                      //   phone2: _phone2.text,
-                      //   profession: _profession.text,
-                      //   address1: _address1.text,
-                      //   district: _district.text,
-                      //   dateofbirth: _dob.text,
-                      //   address2: _address2.text,
-                      //   address3: _address3.text,
-                      //   pincode: _pincode.text,
-                      //   wardNo: _wordno.text,
-                      //   image: _image!,
-                      // );
                       context.read<AuthBloc>().add(AuthEventUpdatingProfile(
-                            name:
-                                '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                            email: _email.text,
-                            aadhar_no: _aadharNo.text,
-                            gender: _gender.text,
-                            phone1: _phone1.text,
-                            phone2: _phone2.text,
-                            profession: _profession.text,
-                            address1: _address1.text,
-                            district: _district.text,
-                            dateofbirth: _dob.text,
-                            address2: _address2.text,
-                            address3: _address3.text,
-                            pincode: _pincode.text,
-                            wardNo: _wordno.text,
-                            image: _image!,
-                          ));
-
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(
-                      //     backgroundColor:
-                      //         Colors.green, // Custom background color
-                      //     content: Row(
-                      //       children: [
-                      //         Icon(Icons.check_circle_outline,
-                      //             color: Colors.white), // Custom tick icon
-                      //         SizedBox(width: 8), // Spacing between icon and text
-                      //         Text(
-                      //           "Profile Updated",
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     duration: Duration(
-                      //         seconds: 1), // Adjust the duration as needed
-                      //   ),
-                      // );
+                          name:
+                              '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                          email: _email.text,
+                          aadhar_no: _aadharNo.text,
+                          gender: _gender.text,
+                          phone1: _phone1.text,
+                          phone2: _phone2.text,
+                          profession: _profession.text,
+                          address1: _address1.text,
+                          district: _district.text,
+                          dateofbirth: _dob.text,
+                          address2: _address2.text,
+                          address3: _address3.text,
+                          pincode: _pincode.text,
+                          wardNo: _wordno.text,
+                          image: _image!,
+                          emergency1: _emergency1.text,
+                          emergency2: _emergency2.text));
                     },
                   ),
                   const SizedBox(height: 50),

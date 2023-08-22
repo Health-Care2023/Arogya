@@ -66,7 +66,8 @@ class AuthEventUpdatingProfile extends AuthEvent {
   final String wardNo;
   final String dateofbirth;
   final Uint8List image;
-
+  final String emergency1;
+  final String emergency2;
   const AuthEventUpdatingProfile(
       {required this.name,
       required this.email,
@@ -82,5 +83,7 @@ class AuthEventUpdatingProfile extends AuthEvent {
       required this.pincode,
       required this.wardNo,
       required this.dateofbirth,
-      required this.image});
+      required this.image,
+      required this.emergency1,
+      required this.emergency2});
 }

@@ -18,7 +18,8 @@ class CouldNotFindUser implements Exception {}
 class SQLHelper {
   Database? _db;
 
-  static final SQLHelper _shared = SQLHelper._sharedInstance(); //Singleton object
+  static final SQLHelper _shared =
+      SQLHelper._sharedInstance(); //Singleton object
   SQLHelper._sharedInstance();
   factory SQLHelper() => _shared;
 
@@ -43,6 +44,8 @@ class SQLHelper {
         pincode: '',
         wardNo: '',
         image: Uint8List(0),
+        emergency1: '',
+        emergency2: '',
       );
       return createdUser;
     } catch (e) {
@@ -80,7 +83,7 @@ class SQLHelper {
     }
     try {
       final docsPath = await getApplicationDocumentsDirectory();
-      final path = join(docsPath.path, 'Profile_view.db');
+      final path = join(docsPath.path, 'Profile.db');
       final db = await openDatabase(path);
       _db = db;
       db.execute(createTable);
@@ -105,6 +108,8 @@ class SQLHelper {
     required String pincode,
     required String wardNo,
     required Uint8List image,
+    required String emergency1,
+    required String emergency2,
   }) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -125,6 +130,8 @@ class SQLHelper {
       pincodeColumn: pincode,
       wardNoColumn: wardNo,
       imageColumn: image,
+      emergency1Column: emergency1,
+      emergency2Column: emergency2
     });
     return DatabaseUser(
       id: userId,
@@ -143,6 +150,8 @@ class SQLHelper {
       pincode: pincode,
       wardNo: wardNo,
       image: image,
+      emergency1: emergency1,
+      emergency2: emergency2,
     );
   }
 
@@ -180,6 +189,8 @@ class SQLHelper {
     required String pincode,
     required String wardNo,
     required Uint8List image,
+    required String emergency1,
+    required String emergency2,
   }) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -199,6 +210,8 @@ class SQLHelper {
       'pincode': pincode,
       'wardNo': wardNo,
       'image': image,
+      'emergency1': emergency1,
+      'emergency2': emergency2,
     };
     final result = await db
         .update('complaint', data, where: 'email=?', whereArgs: [email]);
@@ -234,25 +247,27 @@ class DatabaseUser {
   final String wardNo;
   final String dateofbirth;
   final Uint8List image;
-
-  const DatabaseUser({
-    required this.gender,
-    required this.address2,
-    required this.address3,
-    required this.pincode,
-    required this.wardNo,
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.aadhar_no,
-    required this.profession,
-    required this.address1,
-    required this.district,
-    required this.phone1,
-    required this.phone2,
-    required this.dateofbirth,
-    required this.image,
-  });
+  final String emergency1;
+  final String emergency2;
+  const DatabaseUser(
+      {required this.gender,
+      required this.address2,
+      required this.address3,
+      required this.pincode,
+      required this.wardNo,
+      required this.id,
+      required this.name,
+      required this.email,
+      required this.aadhar_no,
+      required this.profession,
+      required this.address1,
+      required this.district,
+      required this.phone1,
+      required this.phone2,
+      required this.dateofbirth,
+      required this.image,
+      required this.emergency1,
+      required this.emergency2});
   DatabaseUser.fromRow(Map<String, Object?> map)
       : id = map[idColumn] as int,
         name = map[nameColumn] as String,
@@ -269,7 +284,9 @@ class DatabaseUser {
         address3 = map[address3Column] as String,
         pincode = map[pincodeColumn] as String,
         wardNo = map[wardNoColumn] as String,
-        image = map[imageColumn] as Uint8List;
+        image = map[imageColumn] as Uint8List,
+        emergency1 = map[emergency1Column] as String,
+        emergency2 = map[emergency2Column] as String;
 }
 
 const idColumn = 'id';
@@ -284,7 +301,8 @@ const professionColumn = 'profession';
 const address1Column = 'address1';
 const districtColumn = 'district';
 const dateofbirthColumn = 'dateofbirth';
-
+const emergency1Column = 'emergency1';
+const emergency2Column = 'emergency2';
 const address2Column = 'address2';
 const address3Column = 'address3';
 const pincodeColumn = 'pincode';
@@ -307,6 +325,8 @@ const createTable = """CREATE TABLE "complaint" (
   "pincode" TEXT,
   "wardNo" TEXT,
   "image" BLOB,
+  "emergency1" TEXT,
+  "emergency2" TEXT,
   PRIMARY KEY("id" AUTOINCREMENT)
 );
 """;
