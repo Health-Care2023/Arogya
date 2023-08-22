@@ -61,7 +61,10 @@ Future<void> loadDoctors() async {
     // Extract and deduplicate specialties
     Set<String> specialtySet = {};
     for (var doctor in doctors) {
+      
       specialtySet.add(doctor.speciality);
+      
+
     }
     return specialtySet.toList();
   }
@@ -73,6 +76,17 @@ Future<void> loadDoctors() async {
     }
     return specialtySet.toList();
   }
+  //  List<String> extractExperience(List<DoctorList> doctors) {
+  //   // Extract and deduplicate specialties
+  //   Set<String> experienceSet = {};
+  //   for (var doctor in doctors) {
+      
+  //     experienceSet.add(doctor.experience);
+      
+
+  //   }
+  //   return experienceSet.toList();
+  // }
    List<String> extractNames(List<DoctorList> doctors) {
     // Extract and deduplicate specialties
     Set<String> nameSet = {};
@@ -296,23 +310,39 @@ Widget build(BuildContext context) {
                         color: const Color.fromARGB(255, 255, 255, 255).withOpacity(1.0),
                         padding: const EdgeInsets.only(left:8.0,right:8.0,bottom:8.0),
                         child: ListView.builder(
-                              // physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: DoctorNames.length,
-                              itemBuilder: (context, index) {
-                                final doctorName = DoctorNames[index];
-                                final doctorBio = getDoctorBio(doctorName);
-                                return ListTile(
-                                  leading: const Icon(FontAwesomeIcons.userDoctor),
-                                  title: Text(DoctorNames[index]),
-                                   subtitle: Text(doctorBio), 
-                                   hoverColor: Colors.black,
-                                  onTap: () {
-                                    searchController.text = DoctorNames[index];
-                                    print("hello ${doctorName}");
-                                  },
-                                );
-                              },
+                          shrinkWrap: true,
+                          itemCount: DoctorNames.length,
+                          itemBuilder: (context, index) {
+                            final doctorName = DoctorNames[index];
+                            final doctorBio = getDoctorBio(doctorName);
+                            final isSelected = index == selectedIndex;
+
+                            return Container(
+
+                              color: isSelected ? Color.fromARGB(255, 207, 208, 208) : Colors.white,
+                              child: ListTile(
+                                
+                                // selectedTileColor: isSelected ? Color.fromARGB(255, 227, 17, 17) : Colors.black,
+                                leading: const Icon(FontAwesomeIcons.userDoctor),
+                                title: Text(DoctorNames[index] ,
+                                style: TextStyle(
+                                      color: isSelected ? Color.fromARGB(255, 8, 8, 8) : Colors.black,
+                                    ),),
+                                 subtitle: Text(doctorBio , 
+                                 style: TextStyle(
+                                  color: isSelected ? Color.fromARGB(255, 11, 11, 11) : Colors.black,
+                                ),), 
+                                 hoverColor: Colors.black,
+                                onTap: () {
+                                   setState(() {
+                                  searchController.text = DoctorNames[index];
+                                  selectedIndex = index;
+                                   });
+                                  print("hello ${doctorName}");
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -323,23 +353,27 @@ Widget build(BuildContext context) {
         ),
       ),
               
-            );
+   );
   }
 String getDoctorBio(String doctorName) {
   
-    return "One-line bio of $doctorName";
+     final doctor = doctors.firstWhere((doc) => doc.name == doctorName);
+    // ignore: prefer_adjacent_string_concatenation
+    return "${doctor.speciality} | Experience: ${doctor.experience} | ${doctor.degree}";
+ 
+  
   }
 
 
 List<Doctor> doctorSpeciality = [
-  Doctor(name: "Dentist", icon: const Icon(FontAwesomeIcons.tooth)),
-  Doctor(name: "Cardiologist", icon: const Icon(FontAwesomeIcons.heartPulse , color: Color.fromARGB(255, 240, 26, 10),)),
-  Doctor(name: "Pulmonologist", icon: const Icon(FontAwesomeIcons.lungs , color: Colors.pink)),
-  Doctor(name: "Oncologist", icon: const Icon(FontAwesomeIcons.brain , color: Color.fromARGB(255, 240, 131, 167))),
-  Doctor(name: "General physician", icon: const Icon(FontAwesomeIcons.stethoscope , color: Colors.black)),
-  Doctor(name: "Radiologist", icon: const Icon(FontAwesomeIcons.xRay)),
-  Doctor(name: "Pediatrician", icon: const Icon(FontAwesomeIcons.baby)),
-  Doctor(name: "Orthologist", icon: const Icon(FontAwesomeIcons.bone , color: Color.fromARGB(255, 170, 169, 169))),
+  Doctor(name: "Dentist", icon: const Icon(FontAwesomeIcons.tooth) ,selected: false),
+  Doctor(name: "Cardiologist", icon: const Icon(FontAwesomeIcons.heartPulse , color: Color.fromARGB(255, 240, 26, 10),) ,selected: false),
+  Doctor(name: "Pulmonologist", icon: const Icon(FontAwesomeIcons.lungs , color: Colors.pink) ,selected: false),
+  Doctor(name: "Oncologist", icon: const Icon(FontAwesomeIcons.brain , color: Color.fromARGB(255, 240, 131, 167)) ,selected: false),
+  Doctor(name: "General physician", icon: const Icon(FontAwesomeIcons.stethoscope , color: Colors.black) ,selected: false),
+  Doctor(name: "Radiologist", icon: const Icon(FontAwesomeIcons.xRay) ,selected: false),
+  Doctor(name: "Pediatrician", icon: const Icon(FontAwesomeIcons.baby) ,selected: false),
+  Doctor(name: "Orthologist", icon: const Icon(FontAwesomeIcons.bone , color: Color.fromARGB(255, 170, 169, 169)) ,selected: false),
   // Add more doctors here
 ];
 Widget buildDoctorCard(Doctor doctor,index,bool selected) {
@@ -348,7 +382,10 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
         handleGridOptionClick(doctor);
         print('Hello ${ filterDoctorNames.length}');
          setState(() {
-        selectedIndex = index;
+           for (var i = 0; i < doctorSpeciality.length; i++) {
+          doctorSpeciality[i].selected = i == index;
+        }
+        // selectedIndex = index;
       });
        
       
@@ -358,8 +395,8 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
           margin: const EdgeInsets.all(0),
           decoration: BoxDecoration(
               border: Border.all(width: 1, color: Color.fromARGB(255, 4, 100, 178)), 
-              color: selected ? Colors.blue : Colors.white,
-              boxShadow: selected
+              color: doctor.selected ? Colors.blue : Colors.white,
+              boxShadow: doctor.selected
             ? [
                 BoxShadow(
                   color: Color.fromARGB(255, 99, 179, 245).withOpacity(0.5), // Glow color
@@ -372,12 +409,13 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            doctor.icon,
+            doctor.icon, 
             SizedBox(height: 8),
             Text(doctor.name , 
              style: TextStyle(
-              color: selected ? Colors.white : Colors.black, // Change text color when selected
+              color: doctor.selected ? Colors.white : Colors.black, // Change text color when selected
             ),),
+          
           ],
         ),
       ),
