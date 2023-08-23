@@ -20,9 +20,9 @@ import 'providers/chats_provider.dart';
 
 import 'package:hello/views/login_view.dart';
 
-import 'package:hello/views/notes/notes_view.dart';
+import 'package:hello/views/views/notes_view.dart';
 import 'package:hello/views/otp.dart';
-import 'package:hello/views/notes/chat_view.dart';
+import 'package:hello/views/views/chat_view.dart';
 
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
