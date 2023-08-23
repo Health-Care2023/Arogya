@@ -113,7 +113,4 @@ Future<void> _requestPermissions() async {
     Permission.camera,
     Permission.microphone,
   ].request();
-
-  // You can handle the statuses here as needed
-  // For example, check statuses[Permission.phone].isGranted to see if phone permission is granted
 }

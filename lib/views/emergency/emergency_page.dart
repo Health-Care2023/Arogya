@@ -139,7 +139,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
           localizedReason: 'use fingerprint to authenticate',
           options: const AuthenticationOptions(
             stickyAuth: true,
-            biometricOnly: true,
           ));
       if (authinticate) {
         final ConfirmAction? action = await _asyncConfirmDialog(
