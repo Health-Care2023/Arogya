@@ -26,6 +26,7 @@ import 'package:hello/views/views/chat_view.dart';
 
 import 'package:hello/views/phone.dart';
 import 'package:hello/views/register_view.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,6 +82,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is AuthStateLoggedIn) {
+          _requestPermissions();
           return const NotesView();
         } else if (state is AuthStateUpdatedProfile) {
           return const NotesView();
@@ -100,4 +102,18 @@ class HomePage extends StatelessWidget {
       },
     );
   }
+}
+
+Future<void> _requestPermissions() async {
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.phone,
+    Permission.location,
+    Permission.sms,
+    Permission.storage,
+    Permission.camera,
+    Permission.microphone,
+  ].request();
+
+  // You can handle the statuses here as needed
+  // For example, check statuses[Permission.phone].isGranted to see if phone permission is granted
 }
