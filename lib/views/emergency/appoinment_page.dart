@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hello/views/pages/find_doctorList/Doctor.dart';
+import 'package:hello/views/emergency/doctor_list_page.dart';
 // ignore: depend_on_referenced_packages
 
 import '../pages/Custom_dropdown.dart';
@@ -153,19 +154,44 @@ List<DoctorList> filteredDoctors() {
 
   return filteredList;
 }
-  void handleGridOptionClick(Doctor selectedDoctor) {
-  setState(() {
-    // selectedIndex = index;
-    selectedSpecialty = selectedDoctor.name;
-    filterDoctorNames = extractNames(filterDoctorsBySpecialty(selectedSpecialty));
-  });
+  void handleGridOptionClick(Doctor selectedDoctor) async{
+  // setState(() {
+  //   // selectedIndex = index;
+  //   selectedSpecialty = selectedDoctor.name;
+  // });
+  selectedSpecialty = selectedDoctor.name;
+  final result = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => DoctorListPage(doctorsView: filterDoctorsBySpecialty(selectedSpecialty)),
+      maintainState: false,
+    ),
+  );
+  // Refresh the AppointmentPage
+  if (result == 'refresh') {
+    setState(() {});
+  }
 }
- void handleSearchClick() {
-  setState(() {
-    // selectedIndex = index;
-    filterDoctorNames = extractNames(filteredDoctors());
-  });
-   print("Hello ${filterDoctorNames.length}");
+ void handleSearchClick() async {
+  // setState(() {
+  //   // selectedIndex = index;
+  //   filterDoctorNames = extractNames(filteredDoctors());
+  // });
+  //  print("Hello ${filterDoctorNames.length}");
+   List <DoctorList> list  = filteredDoctors();
+   if(list.isNotEmpty){
+       final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DoctorListPage(doctorsView: list),
+          maintainState: false,
+        ),
+      );
+       // Refresh the AppointmentPage
+    if (result == 'refresh') {
+      setState(() {});
+    }
+  }
 }
   @override
 Widget build(BuildContext context) {
@@ -421,3 +447,5 @@ Widget buildDoctorCard(Doctor doctor,index,bool selected) {
     );
   }
 }
+
+
