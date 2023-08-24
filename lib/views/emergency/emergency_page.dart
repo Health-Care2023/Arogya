@@ -127,8 +127,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ), // <-- Text
             backgroundColor: const Color.fromARGB(255, 8, 100, 176),
             onPressed: () async {
-              // _authin(userEmail);
-              // await _getCurrentLocation();
+              _authin(userEmail);
+              await _getCurrentLocation();
               widget.onDataUpdated();
             },
           ),
@@ -233,13 +233,13 @@ Future<ConfirmAction?> _asyncConfirmDialog(
               await sqlhelper.updateEmergency(
                 email: userEmail,
               );
-              // String message =
-              //     "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
-              // for (String number in phoneNo) {
-              //   _sendSms(number, " Please Help I am at: $message ");
-              // }
-              // _callNumber(phoneNo[0]);
-              // Navigator.of(context).pop(ConfirmAction.Accept);
+              String message =
+                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
+              for (String number in phoneNo) {
+                _sendSms(number, " Please Help I am at: $message ");
+              }
+              _callNumber(phoneNo[0]);
+              Navigator.of(context).pop(ConfirmAction.Accept);
             },
           )
         ],

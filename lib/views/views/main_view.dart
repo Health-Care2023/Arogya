@@ -156,7 +156,7 @@ class _NotesViewState extends State<NotesView> {
                       : imageProfile(),
                   const SizedBox(height: 10),
                   Text(
-                    "  ${_name.toString()} + ${_emergency.toString()}",
+                    "  ${_name.toString()}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -168,9 +168,32 @@ class _NotesViewState extends State<NotesView> {
                       fontSize: 15,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisSize: MainAxisSize.min, // To keep the Row's width minimum
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+                        padding: EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: _emergency.toString() == "1" ? Colors.red : Colors.grey,
+                          ),
+                        ),
+                        child: Text(
+                          _emergency.toString() == "1" ? "Emergency Active" : "Activate Emergency",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: _emergency.toString() == "1" ? Colors.red : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
 
-                  const SizedBox(height: 30),
+
+
+                  const SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 12, right: 18),
                     height: 0.5,
