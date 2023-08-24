@@ -136,7 +136,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                   widget.onDataUpdated();
                 },
               ),
-              const SizedBox(height: 10), // Add spacing between buttons
+              const SizedBox(height: 10),
               FloatingActionButton.extended(
                 extendedPadding: EdgeInsets.only(left: 120, right: 120),
                 label: const Text(
