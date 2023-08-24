@@ -109,30 +109,62 @@ class _EmergencyPageState extends State<EmergencyPage> {
         //  const Divider(height: 100),
         Container(
           margin: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: (MediaQuery.of(context).size.height) * 0.40),
-          child: FloatingActionButton.extended(
-            extendedPadding: EdgeInsets.only(left: 120, right: 120),
-            label: const Text(
-              'Authenticate',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-            icon: const Icon(
-              FontAwesomeIcons.fingerprint,
-              color: Colors.black,
-            ), // <-- Text
-            backgroundColor: const Color.fromARGB(255, 8, 100, 176),
-            onPressed: () async {
-              _authin(userEmail);
-              await _getCurrentLocation();
-              widget.onDataUpdated();
-            },
+            left: 20,
+            right: 20,
+            top: (MediaQuery.of(context).size.height) * 0.30,
           ),
-        )
+          child: Column(
+            children: [
+              FloatingActionButton.extended(
+                extendedPadding: EdgeInsets.only(left: 120, right: 120),
+                label: const Text(
+                  'Authenticate',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: const Icon(
+                  FontAwesomeIcons.fingerprint,
+                  color: Colors.white,
+                ),
+                backgroundColor: const Color.fromARGB(255, 8, 100, 176),
+                onPressed: () async {
+                  _authin(userEmail);
+                  await _getCurrentLocation();
+                  widget.onDataUpdated();
+                },
+              ),
+              const SizedBox(height: 10), // Add spacing between buttons
+              FloatingActionButton.extended(
+                extendedPadding: EdgeInsets.only(left: 120, right: 120),
+                label: const Text(
+                  'Deactivate',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: const Icon(
+                  FontAwesomeIcons.fingerprint,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.red,
+                onPressed: () {
+                  _authin(userEmail);
+                  _sqlhelper.updateEmergency(
+                    email: userEmail,
+                    emergency: 0,
+                  );
+                  widget.onDataUpdated();
+                },
+              ),
+            ],
+          ),
+        ),
+
       ],
     );
   }
@@ -232,6 +264,7 @@ Future<ConfirmAction?> _asyncConfirmDialog(
             onPressed: () async {
               await sqlhelper.updateEmergency(
                 email: userEmail,
+                emergency: 1,
               );
               String message =
                   "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";

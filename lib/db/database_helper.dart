@@ -222,11 +222,11 @@ class SQLHelper {
     return result;
   }
 
-  Future<int> updateEmergency({required String email}) async {
+  Future<int> updateEmergency({required String email,required int emergency}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
     final data = {
-      'emergency': 1,
+      'emergency': emergency,
     };
     final result = await db
         .update('complaint', data, where: 'email=?', whereArgs: [email]);

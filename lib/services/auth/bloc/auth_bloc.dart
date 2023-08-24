@@ -98,6 +98,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthStateUpdateEmergency(isloading: false));
       await sqlhelper.updateEmergency(
         email: event.email,
+        emergency: event.emergency,
       );
     });
     on<AuthEventUpdatedProfile>(

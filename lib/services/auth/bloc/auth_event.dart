@@ -91,5 +91,6 @@ class AuthEventUpdatingProfile extends AuthEvent {
 
 class AuthEventUpdateEmergency extends AuthEvent {
   final String email;
-  const AuthEventUpdateEmergency({required this.email});
+  final int emergency;
+  const AuthEventUpdateEmergency({required this.email,required this.emergency});
 }
