@@ -46,6 +46,7 @@ class SQLHelper {
         image: Uint8List(0),
         emergency1: '',
         emergency2: '',
+        emergency: 0,
       );
       return createdUser;
     } catch (e) {
@@ -110,6 +111,7 @@ class SQLHelper {
     required Uint8List image,
     required String emergency1,
     required String emergency2,
+    required int emergency,
   }) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -131,7 +133,8 @@ class SQLHelper {
       wardNoColumn: wardNo,
       imageColumn: image,
       emergency1Column: emergency1,
-      emergency2Column: emergency2
+      emergency2Column: emergency2,
+      emergencyColumn: emergency,
     });
     return DatabaseUser(
       id: userId,
@@ -152,6 +155,7 @@ class SQLHelper {
       image: image,
       emergency1: emergency1,
       emergency2: emergency2,
+      emergency: 0,
     );
   }
 
@@ -218,6 +222,17 @@ class SQLHelper {
     return result;
   }
 
+  Future<int> updateEmergency({required String email}) async {
+    await _ensureDbIsOpen();
+    final db = _getDatabaseorThrow();
+    final data = {
+      'emergency': 1,
+    };
+    final result = await db
+        .update('complaint', data, where: 'email=?', whereArgs: [email]);
+    return result;
+  }
+
   Future<void> deleteItem({required int id}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseorThrow();
@@ -249,6 +264,7 @@ class DatabaseUser {
   final Uint8List image;
   final String emergency1;
   final String emergency2;
+  final int emergency;
   const DatabaseUser(
       {required this.gender,
       required this.address2,
@@ -267,7 +283,8 @@ class DatabaseUser {
       required this.dateofbirth,
       required this.image,
       required this.emergency1,
-      required this.emergency2});
+      required this.emergency2,
+      required this.emergency});
   DatabaseUser.fromRow(Map<String, Object?> map)
       : id = map[idColumn] as int,
         name = map[nameColumn] as String,
@@ -286,7 +303,8 @@ class DatabaseUser {
         wardNo = map[wardNoColumn] as String,
         image = map[imageColumn] as Uint8List,
         emergency1 = map[emergency1Column] as String,
-        emergency2 = map[emergency2Column] as String;
+        emergency2 = map[emergency2Column] as String,
+        emergency = map[emergencyColumn] as int;
 }
 
 const idColumn = 'id';
@@ -308,6 +326,7 @@ const address3Column = 'address3';
 const pincodeColumn = 'pincode';
 const wardNoColumn = 'wardNo';
 const imageColumn = 'image';
+const emergencyColumn = 'emergency';
 const createTable = """CREATE TABLE "complaint" (
   "id" INTEGER NOT NULL UNIQUE,
   "name" TEXT,
@@ -327,6 +346,7 @@ const createTable = """CREATE TABLE "complaint" (
   "image" BLOB,
   "emergency1" TEXT,
   "emergency2" TEXT,
+  "emergency" INTEGER DEFAULT 0,
   PRIMARY KEY("id" AUTOINCREMENT)
 );
 """;

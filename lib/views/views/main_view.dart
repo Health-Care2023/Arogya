@@ -31,6 +31,7 @@ class _NotesViewState extends State<NotesView> {
   int currentPageIndex = 0;
   String? _name;
   String? _email;
+  int? _emergency;
 
   Uint8List? _image;
 
@@ -49,6 +50,7 @@ class _NotesViewState extends State<NotesView> {
       _name = user.name;
       _email = user.email;
       _image = user.image;
+      _emergency = user.emergency;
     });
   }
 
@@ -126,7 +128,9 @@ class _NotesViewState extends State<NotesView> {
                 });
               });
             }),
-            const EmergencyPage(),
+            EmergencyPage(
+              onDataUpdated: onDataUpdated,
+            ),
             const AppointmentPage(),
           ][currentPageIndex],
         ),
@@ -152,7 +156,7 @@ class _NotesViewState extends State<NotesView> {
                       : imageProfile(),
                   const SizedBox(height: 10),
                   Text(
-                    "  ${_name.toString()}",
+                    "  ${_name.toString()} + ${_emergency.toString()}",
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -164,6 +168,8 @@ class _NotesViewState extends State<NotesView> {
                       fontSize: 15,
                     ),
                   ),
+                  const SizedBox(height: 30),
+
                   const SizedBox(height: 30),
                   Container(
                     margin: const EdgeInsets.only(left: 12, right: 18),

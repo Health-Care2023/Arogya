@@ -20,7 +20,7 @@ import 'providers/chats_provider.dart';
 
 import 'package:hello/views/login_view.dart';
 
-import 'package:hello/views/views/notes_view.dart';
+import 'package:hello/views/views/main_view.dart';
 import 'package:hello/views/otp.dart';
 import 'package:hello/views/views/chat_view.dart';
 

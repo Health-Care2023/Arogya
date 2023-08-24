@@ -70,3 +70,8 @@ class AuthStateUpdatedProfile extends AuthState {
   const AuthStateUpdatedProfile({required isloading, String? loadingtext})
       : super(isloading: isloading, loadingText: loadingtext);
 }
+
+class AuthStateUpdateEmergency extends AuthState {
+  const AuthStateUpdateEmergency({required isloading, String? loadingtext})
+      : super(isloading: isloading, loadingText: loadingtext);
+}

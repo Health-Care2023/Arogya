@@ -1,8 +1,11 @@
 import 'package:background_sms/background_sms.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hello/services/auth/bloc/auth_bloc.dart';
+import 'package:hello/services/auth/bloc/auth_event.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:flutter/material.dart';
@@ -10,12 +13,12 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:local_auth/local_auth.dart';
 
-import '../../db/database_helper.dart';
 import '../../services/auth/auth_service.dart';
+import '../../db/database_helper.dart';
 
 class EmergencyPage extends StatefulWidget {
-  const EmergencyPage({super.key});
-
+  final VoidCallback onDataUpdated;
+  const EmergencyPage({required this.onDataUpdated, Key? key}) : super(key: key);
   @override
   State<EmergencyPage> createState() => _EmergencyPageState();
 }
@@ -124,8 +127,9 @@ class _EmergencyPageState extends State<EmergencyPage> {
             ), // <-- Text
             backgroundColor: const Color.fromARGB(255, 8, 100, 176),
             onPressed: () async {
-              _authin();
-              await _getCurrentLocation();
+              // _authin(userEmail);
+              // await _getCurrentLocation();
+              widget.onDataUpdated();
             },
           ),
         )
@@ -133,16 +137,16 @@ class _EmergencyPageState extends State<EmergencyPage> {
     );
   }
 
-  Future<void> _authin() async {
+  Future<void> _authin(userEmail) async {
     try {
       bool authinticate = await auth.authenticate(
-          localizedReason: 'use fingerprint to authenticate',
+          localizedReason: 'use fingerprint or pin to authenticate',
           options: const AuthenticationOptions(
             stickyAuth: true,
           ));
       if (authinticate) {
         final ConfirmAction? action = await _asyncConfirmDialog(
-            context, _currentPosition, _currentAddress, phoneNo);
+            _sqlhelper,context, _currentPosition, _currentAddress, phoneNo, userEmail);
         print("Confirm Action $action");
       }
       print("Authenticated : $authinticate");
@@ -182,10 +186,12 @@ _callNumber(String number) async {
 }
 
 Future<ConfirmAction?> _asyncConfirmDialog(
+    SQLHelper sqlhelper,
     BuildContext context,
     Position? _currentPosition,
     String? _currentAddress,
-    List<String> phoneNo) async {
+    List<String> phoneNo,
+    userEmail) async {
   return showDialog<ConfirmAction>(
     context: context,
     barrierDismissible: false,
@@ -224,13 +230,16 @@ Future<ConfirmAction?> _asyncConfirmDialog(
                   color: Colors.black,
                 )),
             onPressed: () async {
-              String message =
-                  "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
-              for (String number in phoneNo) {
-                _sendSms(number, " Please Help I am at: $message ");
-              }
-              _callNumber(phoneNo[0]);
-              Navigator.of(context).pop(ConfirmAction.Accept);
+              await sqlhelper.updateEmergency(
+                email: userEmail,
+              );
+              // String message =
+              //     "https://www.google.com/maps/search/?api=1&query=${_currentPosition!.latitude}%2C${_currentPosition!.longitude}";
+              // for (String number in phoneNo) {
+              //   _sendSms(number, " Please Help I am at: $message ");
+              // }
+              // _callNumber(phoneNo[0]);
+              // Navigator.of(context).pop(ConfirmAction.Accept);
             },
           )
         ],

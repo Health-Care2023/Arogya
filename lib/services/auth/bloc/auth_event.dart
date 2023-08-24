@@ -68,22 +68,28 @@ class AuthEventUpdatingProfile extends AuthEvent {
   final Uint8List image;
   final String emergency1;
   final String emergency2;
-  const AuthEventUpdatingProfile(
-      {required this.name,
-      required this.email,
-      required this.aadhar_no,
-      required this.gender,
-      required this.phone1,
-      required this.phone2,
-      required this.profession,
-      required this.address1,
-      required this.district,
-      required this.address2,
-      required this.address3,
-      required this.pincode,
-      required this.wardNo,
-      required this.dateofbirth,
-      required this.image,
-      required this.emergency1,
-      required this.emergency2});
+  const AuthEventUpdatingProfile({
+    required this.name,
+    required this.email,
+    required this.aadhar_no,
+    required this.gender,
+    required this.phone1,
+    required this.phone2,
+    required this.profession,
+    required this.address1,
+    required this.district,
+    required this.address2,
+    required this.address3,
+    required this.pincode,
+    required this.wardNo,
+    required this.dateofbirth,
+    required this.image,
+    required this.emergency1,
+    required this.emergency2,
+  });
+}
+
+class AuthEventUpdateEmergency extends AuthEvent {
+  final String email;
+  const AuthEventUpdateEmergency({required this.email});
 }

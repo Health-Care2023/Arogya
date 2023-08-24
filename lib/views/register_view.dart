@@ -190,25 +190,25 @@ class _RegisterViewState extends State<RegisterView> {
                           .add(AuthEventRegister(email, pass));
 
                       await _sqlHelper.createUser(
-                        name:
-                            '${_firstname.text} ${_middlename.text} ${_lastname.text}',
-                        email: _email.text,
-                        aadhar_no: '',
-                        gender: 'Male',
-                        phone1: '',
-                        phone2: '',
-                        profession: 'Service',
-                        address1: '',
-                        district: '',
-                        dateofbirth: '',
-                        address2: '',
-                        address3: '',
-                        pincode: '',
-                        wardNo: '',
-                        image: _imageBytes,
-                        emergency1: '',
-                        emergency2: '',
-                      );
+                          name:
+                              '${_firstname.text} ${_middlename.text} ${_lastname.text}',
+                          email: _email.text,
+                          aadhar_no: '',
+                          gender: 'Male',
+                          phone1: '',
+                          phone2: '',
+                          profession: 'Service',
+                          address1: '',
+                          district: '',
+                          dateofbirth: '',
+                          address2: '',
+                          address3: '',
+                          pincode: '',
+                          wardNo: '',
+                          image: _imageBytes,
+                          emergency1: '',
+                          emergency2: '',
+                          emergency: 0);
                       await openDialog(context);
                     }),
                 Row(
