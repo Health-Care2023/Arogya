@@ -19,6 +19,7 @@ import 'package:hello/views/emergency/home_page.dart';
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
+
   @override
   State<NotesView> createState() => _NotesViewState();
 }

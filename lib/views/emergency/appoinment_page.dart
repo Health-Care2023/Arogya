@@ -180,7 +180,7 @@ List<DoctorList> filteredDoctors() {
   //  print("Hello ${filterDoctorNames.length}");
    List <DoctorList> list  = filteredDoctors();
    if(list.isNotEmpty){
-       final result = await Navigator.push(
+       final result = await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => DoctorListPage(doctorsView: list),
@@ -303,7 +303,7 @@ Widget build(BuildContext context) {
                                               ],
                                             ),
                                             onPressed: () {
-                                                handleSearchClick();
+                                              handleSearchClick();
                                             },
                                           ),
                                         ),

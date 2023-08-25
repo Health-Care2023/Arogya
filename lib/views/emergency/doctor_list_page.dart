@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hello/views/emergency/appoinment_page.dart';
+import 'package:hello/views/notes/notes_view.dart';
 // import 'package:hello/views/emergency/appoinment_page.dart';
 import '../pages/find_doctorList/DoctorList.dart';
 
@@ -25,7 +27,14 @@ class _DoctorListPageState extends State<DoctorListPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,color: Colors.white),
-          onPressed: () => Navigator.pop(context,'refresh'),
+          // onPressed: () => Navigator.pushReplacement(context,'refresh'),
+          onPressed: () => Navigator.pushReplacement(
+                    context,
+        MaterialPageRoute(
+          builder: (context) => const NotesView(),
+          maintainState: false,
+        ),
+          ),
         ),
         title: const Text('Doctor List',
          style: TextStyle(fontSize: 25)),
