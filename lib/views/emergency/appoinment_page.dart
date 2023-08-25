@@ -23,7 +23,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   String selectedSpecialty = ''; 
   String selectedGender = '';
 
-List<String> DoctorNames = [];
+List<DoctorList> DoctorNames = [];
 List<String> filterDoctorNames = [];
   @override
   void initState() {
@@ -160,7 +160,7 @@ List<DoctorList> filteredDoctors() {
   //   selectedSpecialty = selectedDoctor.name;
   // });
   selectedSpecialty = selectedDoctor.name;
-  final result = await Navigator.push(
+  final result = await Navigator.pushReplacement(
     context,
     MaterialPageRoute(
       builder: (context) => DoctorListPage(doctorsView: filterDoctorsBySpecialty(selectedSpecialty)),
@@ -193,6 +193,21 @@ List<DoctorList> filteredDoctors() {
     }
   }
 }
+void searchEngine(DoctorList val) async{
+List <DoctorList> list = [];
+list.add(val);
+       final result = await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DoctorListPage(doctorsView: list),
+          maintainState: false,
+        ),
+      );
+       // Refresh the AppointmentPage
+    if (result == 'refresh') {
+      setState(() {});
+    }
+}
   @override
 Widget build(BuildContext context) {
       return Container(
@@ -209,7 +224,7 @@ Widget build(BuildContext context) {
                                   DoctorNames.clear();
                                 }
                                 else{
-                              DoctorNames = extractNames(searchDoctors(value));
+                              DoctorNames = searchDoctors(value);
                               print("hello doctors names ${DoctorNames.length}");
                                 }
                             });
@@ -338,7 +353,8 @@ Widget build(BuildContext context) {
                           shrinkWrap: true,
                           itemCount: DoctorNames.length,
                           itemBuilder: (context, index) {
-                            final doctorName = DoctorNames[index];
+                             final doctor = DoctorNames[index];
+                            final doctorName = doctor.name;
                             final doctorBio = getDoctorBio(doctorName);
                             final isSelected = index == selectedIndex;
 
@@ -349,7 +365,7 @@ Widget build(BuildContext context) {
                                 
                                 // selectedTileColor: isSelected ? Color.fromARGB(255, 227, 17, 17) : Colors.black,
                                 leading: const Icon(FontAwesomeIcons.userDoctor),
-                                title: Text(DoctorNames[index] ,
+                                title: Text(doctorName,
                                 style: TextStyle(
                                       color: isSelected ? Color.fromARGB(255, 8, 8, 8) : Colors.black,
                                     ),),
@@ -360,10 +376,12 @@ Widget build(BuildContext context) {
                                  hoverColor: Colors.black,
                                 onTap: () {
                                    setState(() {
-                                  searchController.text = DoctorNames[index];
+                                  searchController.text = doctorName;
                                   selectedIndex = index;
                                    });
-                                  print("hello ${doctorName}");
+                                  searchEngine(doctor);
+                                  // print("hello ${doctorName}");
+                                  
                                 },
                               ),
                             );

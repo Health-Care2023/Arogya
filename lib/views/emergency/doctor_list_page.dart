@@ -4,6 +4,7 @@ import 'package:hello/views/notes/notes_view.dart';
 // import 'package:hello/views/emergency/appoinment_page.dart';
 import '../pages/find_doctorList/DoctorList.dart';
 
+
 class DoctorListPage extends StatefulWidget {
   final List<DoctorList> doctorsView;
   const DoctorListPage({super.key, required this.doctorsView});
@@ -13,6 +14,7 @@ class DoctorListPage extends StatefulWidget {
 }
 
 class _DoctorListPageState extends State<DoctorListPage> {
+
   @override
   void initState() {
     super.initState();
@@ -21,6 +23,14 @@ class _DoctorListPageState extends State<DoctorListPage> {
   void dispose() {
     super.dispose();
   }
+  void navigateToDoctorDetails(DoctorList selectedDoctor) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => DoctorListPage(doctorsView: [selectedDoctor]),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +56,18 @@ class _DoctorListPageState extends State<DoctorListPage> {
         itemCount: widget.doctorsView.length, // Replace with the actual list length
         itemBuilder: (context, index) {
           final doctor = widget.doctorsView[index];
-          return Card(
-            // Customize the card widget to display doctor information
-            child: ListTile(
-              leading: Icon(Icons.person),
-              title: Text(doctor.name),
-              subtitle: Text('Speciality: ${doctor.speciality}'),
-              // Add more doctor information as needed
+          return GestureDetector(
+             onTap: () {
+              navigateToDoctorDetails(doctor);
+            },
+            child: Card(
+              // Customize the card widget to display doctor information
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: Text(doctor.name),
+                subtitle: Text('Speciality: ${doctor.speciality}'),
+                // Add more doctor information as needed
+              ),
             ),
           );
         },

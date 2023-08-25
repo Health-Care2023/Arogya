@@ -16,9 +16,10 @@ import 'package:hello/views/emergency/emergency_page.dart';
 import 'package:hello/views/emergency/appoinment_page.dart';
 import 'package:hello/views/emergency/home_page.dart';
 
+
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
-
+  
 
   @override
   State<NotesView> createState() => _NotesViewState();
@@ -29,10 +30,9 @@ class _NotesViewState extends State<NotesView> {
   late final SQLHelper _sqlHelper;
   late String imageString;
   Map<String, dynamic>? patient;
-  int currentPageIndex = 0;
+  int currentPageIndex = 0;  
   String? _name;
   String? _email;
-
   Uint8List? _image;
 
   @override
@@ -56,7 +56,6 @@ class _NotesViewState extends State<NotesView> {
   void onDataUpdated() {
     refreshJournals();
   }
-
   @override
   Widget build(BuildContext context) {
     var scaffold = Scaffold(
